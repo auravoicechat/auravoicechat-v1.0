@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "App Owner Global Config",
+  "type": "object",
+  "properties": {
+    "version": {"type": "string"},
+    "publishedAtUtc": {"type": "string"},
+    "vipRechargeBonus": {
+      "type": "object",
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "creditMode": {"type": "string", "enum": ["IMMEDIATE", "BONUS_WALLET"]},
+        "ladder": {
+          "type": "object",
+          "patternProperties": {
+            "^(10|[1-9])$": {"type": "number", "minimum": 0, "maximum": 1}
+          }
+        },
+        "caps": {
+          "type": "object",
+          "properties": {
+            "perRecharge": {"type": "integer", "minimum": 0},
+            "perDay": {"type": "integer", "minimum": 0},
+            "perUser30d": {"type": "integer", "minimum": 0},
+            "globalBudget": {"type": "integer", "minimum": 0}
+          },
+          "required": ["perRecharge", "perDay", "perUser30d", "globalBudget"]
+        },
+        "targeting": {"type": "object"},
+        "schedule": {"type": "object"},
+        "experiments": {"type": "array"}
+      },
+      "required": ["enabled", "ladder", "caps"]
+    },
+    "aurapassSpin": {
+      "type": "object",
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "earnRule": {"type": "object"},
+        "wheels": {"type": "object"},
+        "caps": {"type": "object"},
+        "targeting": {"type": "object"},
+        "oddsDisclosure": {"type": "object"}
+      },
+      "required": ["enabled", "earnRule", "wheels"]
+    },
+    "roomProgramSlider": {"type": "object"}
+  },
+  "required": ["version", "vipRechargeBonus", "aurapassSpin", "roomProgramSlider"]
+}
