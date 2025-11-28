@@ -4,6 +4,8 @@
  */
 
 import { v4 as uuidv4 } from 'uuid';
+import { config } from '../config';
+import { logger } from '../utils/logger';
 
 interface OtpResult {
   success: boolean;
@@ -33,7 +35,17 @@ export const sendOtp = async (phone: string): Promise<OtpResult> => {
   otpStore.set(phone, { otp, expires });
   
   // In production, send OTP via Twilio
-  console.log(`OTP for ${phone}: ${otp}`);
+  // Development only: log OTP for testing (never in production)
+  if (config.nodeEnv === 'development') {
+    logger.debug(`[DEV ONLY] OTP for testing: ${phone}`);
+  }
+  
+  // TODO: Implement Twilio SMS sending
+  // await twilioClient.messages.create({
+  //   body: `Your Aura Voice Chat verification code is: ${otp}`,
+  //   from: config.twilio.phoneNumber,
+  //   to: phone
+  // });
   
   return {
     success: true,

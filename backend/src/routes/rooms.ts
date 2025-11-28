@@ -7,33 +7,34 @@
 
 import { Router } from 'express';
 import { authenticate, optionalAuth } from '../middleware/auth';
+import { generalLimiter } from '../middleware/rateLimiter';
 import { validateAddToPlaylist } from '../middleware/validation';
 import * as roomsController from '../controllers/roomsController';
 
 const router = Router();
 
 // Get popular rooms
-router.get('/popular', optionalAuth, roomsController.getPopularRooms);
+router.get('/popular', generalLimiter, optionalAuth, roomsController.getPopularRooms);
 
 // Get my rooms
-router.get('/mine', authenticate, roomsController.getMyRooms);
+router.get('/mine', generalLimiter, authenticate, roomsController.getMyRooms);
 
 // Get room by ID
-router.get('/:roomId', optionalAuth, roomsController.getRoom);
+router.get('/:roomId', generalLimiter, optionalAuth, roomsController.getRoom);
 
 // Create room
-router.post('/', authenticate, roomsController.createRoom);
+router.post('/', generalLimiter, authenticate, roomsController.createRoom);
 
 // Join room
-router.post('/:roomId/join', authenticate, roomsController.joinRoom);
+router.post('/:roomId/join', generalLimiter, authenticate, roomsController.joinRoom);
 
 // Leave room
-router.post('/:roomId/leave', authenticate, roomsController.leaveRoom);
+router.post('/:roomId/leave', generalLimiter, authenticate, roomsController.leaveRoom);
 
 // Video - Add to playlist
-router.post('/:roomId/video/playlist', authenticate, validateAddToPlaylist, roomsController.addToPlaylist);
+router.post('/:roomId/video/playlist', generalLimiter, authenticate, validateAddToPlaylist, roomsController.addToPlaylist);
 
 // Video - Exit
-router.post('/:roomId/video/exit', authenticate, roomsController.exitVideo);
+router.post('/:roomId/video/exit', generalLimiter, authenticate, roomsController.exitVideo);
 
 export default router;

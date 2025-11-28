@@ -9,21 +9,22 @@
 
 import { Router } from 'express';
 import { authenticate } from '../middleware/auth';
+import { generalLimiter, withdrawalLimiter } from '../middleware/rateLimiter';
 import { validateExchange } from '../middleware/validation';
 import * as walletController from '../controllers/walletController';
 
 const router = Router();
 
 // Get balances
-router.get('/balances', authenticate, walletController.getBalances);
+router.get('/balances', generalLimiter, authenticate, walletController.getBalances);
 
 // Exchange diamonds to coins
-router.post('/exchange', authenticate, validateExchange, walletController.exchangeDiamondsToCoins);
+router.post('/exchange', generalLimiter, authenticate, validateExchange, walletController.exchangeDiamondsToCoins);
 
 // Get transaction history
-router.get('/transactions', authenticate, walletController.getTransactions);
+router.get('/transactions', generalLimiter, authenticate, walletController.getTransactions);
 
 // Transfer coins
-router.post('/transfer', authenticate, walletController.transferCoins);
+router.post('/transfer', withdrawalLimiter, authenticate, walletController.transferCoins);
 
 export default router;

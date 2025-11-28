@@ -9,17 +9,18 @@
 
 import { Router } from 'express';
 import { authenticate } from '../middleware/auth';
+import { generalLimiter } from '../middleware/rateLimiter';
 import * as vipController from '../controllers/vipController';
 
 const router = Router();
 
 // Get VIP tier
-router.get('/tier', authenticate, vipController.getVipTier);
+router.get('/tier', generalLimiter, authenticate, vipController.getVipTier);
 
 // Purchase VIP
-router.post('/purchase', authenticate, vipController.purchaseVip);
+router.post('/purchase', generalLimiter, authenticate, vipController.purchaseVip);
 
 // Get VIP benefits
-router.get('/benefits', vipController.getVipBenefits);
+router.get('/benefits', generalLimiter, vipController.getVipBenefits);
 
 export default router;

@@ -7,8 +7,22 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+// Validate required environment variables in production
+const nodeEnv = process.env.NODE_ENV || 'development';
+if (nodeEnv === 'production') {
+  if (!process.env.JWT_SECRET) {
+    throw new Error('JWT_SECRET environment variable is required in production');
+  }
+  if (!process.env.JWT_REFRESH_SECRET) {
+    throw new Error('JWT_REFRESH_SECRET environment variable is required in production');
+  }
+  if (!process.env.DATABASE_URL) {
+    throw new Error('DATABASE_URL environment variable is required in production');
+  }
+}
+
 export const config = {
-  nodeEnv: process.env.NODE_ENV || 'development',
+  nodeEnv,
   port: parseInt(process.env.PORT || '3000', 10),
   host: process.env.HOST || '0.0.0.0',
   
@@ -18,10 +32,10 @@ export const config = {
   // Redis
   redisUrl: process.env.REDIS_URL || 'redis://localhost:6379',
   
-  // JWT
-  jwtSecret: process.env.JWT_SECRET || 'default-secret-change-me',
+  // JWT - only use defaults in development
+  jwtSecret: process.env.JWT_SECRET || (nodeEnv === 'development' ? 'dev-secret-change-in-prod' : ''),
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
-  jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || 'refresh-secret-change-me',
+  jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || (nodeEnv === 'development' ? 'dev-refresh-secret-change-in-prod' : ''),
   jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '30d',
   
   // Firebase

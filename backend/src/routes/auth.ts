@@ -8,7 +8,7 @@
  */
 
 import { Router } from 'express';
-import { authLimiter } from '../middleware/rateLimiter';
+import { authLimiter, generalLimiter } from '../middleware/rateLimiter';
 import { validateSendOtp, validateVerifyOtp } from '../middleware/validation';
 import * as authController from '../controllers/authController';
 
@@ -18,12 +18,12 @@ const router = Router();
 router.post('/otp/send', authLimiter, validateSendOtp, authController.sendOtp);
 
 // Verify OTP
-router.post('/otp/verify', validateVerifyOtp, authController.verifyOtp);
+router.post('/otp/verify', authLimiter, validateVerifyOtp, authController.verifyOtp);
 
 // Refresh token
-router.post('/refresh', authController.refreshToken);
+router.post('/refresh', generalLimiter, authController.refreshToken);
 
 // Logout
-router.post('/logout', authController.logout);
+router.post('/logout', generalLimiter, authController.logout);
 
 export default router;
