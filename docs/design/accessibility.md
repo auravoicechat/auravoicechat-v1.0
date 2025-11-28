@@ -181,4 +181,7 @@ All interactive elements must have:
 ## Related Documentation
 
 - [Design Tokens](./tokens.md)
-- [Getting Started](../getting-started.md)
+- [Logo Specification](./logo.md)
+- [UI Documentation](../ui/README.md)
+- [Getting Started](../../getting-started.md)
+- [Product Specification](../../README.md)

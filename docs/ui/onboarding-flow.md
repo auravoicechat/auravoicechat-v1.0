@@ -164,3 +164,6 @@ Encourage initial social graph seeding.
 - [Home Screen](./home-screen.md)
 - [Me Screen](./me-screen.md)
 - [Daily Rewards](../features/daily-rewards.md)
+- [Rooms](../features/rooms.md)
+- [Getting Started](../../getting-started.md)
+- [Product Specification](../../README.md)

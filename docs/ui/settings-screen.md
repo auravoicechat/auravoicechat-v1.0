@@ -154,4 +154,6 @@ Account management, subscription settings, privacy controls, cache maintenance, 
 
 - [Me Screen](./me-screen.md)
 - [VIP Systems](../features/vip-systems.md)
+- [AuraPass](../features/aurapass.md)
 - [Privacy & Security](../../security.md)
+- [Product Specification](../../README.md)

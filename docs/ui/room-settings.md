@@ -155,3 +155,6 @@ Single management hub for:
 
 - [Rooms](../features/rooms.md)
 - [Home Screen](./home-screen.md)
+- [VIP Systems](../features/vip-systems.md)
+- [Rocket System](../features/rocket-system.md)
+- [Product Specification](../../README.md)

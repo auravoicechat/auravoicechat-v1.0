@@ -119,4 +119,7 @@ Use for accent chips, loading spinners, highlight glows:
 ## Related Documentation
 
 - [Design Tokens](./tokens.md)
-- [Getting Started](../getting-started.md)
+- [Accessibility Guidelines](./accessibility.md)
+- [Getting Started](../../getting-started.md)
+- [Onboarding Flow](../ui/onboarding-flow.md)
+- [Product Specification](../../README.md)

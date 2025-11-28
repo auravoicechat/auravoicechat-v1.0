@@ -207,4 +207,8 @@ Consolidates cross-module behavior referenced in Me, Settings, Wallet, and Level
 - [Wallet](../features/wallet.md)
 - [Medals](../features/medals.md)
 - [VIP Systems](../features/vip-systems.md)
+- [AuraPass](../features/aurapass.md)
 - [CP Partnership](../features/cp.md)
+- [Store](../features/store.md)
+- [Referrals](../features/referrals.md)
+- [Product Specification](../../README.md)

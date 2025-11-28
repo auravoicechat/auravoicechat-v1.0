@@ -1,6 +1,19 @@
 # Aura Voice Chat — Product Specification (Consolidated)
 
-This document bundles core product decisions, UI layouts, economy rules, rewards, referrals, and platform behavior defined so far.
+**Aura Voice Chat** is a mobile-first voice and video chat application featuring rooms, gifts, VIP tiers, engagement rewards, and social features.
+
+## 🎯 Quick Overview
+
+| Category | Features |
+|----------|----------|
+| **Platform** | Android 9+ (API 28), Purple→White gradient theme, Dark mode support |
+| **Authentication** | Google, Facebook, Mobile OTP |
+| **Voice/Video** | Rooms with 8–16 seats, Video/Music mode (YouTube), Super Mic |
+| **Economy** | Star Coins, Diamonds, Gifts (50–200M coins), 30% exchange rate |
+| **VIP System** | 10 tiers (VIP1–VIP10), Daily reward multipliers (1.2x–3.0x), AuraPass perks |
+| **Engagement** | Daily Rewards, Recharge Events, Rocket Launch, Medals |
+| **Social** | CP Partnership, Referrals (Get Coins/Get Cash), Family |
+| **Store** | Frames, Entry Effects, Mic Skins, Seat Hearts, Consumables |
 
 > **Theme:** Original Purple → White gradient UI preserved. No "Cosmic" or altered UI changes.
 
@@ -474,10 +487,33 @@ Get Cash summary
 ---
 
 ## Open Items To Finalize (Optional Next Steps)
-- CP thresholds full table (5M → 250M+) and exact reward packs.
-- Store pricing ranges by category and rarity.
-- Family feature limits & perks (member cap, roles, boosts).
-- Refund policy for store purchases.
-- Internationalization: language list for launch.
 
-This spec will be kept as the master reference. As you provide more details, we’ll update this file and link into feature-specific docs.
+See [Pending Decisions](docs/development/pending-decisions.md) for the complete list of 63 open questions awaiting answers.
+
+### High Priority
+- CP thresholds full table (5M → 250M+) and exact reward packs
+- Store pricing ranges by category and rarity
+- Family feature limits & perks (member cap, roles, boosts)
+- Refund policy for store purchases
+
+### Medium Priority
+- VIP billing model (subscription vs one-time purchase)
+- Jackpot feature adoption decision
+- Regional gift catalog precedence rules
+- KYC threshold for Get Cash withdrawals
+
+### Future Planning
+- Internationalization: language list for launch (Urdu, Hindi, Arabic)
+- RTL support for Arabic
+- Flash sales configuration
+- Next languages beyond English
+
+### Pending Assets
+- VIP frames/effects per tier visuals
+- CP milestone cosmetics
+- Rocket launch animations
+- Medal artwork
+
+---
+
+This spec will be kept as the master reference. As you provide more details, we'll update this file and link into feature-specific docs.
