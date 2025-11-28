@@ -9,6 +9,7 @@ This document bundles core product decisions, UI layouts, economy rules, rewards
 ### Documentation
 | Document | Description |
 |----------|-------------|
+| [App Overview](docs/app-overview.md) | **Complete feature inventory, interconnection map, and gap analysis** |
 | [Owner CMS](docs/owner-cms.md) | Owner CMS administration, publishing, versioning, Coins Jar controls, VIP scaling |
 | [EXP & Levels System](docs/exp-levels-system.md) | Experience points, leveling, VIP bonuses, Super Mic, rewards |
 | [Configuration](configuration.md) | Environment variables, feature flags, configuration files |
