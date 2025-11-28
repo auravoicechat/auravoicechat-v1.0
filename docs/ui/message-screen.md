@@ -135,3 +135,4 @@ Unified inbox for system notifications, activities, family messages, feedback ch
 
 - [Home Screen](./home-screen.md)
 - [Me Screen](./me-screen.md)
+- [Settings Screen](./settings-screen.md)

@@ -181,4 +181,4 @@ All interactive elements must have:
 ## Related Documentation
 
 - [Design Tokens](./tokens.md)
-- [Getting Started](../getting-started.md)
+- [Getting Started](../../getting-started.md)

@@ -140,4 +140,4 @@ For significant transactions, confirmation dialogs appear:
 - [Store & Items](./store.md)
 - [Gift System](./gifts.md)
 - [Referral Programs](./referrals.md)
-- [Product Specification](../README.md)
+- [Product Specification](../../README.md)

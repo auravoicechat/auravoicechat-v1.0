@@ -150,4 +150,4 @@ Response:
 - [VIP Systems](./vip-systems.md)
 - [Medals System](./medals.md)
 - [Wallet & Currency](./wallet.md)
-- [Product Specification](../README.md)
+- [Product Specification](../../README.md)

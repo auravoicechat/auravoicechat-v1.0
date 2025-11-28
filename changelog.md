@@ -16,6 +16,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Ver
 - Complete API reference
 - Troubleshooting guide
 - Operations runbooks
+- Recommended answers for all 63 pending decisions in pending-decisions.md
 
 ### Changed
 - Consolidated pending decisions into single document
@@ -24,6 +25,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Ver
 
 ### Fixed
 - Documentation structure and cross-linking
+- Fixed 9 broken links in docs/features/ pointing to wrong README.md
+- Fixed broken link in pending-decisions.md (../docs/features/ → ../features/)
+- Fixed 3 broken getting-started.md links in docs/design/ files
+- Fixed logo image path in docs/design/logo.md
+- Fixed assets path reference in getting-started.md
+- Added missing Settings Screen reference in message-screen.md
 
 ### Deprecated
 - N/A

@@ -17,6 +17,78 @@ Answer by listing the number followed by your choice/value:
 
 ---
 
+## Recommended Answers
+
+The following are **recommended answers** based on industry best practices, user experience considerations, and the Aura Voice Chat app design. These can be used as defaults if no explicit decision is made.
+
+| # | Question | Recommended | Rationale |
+|---|----------|-------------|-----------|
+| 1 | Non-gold icons style | **A) Slight gradient skeuomorphic** | Maintains consistency with existing Aura branding and provides visual richness |
+| 2 | Twilio fallback trigger | **A) Auto if Firebase fails** | Provides seamless user experience without manual intervention |
+| 3 | Tutorial scope expansion | **B) Add Seat & Gift steps** | Helps users understand core features without overwhelming them |
+| 4 | Banner workflow | **C) Owner drafts + auto-publish if passes automated checks** | Balances control with efficiency; reduces moderation load |
+| 5 | Banner rotation interval | **5 seconds** | Industry standard for carousel rotation |
+| 6 | Banner refresh | **C) Cached for session only** | Balances freshness with performance |
+| 7 | Advanced filters | **A) Phase later (basic UID search)** | Launch faster; iterate based on user feedback |
+| 8 | 16-seat toggle mid-session | **A) Allowed seamlessly** | Provides flexibility for room owners |
+| 9 | Super Mic visual style | **C) Pulsing aura only on speech** | Draws attention when relevant; less visual noise otherwise |
+| 10 | Ban durations default | **D) Last chosen remembered** | Respects moderator preferences |
+| 11 | Invite seat popup timeout | **30s** | Balances urgency with response time |
+| 12 | Announcement edit cooldown | **B) 30s between edits** | Prevents spam while allowing corrections |
+| 13 | Initial owner-triggered events | **B) Lucky Bag + Rocket** | Provides engagement variety from start |
+| 14 | Event trigger cooldown (Lucky Bag) | **B) 60s** | Prevents spam while allowing frequent events |
+| 15 | Multi-send recipient UX | **A) "Select All" + checkboxes** | Most familiar and accessible UI pattern |
+| 16 | Anti-spam for multi-send | **C) Rate-limit by cost total per minute** | More flexible; prevents abuse without penalizing small sends |
+| 17 | Gift animation concurrency cap | **A) 5 simultaneous** | Balances visual impact with performance |
+| 18 | Region precedence | **A) Room owner region drives catalog** | Consistent catalog per room; easier to understand |
+| 19 | Adopt Jackpot feature | **Yes** | Adds excitement and engagement |
+| 20 | Jackpot model | **C) Hybrid** | Combines progressive excitement with per-send thrill |
+| 21 | Show odds | **C) Only rarity indicator** | Maintains excitement without exposing exact mechanics |
+| 22 | Seek & skip permissions | **B) Host + admins** | Shared control while preventing disruption |
+| 23 | Latency strategy | **A) Server authoritative timestamp** | Most reliable for sync across clients |
+| 24 | Baggage gifts zero cost | **B) Yes but daily cap (10 sends/day)** | Encourages use while preventing abuse |
+| 25 | Baggage gift log visible | **A) Yes (history)** | Transparency for senders |
+| 26 | Baggage UI | **C) Tabs by source (Event/CP/Friend)** | Organized and easy to navigate |
+| 27 | Anti-spam exchange debounce | **A) 2s** | Quick enough for legitimate use; prevents abuse |
+| 28 | Large gift warning threshold | **B) 10M coins** | High enough to avoid annoying frequent gifters |
+| 29 | VIP billing model | **C) Monthly + upgrade path** | Flexible for users at different spending levels |
+| 30 | VIP expiry notification lead time | **B) 7 days** | Sufficient notice for renewal decision |
+| 31 | VIP seat frame per tier | **B) Only tier milestones (VIP4, VIP7, VIP10)** | Reduces asset workload; creates meaningful milestones |
+| 32 | Auto-claim activity medal toast | **A) Yes minimal toast** | Acknowledges achievement without interrupting |
+| 33 | Reorder mode activation | **B) "Edit" button** | Clear affordance; discoverable |
+| 34 | CP formation payment model | **A) Single payer full fee (3M)** | Simpler transaction; clear gift gesture |
+| 35 | CP dissolution cooldown | **7 days** | Prevents rapid abuse while not being too restrictive |
+| 36 | CP dissolution refund | **A) None** | Consistent with one-time purchase model |
+| 37 | Records page size default | **10** | More content visible; fewer page loads |
+| 38 | Records sort order | **A) Bind date desc** | Shows most recent activity first |
+| 39 | Internal admin audit log for withdrawals | **Yes** | Essential for fraud prevention and compliance |
+| 40 | External payout methods at launch | **B) Bank + PayPal** | Common methods; manageable complexity |
+| 41 | KYC threshold | **$100** | Balances compliance with user friction |
+| 42 | Permanent frame at which level | **B) Lv.10 only** | Rewards highest achievement |
+| 43 | DM attachments after mutual follow | **B) Images + voice (≤60s)** | Rich communication without video complexity |
+| 44 | Read receipts default | **B) Off (toggle in Settings)** | Privacy-respecting default |
+| 45 | Quiet hours setting | **A) Yes (user chooses range)** | Respects user preferences |
+| 46 | Discoverability default | **A) Searchable** | Promotes social discovery |
+| 47 | Analytics opt-out | **A) Yes toggle** | GDPR compliance; builds trust |
+| 48 | Cache auto-clear | **B) Auto after 30 days** | Balances storage with cache benefits |
+| 49 | Next languages | **A) Urdu + Hindi first** | Target market priority |
+| 50 | RTL (Arabic) support at launch | **B) No (later)** | Reduces launch complexity |
+| 51 | Device fingerprint fallback | **C) Hybrid (SSAID + hardware)** | Most robust anti-abuse |
+| 52 | Rooted devices | **B) Block external payouts** | Allows app use; protects financial operations |
+| 53 | Offline daily reward claim | **A) Require online (current)** | Prevents clock manipulation |
+| 54 | Timeout/backoff defaults | **C) 3 retries + user manual retry** | Balances automation with user control |
+| 55 | Flash sales | **A) Yes (discount 10–30%, 24h duration)** | Drives engagement and urgency |
+| 56 | Expiry notice lead time | **B) 72h** | Sufficient time to repurchase |
+| 57 | Family member cap | **100** | Large enough for community; manageable |
+| 58 | Family leaving cooldown | **72h** | Prevents rapid family hopping |
+| 59 | Room name max length | **30** | Allows descriptive names |
+| 60 | Profanity filter | **A) Yes (blocked terms list)** | Maintains community standards |
+| 61 | Cover image min resolution | **512×512** | Good quality; accessible file sizes |
+| 62 | Image moderation | **A) AI automated** | Scalable; immediate feedback |
+| 63 | Ownership transfer | **A) Allowed (with 7-day cooldown)** | Flexibility with abuse prevention |
+
+---
+
 ## Decisions Already Locked
 
 The following decisions have been made and are documented in the relevant feature files:
@@ -397,5 +469,5 @@ The following require screenshots or design assets:
 
 ## Related Documentation
 
-- [Product Specification](../README.md)
-- [Feature Documentation](../docs/features/)
+- [Product Specification](../../README.md)
+- [Feature Documentation](../features/)

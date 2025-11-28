@@ -163,4 +163,4 @@ Request:
 ## Related Documentation
 
 - [Rooms Overview](./rooms.md)
-- [Product Specification](../README.md)
+- [Product Specification](../../README.md)

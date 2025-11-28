@@ -155,4 +155,4 @@ POST /cp/dissolve
 - [Gifts & Baggage](./gifts.md)
 - [Wallet & Currency](./wallet.md)
 - [Store & Items](./store.md)
-- [Product Specification](../README.md)
+- [Product Specification](../../README.md)

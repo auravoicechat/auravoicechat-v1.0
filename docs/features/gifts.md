@@ -157,4 +157,4 @@ Request:
 - [Wallet & Currency](./wallet.md)
 - [CP Partnership](./cp.md)
 - [Store & Items](./store.md)
-- [Product Specification](../README.md)
+- [Product Specification](../../README.md)

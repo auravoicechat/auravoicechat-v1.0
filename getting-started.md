@@ -29,7 +29,7 @@ Upon first launch, Aura Voice Chat presents a streamlined onboarding experience 
 - Accessibility: Maintain AA contrast for text over lighter portions of gradient (use #2E2E2E or #1A1A1A for dark text if not white).
 
 ### Logo Specification
-![Aura Voice Chat logo: neon microphone inside concentric techno rings on dark background with pink/purple/cyan accents](assets/aura_logo.png)
+![Aura Voice Chat logo: neon microphone inside concentric techno rings on dark background with pink/purple/cyan accents](docs/assets/aura_logo.png)
 
 (Reference image1 provided)
 

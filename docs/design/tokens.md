@@ -191,5 +191,5 @@ Default selection: Home
 ## Related Documentation
 
 - [Logo Specification](./logo.md)
-- [Getting Started](../getting-started.md)
+- [Getting Started](../../getting-started.md)
 - [Accessibility Guidelines](./accessibility.md)

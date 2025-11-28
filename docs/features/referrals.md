@@ -178,4 +178,4 @@ GET  /referrals/cash/ranking?page=N
 ## Related Documentation
 
 - [Wallet & Currency](./wallet.md)
-- [Product Specification](../README.md)
+- [Product Specification](../../README.md)

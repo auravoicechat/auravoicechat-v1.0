@@ -154,4 +154,4 @@ Request:
 - [Wallet & Currency](./wallet.md)
 - [VIP Systems](./vip-systems.md)
 - [Medals System](./medals.md)
-- [Product Specification](../README.md)
+- [Product Specification](../../README.md)

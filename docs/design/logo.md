@@ -4,7 +4,7 @@ Official logo guidelines for Aura Voice Chat.
 
 ## Primary Logo
 
-![Aura Voice Chat Logo](../../assets/aura_logo.png)
+![Aura Voice Chat Logo](../assets/aura_logo.png)
 
 *Reference: Neon microphone inside concentric techno rings on dark background with pink/purple/cyan accents*
 
@@ -119,4 +119,4 @@ Use for accent chips, loading spinners, highlight glows:
 ## Related Documentation
 
 - [Design Tokens](./tokens.md)
-- [Getting Started](../getting-started.md)
+- [Getting Started](../../getting-started.md)

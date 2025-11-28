@@ -160,4 +160,4 @@ The following are planned or under consideration for the VIP systems:
 - [Daily Login Rewards](./daily-rewards.md)
 - [Medals System](./medals.md)
 - [Store & Items](./store.md)
-- [Product Specification](../README.md)
+- [Product Specification](../../README.md)
