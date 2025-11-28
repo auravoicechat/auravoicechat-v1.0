@@ -1,0 +1,394 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-11-28",
+  "description": "Level unlocks for cosmetic items including Frames, Medals, Themes, Vehicles, Entrance Styles, and Opening Page Covers",
+  "frames": {
+    "description": "Profile frames unlocked at specific levels",
+    "unlockLevels": [5, 15, 25, 35, 45, 55, 65, 75, 85, 95],
+    "items": [
+      {
+        "level": 5,
+        "name": "Bronze Frame",
+        "rarity": "common",
+        "duration": "permanent"
+      },
+      {
+        "level": 15,
+        "name": "Silver Frame",
+        "rarity": "common",
+        "duration": "permanent"
+      },
+      {
+        "level": 25,
+        "name": "Gold Frame",
+        "rarity": "rare",
+        "duration": "permanent"
+      },
+      {
+        "level": 35,
+        "name": "Platinum Frame",
+        "rarity": "rare",
+        "duration": "permanent"
+      },
+      {
+        "level": 45,
+        "name": "Sapphire Frame",
+        "rarity": "epic",
+        "duration": "permanent"
+      },
+      {
+        "level": 55,
+        "name": "Ruby Frame",
+        "rarity": "epic",
+        "duration": "permanent"
+      },
+      {
+        "level": 65,
+        "name": "Emerald Frame",
+        "rarity": "epic",
+        "duration": "permanent"
+      },
+      {
+        "level": 75,
+        "name": "Diamond Frame",
+        "rarity": "legendary",
+        "duration": "permanent"
+      },
+      {
+        "level": 85,
+        "name": "Aurora Frame",
+        "rarity": "legendary",
+        "duration": "permanent"
+      },
+      {
+        "level": 95,
+        "name": "Celestial Frame",
+        "rarity": "legendary",
+        "duration": "permanent"
+      }
+    ]
+  },
+  "medals": {
+    "description": "Achievement medals unlocked at specific levels",
+    "unlockLevels": [5, 15, 25, 35, 45, 55, 65, 75, 85, 95],
+    "items": [
+      {
+        "level": 5,
+        "name": "Beginner Medal",
+        "rarity": "common",
+        "duration": "permanent"
+      },
+      {
+        "level": 15,
+        "name": "Rising Star Medal",
+        "rarity": "common",
+        "duration": "permanent"
+      },
+      {
+        "level": 25,
+        "name": "Adventurer Medal",
+        "rarity": "rare",
+        "duration": "permanent"
+      },
+      {
+        "level": 35,
+        "name": "Explorer Medal",
+        "rarity": "rare",
+        "duration": "permanent"
+      },
+      {
+        "level": 45,
+        "name": "Champion Medal",
+        "rarity": "epic",
+        "duration": "permanent"
+      },
+      {
+        "level": 55,
+        "name": "Hero Medal",
+        "rarity": "epic",
+        "duration": "permanent"
+      },
+      {
+        "level": 65,
+        "name": "Legend Medal",
+        "rarity": "epic",
+        "duration": "permanent"
+      },
+      {
+        "level": 75,
+        "name": "Master Medal",
+        "rarity": "legendary",
+        "duration": "permanent"
+      },
+      {
+        "level": 85,
+        "name": "Grand Master Medal",
+        "rarity": "legendary",
+        "duration": "permanent"
+      },
+      {
+        "level": 95,
+        "name": "Supreme Medal",
+        "rarity": "legendary",
+        "duration": "permanent"
+      }
+    ]
+  },
+  "themes": {
+    "description": "Profile themes unlocked at specific levels",
+    "unlockLevels": [5, 15, 25, 35, 45, 55, 65, 75, 85, 95],
+    "items": [
+      {
+        "level": 5,
+        "name": "Basic Theme",
+        "rarity": "common",
+        "duration": "permanent"
+      },
+      {
+        "level": 15,
+        "name": "Ocean Theme",
+        "rarity": "common",
+        "duration": "permanent"
+      },
+      {
+        "level": 25,
+        "name": "Forest Theme",
+        "rarity": "rare",
+        "duration": "permanent"
+      },
+      {
+        "level": 35,
+        "name": "Mountain Theme",
+        "rarity": "rare",
+        "duration": "permanent"
+      },
+      {
+        "level": 45,
+        "name": "Sunset Theme",
+        "rarity": "epic",
+        "duration": "permanent"
+      },
+      {
+        "level": 55,
+        "name": "Starlight Theme",
+        "rarity": "epic",
+        "duration": "permanent"
+      },
+      {
+        "level": 65,
+        "name": "Galaxy Theme",
+        "rarity": "epic",
+        "duration": "permanent"
+      },
+      {
+        "level": 75,
+        "name": "Nebula Theme",
+        "rarity": "legendary",
+        "duration": "permanent"
+      },
+      {
+        "level": 85,
+        "name": "Cosmic Theme",
+        "rarity": "legendary",
+        "duration": "permanent"
+      },
+      {
+        "level": 95,
+        "name": "Ethereal Theme",
+        "rarity": "legendary",
+        "duration": "permanent"
+      }
+    ]
+  },
+  "vehicles": {
+    "description": "Profile vehicles unlocked at specific levels",
+    "unlockLevels": [25, 35, 45, 55, 65, 75, 85, 95, 100],
+    "items": [
+      {
+        "level": 25,
+        "name": "Starter Vehicle",
+        "rarity": "rare",
+        "duration": "permanent"
+      },
+      {
+        "level": 35,
+        "name": "Sport Vehicle",
+        "rarity": "rare",
+        "duration": "permanent"
+      },
+      {
+        "level": 45,
+        "name": "Luxury Vehicle",
+        "rarity": "epic",
+        "duration": "permanent"
+      },
+      {
+        "level": 55,
+        "name": "Racing Vehicle",
+        "rarity": "epic",
+        "duration": "permanent"
+      },
+      {
+        "level": 65,
+        "name": "Executive Vehicle",
+        "rarity": "epic",
+        "duration": "permanent"
+      },
+      {
+        "level": 75,
+        "name": "Elite Vehicle",
+        "rarity": "legendary",
+        "duration": "permanent"
+      },
+      {
+        "level": 85,
+        "name": "Premium Vehicle",
+        "rarity": "legendary",
+        "duration": "permanent"
+      },
+      {
+        "level": 95,
+        "name": "Champion Vehicle",
+        "rarity": "legendary",
+        "duration": "permanent"
+      },
+      {
+        "level": 100,
+        "name": "Ultimate Vehicle",
+        "rarity": "legendary",
+        "duration": "permanent"
+      }
+    ]
+  },
+  "entranceStyles": {
+    "description": "Room entrance effects unlocked at specific levels",
+    "unlockLevels": [0, 1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+    "items": [
+      {
+        "level": 0,
+        "name": "Default Entrance",
+        "rarity": "common",
+        "duration": "permanent"
+      },
+      {
+        "level": 1,
+        "name": "Basic Entrance",
+        "rarity": "common",
+        "duration": "permanent"
+      },
+      {
+        "level": 10,
+        "name": "Sparkle Entrance",
+        "rarity": "common",
+        "duration": "permanent"
+      },
+      {
+        "level": 20,
+        "name": "Glow Entrance",
+        "rarity": "rare",
+        "duration": "permanent"
+      },
+      {
+        "level": 30,
+        "name": "Flash Entrance",
+        "rarity": "rare",
+        "duration": "permanent"
+      },
+      {
+        "level": 40,
+        "name": "Burst Entrance",
+        "rarity": "rare",
+        "duration": "permanent"
+      },
+      {
+        "level": 50,
+        "name": "Wave Entrance",
+        "rarity": "epic",
+        "duration": "permanent"
+      },
+      {
+        "level": 60,
+        "name": "Thunder Entrance",
+        "rarity": "epic",
+        "duration": "permanent"
+      },
+      {
+        "level": 70,
+        "name": "Storm Entrance",
+        "rarity": "epic",
+        "duration": "permanent"
+      },
+      {
+        "level": 80,
+        "name": "Inferno Entrance",
+        "rarity": "legendary",
+        "duration": "permanent"
+      },
+      {
+        "level": 90,
+        "name": "Phoenix Entrance",
+        "rarity": "legendary",
+        "duration": "permanent"
+      },
+      {
+        "level": 100,
+        "name": "Divine Entrance",
+        "rarity": "legendary",
+        "duration": "permanent"
+      }
+    ]
+  },
+  "openingPageCovers": {
+    "description": "Profile opening page covers unlocked at high levels",
+    "unlockLevels": [80, 90, 100],
+    "items": [
+      {
+        "level": 80,
+        "name": "Premium Cover",
+        "rarity": "legendary",
+        "duration": "permanent"
+      },
+      {
+        "level": 90,
+        "name": "Elite Cover",
+        "rarity": "legendary",
+        "duration": "permanent"
+      },
+      {
+        "level": 100,
+        "name": "Ultimate Cover",
+        "rarity": "legendary",
+        "duration": "permanent"
+      }
+    ]
+  },
+  "customID": {
+    "description": "Custom ID duration based on level",
+    "unlockLevel": 65,
+    "durations": [
+      {
+        "level": 65,
+        "durationDays": 45,
+        "description": "Custom ID available for 45 days at Level 65"
+      }
+    ]
+  },
+  "rarityTiers": {
+    "common": {
+      "color": "#808080",
+      "description": "Standard cosmetics"
+    },
+    "rare": {
+      "color": "#0070DD",
+      "description": "Uncommon cosmetics with enhanced visuals"
+    },
+    "epic": {
+      "color": "#A335EE",
+      "description": "Premium cosmetics with special effects"
+    },
+    "legendary": {
+      "color": "#FF8000",
+      "description": "Exclusive cosmetics with unique animations"
+    }
+  }
+}

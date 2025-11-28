@@ -1,0 +1,131 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-11-28",
+  "description": "VIP tier additive bonuses for EXP calculation",
+  "baseline": {
+    "coinsPerEXP": 5,
+    "baseEXP": 1.0,
+    "description": "5 coins spent equals 1 EXP at baseline (non-VIP)"
+  },
+  "tiers": [
+    {
+      "tier": "VIP1",
+      "level": 1,
+      "additiveBonus": 0.2,
+      "effectiveEXPPer5Coins": 1.2,
+      "dailyRewardMultiplier": 1.2,
+      "description": "VIP1 adds +0.2 EXP per 5 coins"
+    },
+    {
+      "tier": "VIP2",
+      "level": 2,
+      "additiveBonus": 0.4,
+      "effectiveEXPPer5Coins": 1.4,
+      "dailyRewardMultiplier": 1.4,
+      "description": "VIP2 adds +0.4 EXP per 5 coins"
+    },
+    {
+      "tier": "VIP3",
+      "level": 3,
+      "additiveBonus": 0.6,
+      "effectiveEXPPer5Coins": 1.6,
+      "dailyRewardMultiplier": 1.6,
+      "description": "VIP3 adds +0.6 EXP per 5 coins"
+    },
+    {
+      "tier": "VIP4",
+      "level": 4,
+      "additiveBonus": 0.8,
+      "effectiveEXPPer5Coins": 1.8,
+      "dailyRewardMultiplier": 1.8,
+      "description": "VIP4 adds +0.8 EXP per 5 coins"
+    },
+    {
+      "tier": "VIP5",
+      "level": 5,
+      "additiveBonus": 1.0,
+      "effectiveEXPPer5Coins": 2.0,
+      "dailyRewardMultiplier": 2.0,
+      "description": "VIP5 adds +1.0 EXP per 5 coins"
+    },
+    {
+      "tier": "VIP6",
+      "level": 6,
+      "additiveBonus": 1.2,
+      "effectiveEXPPer5Coins": 2.2,
+      "dailyRewardMultiplier": 2.2,
+      "description": "VIP6 adds +1.2 EXP per 5 coins"
+    },
+    {
+      "tier": "VIP7",
+      "level": 7,
+      "additiveBonus": 1.4,
+      "effectiveEXPPer5Coins": 2.4,
+      "dailyRewardMultiplier": 2.4,
+      "description": "VIP7 adds +1.4 EXP per 5 coins"
+    },
+    {
+      "tier": "VIP8",
+      "level": 8,
+      "additiveBonus": 1.6,
+      "effectiveEXPPer5Coins": 2.6,
+      "dailyRewardMultiplier": 2.6,
+      "description": "VIP8 adds +1.6 EXP per 5 coins"
+    },
+    {
+      "tier": "VIP9",
+      "level": 9,
+      "additiveBonus": 1.8,
+      "effectiveEXPPer5Coins": 2.8,
+      "dailyRewardMultiplier": 2.8,
+      "description": "VIP9 adds +1.8 EXP per 5 coins"
+    },
+    {
+      "tier": "VIP10",
+      "level": 10,
+      "additiveBonus": 2.0,
+      "effectiveEXPPer5Coins": 3.0,
+      "dailyRewardMultiplier": 3.0,
+      "description": "VIP10 adds +2.0 EXP per 5 coins"
+    }
+  ],
+  "applicableActivities": {
+    "gifting": {
+      "bonusApplied": true,
+      "description": "VIP bonus applies to EXP earned from sending gifts"
+    },
+    "dailyRewards": {
+      "bonusApplied": true,
+      "description": "VIP multiplier applies to daily login rewards"
+    },
+    "jarTasks": {
+      "bonusApplied": false,
+      "description": "VIP bonus does not apply to Coins Jar task rewards"
+    },
+    "levelRewards": {
+      "bonusApplied": false,
+      "description": "Level-up coin rewards are fixed amounts"
+    }
+  },
+  "calculationExamples": [
+    {
+      "scenario": "VIP5 user sends 1,000,000 coin gift",
+      "calculation": {
+        "baseEXP": 200000,
+        "formula": "1,000,000 / 5 = 200,000",
+        "vipBonus": 200000,
+        "vipFormula": "200,000 × 1.0 = 200,000",
+        "totalEXP": 400000
+      }
+    },
+    {
+      "scenario": "VIP10 user claims Day 7 daily reward (50,000 base)",
+      "calculation": {
+        "baseReward": 50000,
+        "multiplier": 3.0,
+        "totalReward": 150000,
+        "formula": "50,000 × 3.0 = 150,000"
+      }
+    }
+  ]
+}

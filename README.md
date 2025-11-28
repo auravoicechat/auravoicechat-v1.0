@@ -2,7 +2,33 @@
 
 This document bundles core product decisions, UI layouts, economy rules, rewards, referrals, and platform behavior defined so far.
 
-Contents
+---
+
+## Feature Map
+
+### Documentation
+| Document | Description |
+|----------|-------------|
+| [Owner CMS](docs/owner-cms.md) | Owner CMS administration, publishing, versioning, Coins Jar controls, VIP scaling |
+| [EXP & Levels System](docs/exp-levels-system.md) | Experience points, leveling, VIP bonuses, Super Mic, rewards |
+| [Configuration](configuration.md) | Environment variables, feature flags, configuration files |
+| [Architecture](architecture.md) | System design, data models, scalability |
+| [Operations](operations.md) | Monitoring, logging, alerts, runbooks |
+| [Troubleshooting](troubleshooting.md) | Error index, diagnostic playbooks |
+| [Changelog](changelog.md) | Release history and version notes |
+
+### Data Files
+| File | Description |
+|------|-------------|
+| [Jar Tasks](data/jar-tasks.json) | Daily task catalog with targets and rewards |
+| [Jar Rules](data/jar-rules.json) | Operational rules for Coins Jar feature |
+| [VIP Multipliers](data/vip-multipliers.json) | VIP tier additive bonuses (VIP1–VIP10) |
+| [Level Rewards](data/level-rewards.json) | Level-to-coin rewards table and special unlocks |
+| [Cosmetics](data/cosmetics.json) | Level unlocks for Frames, Medals, Themes, Vehicles, Entrance Styles |
+
+---
+
+## Contents
 - Branding & Platform
 - Authentication
 - Home & Navigation

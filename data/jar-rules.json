@@ -1,0 +1,159 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-11-28",
+  "description": "Operational rules for Coins Jar feature",
+  "dayReset": {
+    "type": "anchored",
+    "resetTime": "local_midnight",
+    "timezone": "user_local",
+    "description": "Day resets at local midnight based on user's device timezone"
+  },
+  "newUserDefinition": {
+    "maxAgeInDays": 7,
+    "criteria": "registration_date",
+    "description": "Users registered within the last 7 days are considered new users"
+  },
+  "micConcurrency": {
+    "trackingEnabled": true,
+    "resetOnLeave": true,
+    "pauseOnMute": false,
+    "maxConcurrentSessions": 1,
+    "description": "Mic time tracked per user, resets when leaving room, muted mic still counts"
+  },
+  "shareValidation": {
+    "type": "intent_only",
+    "trackDestination": false,
+    "cooldownSeconds": 60,
+    "description": "Share intent triggers completion; actual share destination not verified"
+  },
+  "inviteSuccess": {
+    "minimumStaySeconds": 30,
+    "uniquePerHost": true,
+    "uniqueWindowHours": 24,
+    "selfInviteAllowed": false,
+    "deviceIdCheck": true,
+    "description": "Invite successful when invitee stays 30+ seconds; same invitee cannot count twice for same host within 24 hours"
+  },
+  "hostBonus": {
+    "enabled": true,
+    "percentage": 5,
+    "settlement": "real_time",
+    "applicableTasks": [
+      "invite",
+      "mic_presence",
+      "room_entry"
+    ],
+    "description": "Room hosts receive 5% of guest task rewards, settled in real-time"
+  },
+  "vipScaling": {
+    "applyToJarRewards": false,
+    "applyToGiftingEXP": true,
+    "applyToDailyRewards": true,
+    "categories": {
+      "jar_coins": {
+        "vipApplied": false,
+        "description": "Coins Jar task rewards do not scale with VIP"
+      },
+      "gifting_exp": {
+        "vipApplied": true,
+        "description": "EXP from gifting scales with VIP tier"
+      },
+      "daily_rewards": {
+        "vipApplied": true,
+        "description": "Daily login rewards scale with VIP tier"
+      },
+      "level_rewards": {
+        "vipApplied": false,
+        "description": "Level-up coin rewards are fixed"
+      }
+    }
+  },
+  "visibility": {
+    "jarWidget": {
+      "default": "show",
+      "hideWhenComplete": true,
+      "description": "Jar widget visible by default, hidden when all tasks complete"
+    },
+    "taskProgress": {
+      "showPercentage": true,
+      "showRemainingCount": true
+    },
+    "rewards": {
+      "showPreview": true,
+      "showVipBonus": true
+    }
+  },
+  "abuseResponse": {
+    "multiAccountDetection": {
+      "enabled": true,
+      "maxAccountsPerDevice": 4,
+      "action": "flag_for_review"
+    },
+    "rapidClaiming": {
+      "enabled": true,
+      "maxClaimsPerHour": 50,
+      "action": "soft_lock"
+    },
+    "inviteCycling": {
+      "enabled": true,
+      "maxInvitesPerWindow": 10,
+      "windowMinutes": 5,
+      "action": "temporary_lock"
+    },
+    "botDetection": {
+      "enabled": true,
+      "patterns": [
+        "non_human_timing",
+        "identical_sessions",
+        "automated_patterns"
+      ],
+      "action": "shadow_ban"
+    },
+    "escalation": {
+      "lowSeverity": {
+        "action": "warning",
+        "duration": null
+      },
+      "mediumSeverity": {
+        "action": "feature_restriction",
+        "durationHours": 24
+      },
+      "highSeverity": {
+        "action": "account_suspension",
+        "durationDays": 7
+      },
+      "criticalSeverity": {
+        "action": "permanent_ban",
+        "duration": "indefinite"
+      }
+    }
+  },
+  "counters": {
+    "taskProgress": {
+      "persistence": "daily",
+      "resetWithDay": true
+    },
+    "hostBonus": {
+      "persistence": "cumulative",
+      "resetWithDay": false
+    },
+    "streaks": {
+      "persistence": "cumulative",
+      "resetOnMiss": true
+    }
+  },
+  "rateLimits": {
+    "taskClaims": {
+      "limit": 50,
+      "windowHours": 1
+    },
+    "inviteSubmissions": {
+      "limit": 20,
+      "windowHours": 24
+    },
+    "shareActions": {
+      "limit": 100,
+      "windowHours": 24
+    }
+  }
+}

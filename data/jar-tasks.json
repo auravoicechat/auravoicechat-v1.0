@@ -1,0 +1,416 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-11-28",
+  "description": "Daily task catalog for Coins Jar feature",
+  "anchoredDayWindow": {
+    "resetTime": "local_midnight",
+    "timezone": "user_local"
+  },
+  "tasks": [
+    {
+      "id": "invite_new_user_1",
+      "category": "invite",
+      "name": "Invite 1 New User",
+      "description": "Invite 1 new user to join a room",
+      "target": 1,
+      "reward": {
+        "coins": 500
+      },
+      "rules": {
+        "successCriteria": "invitee_stays_30s",
+        "newUserDefinition": "registered_within_7_days",
+        "uniquePerDay": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "invite_new_user_3",
+      "category": "invite",
+      "name": "Invite 3 New Users",
+      "description": "Invite 3 new users to join rooms",
+      "target": 3,
+      "reward": {
+        "coins": 2000
+      },
+      "rules": {
+        "successCriteria": "invitee_stays_30s",
+        "newUserDefinition": "registered_within_7_days",
+        "uniquePerDay": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "invite_new_user_5",
+      "category": "invite",
+      "name": "Invite 5 New Users",
+      "description": "Invite 5 new users to join rooms",
+      "target": 5,
+      "reward": {
+        "coins": 5000
+      },
+      "rules": {
+        "successCriteria": "invitee_stays_30s",
+        "newUserDefinition": "registered_within_7_days",
+        "uniquePerDay": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "invite_new_user_10",
+      "category": "invite",
+      "name": "Invite 10 New Users",
+      "description": "Invite 10 new users to join rooms",
+      "target": 10,
+      "reward": {
+        "coins": 10000
+      },
+      "rules": {
+        "successCriteria": "invitee_stays_30s",
+        "newUserDefinition": "registered_within_7_days",
+        "uniquePerDay": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "mic_presence_5min",
+      "category": "mic_presence",
+      "name": "On Mic for 5 Minutes",
+      "description": "Spend 5 minutes on mic in any room",
+      "target": 5,
+      "targetUnit": "minutes",
+      "reward": {
+        "coins": 1000
+      },
+      "rules": {
+        "mutedMicAllowed": true,
+        "concurrencyTracking": true,
+        "resetOnLeave": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "mic_presence_15min",
+      "category": "mic_presence",
+      "name": "On Mic for 15 Minutes",
+      "description": "Spend 15 minutes on mic in any room",
+      "target": 15,
+      "targetUnit": "minutes",
+      "reward": {
+        "coins": 3000
+      },
+      "rules": {
+        "mutedMicAllowed": true,
+        "concurrencyTracking": true,
+        "resetOnLeave": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "mic_presence_30min",
+      "category": "mic_presence",
+      "name": "On Mic for 30 Minutes",
+      "description": "Spend 30 minutes on mic in any room",
+      "target": 30,
+      "targetUnit": "minutes",
+      "reward": {
+        "coins": 5000
+      },
+      "rules": {
+        "mutedMicAllowed": true,
+        "concurrencyTracking": true,
+        "resetOnLeave": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "gain_followers_1",
+      "category": "followers",
+      "name": "Gain 1 Follower",
+      "description": "Get 1 new follower today",
+      "target": 1,
+      "reward": {
+        "coins": 500
+      },
+      "rules": {
+        "uniqueFollowersOnly": true,
+        "unfollowReversal": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "gain_followers_5",
+      "category": "followers",
+      "name": "Gain 5 Followers",
+      "description": "Get 5 new followers today",
+      "target": 5,
+      "reward": {
+        "coins": 3000
+      },
+      "rules": {
+        "uniqueFollowersOnly": true,
+        "unfollowReversal": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "gain_followers_10",
+      "category": "followers",
+      "name": "Gain 10 Followers",
+      "description": "Get 10 new followers today",
+      "target": 10,
+      "reward": {
+        "coins": 8000
+      },
+      "rules": {
+        "uniqueFollowersOnly": true,
+        "unfollowReversal": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "share_app_1",
+      "category": "sharing",
+      "name": "Share App Once",
+      "description": "Share the app with friends",
+      "target": 1,
+      "reward": {
+        "coins": 500
+      },
+      "rules": {
+        "intentOnly": true,
+        "cooldownSeconds": 60
+      },
+      "enabled": true
+    },
+    {
+      "id": "share_app_3",
+      "category": "sharing",
+      "name": "Share App 3 Times",
+      "description": "Share the app with friends 3 times",
+      "target": 3,
+      "reward": {
+        "coins": 2000
+      },
+      "rules": {
+        "intentOnly": true,
+        "cooldownSeconds": 60
+      },
+      "enabled": true
+    },
+    {
+      "id": "share_room_1",
+      "category": "sharing",
+      "name": "Share Room Once",
+      "description": "Share a room link",
+      "target": 1,
+      "reward": {
+        "coins": 500
+      },
+      "rules": {
+        "intentOnly": true,
+        "cooldownSeconds": 60
+      },
+      "enabled": true
+    },
+    {
+      "id": "enter_room_1",
+      "category": "room_entry",
+      "name": "Enter 1 Room",
+      "description": "Enter any room today",
+      "target": 1,
+      "reward": {
+        "coins": 500
+      },
+      "rules": {
+        "minimumStaySeconds": 30,
+        "uniqueRoomsOnly": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "enter_room_3",
+      "category": "room_entry",
+      "name": "Enter 3 Rooms",
+      "description": "Enter 3 different rooms today",
+      "target": 3,
+      "reward": {
+        "coins": 2000
+      },
+      "rules": {
+        "minimumStaySeconds": 30,
+        "uniqueRoomsOnly": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "enter_room_5",
+      "category": "room_entry",
+      "name": "Enter 5 Rooms",
+      "description": "Enter 5 different rooms today",
+      "target": 5,
+      "reward": {
+        "coins": 4000
+      },
+      "rules": {
+        "minimumStaySeconds": 30,
+        "uniqueRoomsOnly": true
+      },
+      "enabled": true
+    },
+    {
+      "id": "send_gift_1",
+      "category": "gifting",
+      "name": "Send 1 Gift",
+      "description": "Send a gift to another user",
+      "target": 1,
+      "reward": {
+        "coins": 1000
+      },
+      "rules": {
+        "minimumGiftValue": 100,
+        "selfGiftAllowed": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "send_gift_5",
+      "category": "gifting",
+      "name": "Send 5 Gifts",
+      "description": "Send 5 gifts to other users",
+      "target": 5,
+      "reward": {
+        "coins": 5000
+      },
+      "rules": {
+        "minimumGiftValue": 100,
+        "selfGiftAllowed": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "send_gift_10",
+      "category": "gifting",
+      "name": "Send 10 Gifts",
+      "description": "Send 10 gifts to other users",
+      "target": 10,
+      "reward": {
+        "coins": 10000
+      },
+      "rules": {
+        "minimumGiftValue": 100,
+        "selfGiftAllowed": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "send_gift_value_10k",
+      "category": "gifting",
+      "name": "Send 10,000 Coins in Gifts",
+      "description": "Send gifts totaling 10,000 coins",
+      "target": 10000,
+      "targetUnit": "coins",
+      "reward": {
+        "coins": 2000
+      },
+      "rules": {
+        "selfGiftAllowed": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "send_gift_value_50k",
+      "category": "gifting",
+      "name": "Send 50,000 Coins in Gifts",
+      "description": "Send gifts totaling 50,000 coins",
+      "target": 50000,
+      "targetUnit": "coins",
+      "reward": {
+        "coins": 10000
+      },
+      "rules": {
+        "selfGiftAllowed": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "send_gift_value_100k",
+      "category": "gifting",
+      "name": "Send 100,000 Coins in Gifts",
+      "description": "Send gifts totaling 100,000 coins",
+      "target": 100000,
+      "targetUnit": "coins",
+      "reward": {
+        "coins": 20000
+      },
+      "rules": {
+        "selfGiftAllowed": false
+      },
+      "enabled": true
+    },
+    {
+      "id": "daily_checkin",
+      "category": "daily",
+      "name": "Daily Check-in",
+      "description": "Open the Coins Jar today",
+      "target": 1,
+      "reward": {
+        "coins": 1000
+      },
+      "rules": {
+        "autoComplete": true
+      },
+      "enabled": true
+    }
+  ],
+  "categories": [
+    {
+      "id": "invite",
+      "name": "Invite Tasks",
+      "description": "Invite new users to the app",
+      "icon": "person_add",
+      "sortOrder": 1
+    },
+    {
+      "id": "mic_presence",
+      "name": "Mic Presence",
+      "description": "Spend time on mic in rooms",
+      "icon": "mic",
+      "sortOrder": 2
+    },
+    {
+      "id": "followers",
+      "name": "Followers",
+      "description": "Grow your follower count",
+      "icon": "group",
+      "sortOrder": 3
+    },
+    {
+      "id": "sharing",
+      "name": "Sharing",
+      "description": "Share with friends",
+      "icon": "share",
+      "sortOrder": 4
+    },
+    {
+      "id": "room_entry",
+      "name": "Room Entry",
+      "description": "Visit rooms",
+      "icon": "meeting_room",
+      "sortOrder": 5
+    },
+    {
+      "id": "gifting",
+      "name": "Gifting",
+      "description": "Send gifts to others",
+      "icon": "card_giftcard",
+      "sortOrder": 6
+    },
+    {
+      "id": "daily",
+      "name": "Daily",
+      "description": "Daily activities",
+      "icon": "today",
+      "sortOrder": 7
+    }
+  ]
+}

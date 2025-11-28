@@ -1,0 +1,339 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-11-28",
+  "description": "Level-to-coin rewards table with special unlocks",
+  "vipScaling": false,
+  "rewards": [
+    {
+      "level": 1,
+      "coinReward": 1000,
+      "specialUnlocks": []
+    },
+    {
+      "level": 2,
+      "coinReward": 1500,
+      "specialUnlocks": []
+    },
+    {
+      "level": 3,
+      "coinReward": 2000,
+      "specialUnlocks": []
+    },
+    {
+      "level": 4,
+      "coinReward": 2500,
+      "specialUnlocks": []
+    },
+    {
+      "level": 5,
+      "coinReward": 5000,
+      "specialUnlocks": [
+        {
+          "type": "frame",
+          "name": "Bronze Frame",
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "level": 6,
+      "coinReward": 5500,
+      "specialUnlocks": []
+    },
+    {
+      "level": 7,
+      "coinReward": 6000,
+      "specialUnlocks": []
+    },
+    {
+      "level": 8,
+      "coinReward": 6500,
+      "specialUnlocks": []
+    },
+    {
+      "level": 9,
+      "coinReward": 7000,
+      "specialUnlocks": []
+    },
+    {
+      "level": 10,
+      "coinReward": 10000,
+      "specialUnlocks": [
+        {
+          "type": "frame",
+          "name": "Level 10 Frame",
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "level": 15,
+      "coinReward": 15000,
+      "specialUnlocks": [
+        {
+          "type": "medal",
+          "name": "Level 15 Medal",
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "level": 20,
+      "coinReward": 25000,
+      "specialUnlocks": []
+    },
+    {
+      "level": 25,
+      "coinReward": 35000,
+      "specialUnlocks": [
+        {
+          "type": "vehicle",
+          "name": "Level 25 Vehicle",
+          "duration": "permanent"
+        },
+        {
+          "type": "theme",
+          "name": "Level 25 Theme",
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "level": 30,
+      "coinReward": 50000,
+      "specialUnlocks": []
+    },
+    {
+      "level": 35,
+      "coinReward": 75000,
+      "specialUnlocks": [
+        {
+          "type": "vehicle",
+          "name": "Level 35 Vehicle",
+          "duration": "permanent"
+        },
+        {
+          "type": "theme",
+          "name": "Level 35 Theme",
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "level": 40,
+      "coinReward": 100000,
+      "specialUnlocks": [
+        {
+          "type": "feature",
+          "name": "Super Mic",
+          "duration": "permanent",
+          "description": "Enhanced audio broadcasting with priority channel and voice effects"
+        }
+      ]
+    },
+    {
+      "level": 45,
+      "coinReward": 150000,
+      "specialUnlocks": [
+        {
+          "type": "vehicle",
+          "name": "Level 45 Vehicle",
+          "duration": "permanent"
+        },
+        {
+          "type": "theme",
+          "name": "Level 45 Theme",
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "level": 50,
+      "coinReward": 200000,
+      "specialUnlocks": [
+        {
+          "type": "frame",
+          "name": "Level 50 Frame",
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "level": 55,
+      "coinReward": 300000,
+      "specialUnlocks": [
+        {
+          "type": "vehicle",
+          "name": "Level 55 Vehicle",
+          "duration": "permanent"
+        },
+        {
+          "type": "theme",
+          "name": "Level 55 Theme",
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "level": 60,
+      "coinReward": 400000,
+      "specialUnlocks": [
+        {
+          "type": "entrance_style",
+          "name": "Level 60 Entrance",
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "level": 65,
+      "coinReward": 500000,
+      "specialUnlocks": [
+        {
+          "type": "vehicle",
+          "name": "Level 65 Vehicle",
+          "duration": "permanent"
+        },
+        {
+          "type": "theme",
+          "name": "Level 65 Theme",
+          "duration": "permanent"
+        },
+        {
+          "type": "custom_id",
+          "name": "Custom ID",
+          "durationDays": 45,
+          "description": "Ability to set a custom user ID for 45 days"
+        }
+      ]
+    },
+    {
+      "level": 70,
+      "coinReward": 750000,
+      "specialUnlocks": [
+        {
+          "type": "entrance_style",
+          "name": "Level 70 Entrance",
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "level": 75,
+      "coinReward": 1000000,
+      "specialUnlocks": [
+        {
+          "type": "vehicle",
+          "name": "Level 75 Vehicle",
+          "duration": "permanent"
+        },
+        {
+          "type": "theme",
+          "name": "Level 75 Theme",
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "level": 80,
+      "coinReward": 1500000,
+      "specialUnlocks": [
+        {
+          "type": "opening_page_cover",
+          "name": "Level 80 Opening Cover",
+          "duration": "permanent"
+        },
+        {
+          "type": "entrance_style",
+          "name": "Level 80 Entrance",
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "level": 85,
+      "coinReward": 2000000,
+      "specialUnlocks": [
+        {
+          "type": "vehicle",
+          "name": "Level 85 Vehicle",
+          "duration": "permanent"
+        },
+        {
+          "type": "theme",
+          "name": "Level 85 Theme",
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "level": 90,
+      "coinReward": 2500000,
+      "specialUnlocks": [
+        {
+          "type": "opening_page_cover",
+          "name": "Level 90 Opening Cover",
+          "duration": "permanent"
+        },
+        {
+          "type": "entrance_style",
+          "name": "Level 90 Entrance",
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "level": 95,
+      "coinReward": 3000000,
+      "specialUnlocks": [
+        {
+          "type": "vehicle",
+          "name": "Level 95 Vehicle",
+          "duration": "permanent"
+        },
+        {
+          "type": "theme",
+          "name": "Level 95 Theme",
+          "duration": "permanent"
+        }
+      ]
+    },
+    {
+      "level": 100,
+      "coinReward": 5000000,
+      "specialUnlocks": [
+        {
+          "type": "vehicle",
+          "name": "Level 100 Vehicle",
+          "duration": "permanent"
+        },
+        {
+          "type": "opening_page_cover",
+          "name": "Level 100 Opening Cover",
+          "duration": "permanent"
+        },
+        {
+          "type": "entrance_style",
+          "name": "Level 100 Entrance",
+          "duration": "permanent"
+        }
+      ]
+    }
+  ],
+  "milestones": {
+    "superMicUnlock": {
+      "level": 40,
+      "description": "Super Mic feature unlocks at Level 40"
+    },
+    "customIDUnlock": {
+      "level": 65,
+      "durationDays": 45,
+      "description": "Custom ID available for 45 days starting at Level 65"
+    }
+  },
+  "totalCoinRewards": {
+    "level1to10": 47000,
+    "level1to50": 652000,
+    "level1to100": 16852000
+  }
+}
