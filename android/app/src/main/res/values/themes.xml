@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aura Voice Chat - Theme Resources -->
+<resources>
+    <!-- Base Theme -->
+    <style name="Theme.AuraVoiceChat" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary colors -->
+        <item name="colorPrimary">@color/purple_80</item>
+        <item name="colorOnPrimary">@color/dark_canvas</item>
+        <item name="colorPrimaryContainer">@color/purple_40</item>
+        <item name="colorOnPrimaryContainer">@color/purple_80</item>
+        
+        <!-- Secondary colors -->
+        <item name="colorSecondary">@color/accent_magenta</item>
+        <item name="colorOnSecondary">@color/dark_canvas</item>
+        <item name="colorSecondaryContainer">@color/purple_40</item>
+        <item name="colorOnSecondaryContainer">@color/accent_magenta</item>
+        
+        <!-- Tertiary colors -->
+        <item name="colorTertiary">@color/accent_cyan</item>
+        <item name="colorOnTertiary">@color/dark_canvas</item>
+        
+        <!-- Background and surface -->
+        <item name="android:colorBackground">@color/dark_canvas</item>
+        <item name="colorSurface">@color/dark_surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorSurfaceVariant">@color/dark_card</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        
+        <!-- Error colors -->
+        <item name="colorError">@color/error_red</item>
+        <item name="colorOnError">@color/text_primary</item>
+        
+        <!-- Status bar -->
+        <item name="android:statusBarColor">@color/dark_canvas</item>
+        <item name="android:windowLightStatusBar">false</item>
+        
+        <!-- Navigation bar -->
+        <item name="android:navigationBarColor">@color/dark_surface</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+    
+    <!-- Splash Theme -->
+    <style name="Theme.AuraVoiceChat.Splash" parent="Theme.AuraVoiceChat">
+        <item name="android:windowBackground">@color/purple_40</item>
+    </style>
+    
+    <!-- Light Theme -->
+    <style name="Theme.AuraVoiceChat.Light" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/purple_40</item>
+        <item name="colorOnPrimary">@color/light_background</item>
+        <item name="colorSecondary">@color/accent_magenta</item>
+        <item name="colorTertiary">@color/accent_cyan</item>
+        <item name="android:colorBackground">@color/light_background</item>
+        <item name="colorSurface">@color/light_surface</item>
+        <item name="android:statusBarColor">@color/light_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

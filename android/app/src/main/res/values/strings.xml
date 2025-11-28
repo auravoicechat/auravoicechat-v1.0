@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aura Voice Chat - String Resources -->
+<resources>
+    <string name="app_name">Aura Voice Chat</string>
+    
+    <!-- Facebook SDK -->
+    <string name="facebook_app_id">YOUR_FACEBOOK_APP_ID</string>
+    <string name="facebook_client_token">YOUR_FACEBOOK_CLIENT_TOKEN</string>
+    <string name="fb_login_protocol_scheme">fbYOUR_FACEBOOK_APP_ID</string>
+    
+    <!-- Authentication -->
+    <string name="login_title">Welcome to Aura</string>
+    <string name="login_subtitle">Connect with people around the world</string>
+    <string name="continue_with_phone">Continue with Phone</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="continue_with_facebook">Continue with Facebook</string>
+    <string name="phone_number_hint">+1 234 567 8900</string>
+    <string name="verify_otp_title">Verify your phone</string>
+    <string name="enter_otp">Enter 6-digit code</string>
+    <string name="resend_code">Resend code</string>
+    <string name="terms_privacy">By continuing, you agree to our Terms of Service and Privacy Policy</string>
+    
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_explore">Explore</string>
+    <string name="nav_create">Create</string>
+    <string name="nav_wallet">Wallet</string>
+    <string name="nav_me">Me</string>
+    
+    <!-- Home Screen -->
+    <string name="tab_mine">Mine</string>
+    <string name="tab_popular">Popular</string>
+    <string name="rewards_fab">Rewards</string>
+    
+    <!-- Wallet -->
+    <string name="coins">Coins</string>
+    <string name="diamonds">Diamonds</string>
+    <string name="exchange">Exchange</string>
+    <string name="recharge">Recharge</string>
+    <string name="transfer">Transfer</string>
+    <string name="exchange_rate_info">100,000 Diamonds → 30,000 Coins (30%)</string>
+    
+    <!-- Daily Rewards -->
+    <string name="daily_rewards">Daily Rewards</string>
+    <string name="claim_reward">Claim Today\'s Reward</string>
+    <string name="already_claimed">Already Claimed Today</string>
+    <string name="day_streak">Day Streak</string>
+    <string name="vip_multiplier">VIP Multiplier</string>
+    
+    <!-- KYC -->
+    <string name="kyc_title">Identity Verification</string>
+    <string name="kyc_id_front">ID Card - Front Side</string>
+    <string name="kyc_id_back">ID Card - Back Side</string>
+    <string name="kyc_selfie">Take a Selfie</string>
+    <string name="kyc_liveness">Liveness Check</string>
+    <string name="kyc_review">Review &amp; Submit</string>
+    <string name="kyc_complete">Verification Submitted!</string>
+    
+    <!-- Room -->
+    <string name="leave_room">Leave Room</string>
+    <string name="join_seat">Join Seat</string>
+    <string name="send_gift">Send Gift</string>
+    <string name="mute">Mute</string>
+    <string name="unmute">Unmute</string>
+    
+    <!-- Profile -->
+    <string name="my_profile">My Profile</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="gifts_received">Gifts</string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">Following</string>
+    <string name="message">Message</string>
+    
+    <!-- VIP -->
+    <string name="vip_center">VIP Center</string>
+    <string name="vip_benefits">VIP Benefits</string>
+    
+    <!-- Errors -->
+    <string name="error_network">Network error. Please try again.</string>
+    <string name="error_unknown">Something went wrong.</string>
+    <string name="error_invalid_otp">Invalid verification code.</string>
+</resources>

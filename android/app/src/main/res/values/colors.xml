@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aura Voice Chat - Color Resources -->
+<resources>
+    <!-- Primary Purple Palette -->
+    <color name="purple_80">#C9A8F1</color>
+    <color name="purple_60">#A77BDB</color>
+    <color name="purple_40">#8551C5</color>
+    <color name="purple_20">#6329AF</color>
+    
+    <!-- Accent Colors -->
+    <color name="accent_magenta">#D958FF</color>
+    <color name="accent_cyan">#35E8FF</color>
+    <color name="accent_gold">#FFD700</color>
+    
+    <!-- Dark Theme -->
+    <color name="dark_canvas">#12141A</color>
+    <color name="dark_surface">#1A1C24</color>
+    <color name="dark_card">#22242E</color>
+    
+    <!-- Light Theme -->
+    <color name="light_background">#FFFBFE</color>
+    <color name="light_surface">#F8F5FF</color>
+    
+    <!-- VIP Colors -->
+    <color name="vip_gold">#FFD700</color>
+    <color name="vip_platinum">#E5E4E2</color>
+    <color name="vip_diamond">#B9F2FF</color>
+    
+    <!-- Status Colors -->
+    <color name="success_green">#4CAF50</color>
+    <color name="warning_orange">#FF9800</color>
+    <color name="error_red">#F44336</color>
+    <color name="info_blue">#2196F3</color>
+    
+    <!-- Text Colors -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B3FFFFFF</color>
+    <color name="text_tertiary">#80FFFFFF</color>
+    <color name="text_on_light">#1A1C24</color>
+    
+    <!-- Currency Colors -->
+    <color name="coin_gold">#FFD700</color>
+    <color name="diamond_blue">#00BFFF</color>
+</resources>

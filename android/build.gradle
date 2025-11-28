@@ -1,0 +1,35 @@
+// Top-level build file for Aura Voice Chat
+// Developer: Hawkaye Visions LTD — Pakistan
+
+buildscript {
+    ext {
+        kotlin_version = '1.9.21'
+        compose_version = '1.5.6'
+        hilt_version = '2.48.1'
+        agora_version = '4.2.2'
+    }
+    
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.2.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.4.0'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+    }
+}
+
+plugins {
+    id 'com.android.application' version '8.2.0' apply false
+    id 'com.android.library' version '8.2.0' apply false
+    id 'org.jetbrains.kotlin.android' version '1.9.21' apply false
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

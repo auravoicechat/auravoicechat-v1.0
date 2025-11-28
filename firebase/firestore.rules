@@ -1,0 +1,136 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    function isVerified() {
+      return request.auth.token.email_verified == true;
+    }
+    
+    // Users collection
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId);
+      allow delete: if false;
+      
+      // User's private wallet
+      match /wallet/{document=**} {
+        allow read: if isOwner(userId);
+        allow write: if false; // Server-only writes
+      }
+      
+      // User's daily rewards
+      match /rewards/{document=**} {
+        allow read: if isOwner(userId);
+        allow write: if false; // Server-only writes
+      }
+      
+      // User's referrals
+      match /referrals/{document=**} {
+        allow read: if isOwner(userId);
+        allow write: if false; // Server-only writes
+      }
+    }
+    
+    // KYC collection - Only ID Card + Selfie (NO utility bills)
+    match /kyc/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId) && 
+        // Only allow updating these fields
+        request.resource.data.keys().hasOnly(['idCardFront', 'idCardBack', 'selfie', 'livenessScore', 'submittedAt']);
+      allow delete: if false;
+    }
+    
+    // Rooms collection
+    match /rooms/{roomId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && 
+        (resource.data.ownerId == request.auth.uid || 
+         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['currentUsers', 'seats']));
+      allow delete: if resource.data.ownerId == request.auth.uid;
+      
+      // Room messages
+      match /messages/{messageId} {
+        allow read: if isAuthenticated();
+        allow create: if isAuthenticated();
+        allow update, delete: if resource.data.senderId == request.auth.uid;
+      }
+      
+      // Room seats
+      match /seats/{seatId} {
+        allow read: if isAuthenticated();
+        allow write: if isAuthenticated();
+      }
+    }
+    
+    // Medals collection
+    match /medals/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId);
+    }
+    
+    // VIP collection
+    match /vip/{userId} {
+      allow read: if isOwner(userId);
+      allow write: if false; // Server-only writes
+    }
+    
+    // CP (Couple Partnership) collection
+    match /cp/{cpId} {
+      allow read: if isAuthenticated() && 
+        (resource.data.partner1Id == request.auth.uid || 
+         resource.data.partner2Id == request.auth.uid);
+      allow write: if false; // Server-only writes
+    }
+    
+    // Transactions (read-only for users)
+    match /transactions/{transactionId} {
+      allow read: if isAuthenticated() && 
+        (resource.data.userId == request.auth.uid ||
+         resource.data.relatedUserId == request.auth.uid);
+      allow write: if false; // Server-only writes
+    }
+    
+    // Gifts catalog (public read)
+    match /gifts/{giftId} {
+      allow read: if true;
+      allow write: if false; // Admin only
+    }
+    
+    // Store items (public read)
+    match /store/{itemId} {
+      allow read: if true;
+      allow write: if false; // Admin only
+    }
+    
+    // Families
+    match /families/{familyId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update: if resource.data.ownerId == request.auth.uid;
+      allow delete: if resource.data.ownerId == request.auth.uid;
+    }
+    
+    // Reports (users can create, admins manage)
+    match /reports/{reportId} {
+      allow read: if false; // Admin only
+      allow create: if isAuthenticated();
+      allow update, delete: if false;
+    }
+    
+    // Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
