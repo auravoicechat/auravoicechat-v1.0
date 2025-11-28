@@ -101,9 +101,25 @@ Levels are grouped into bands with increasing EXP requirements per level.
 
 ## Level Rewards
 
-Coin rewards are granted upon reaching specific levels. See [Level Rewards Data](../data/level-rewards.json) for the complete table.
+Coin rewards are granted upon reaching specific levels. For levels 1–10, rewards are given at every level. Beyond level 10, rewards are given at milestone levels (every 5 levels). See [Level Rewards Data](../data/level-rewards.json) for the complete table.
 
-### Milestone Rewards Summary
+### Early Level Rewards (1–10)
+| Level | Coin Reward |
+|-------|-------------|
+| 1 | 1,000 |
+| 2 | 1,500 |
+| 3 | 2,000 |
+| 4 | 2,500 |
+| 5 | 5,000 |
+| 6 | 5,500 |
+| 7 | 6,000 |
+| 8 | 6,500 |
+| 9 | 7,000 |
+| 10 | 10,000 |
+
+### Milestone Rewards Summary (15+)
+Levels 11–14 have no coin rewards. Starting at level 15, rewards are granted at each milestone level (every 5 levels).
+
 | Level | Coin Reward | Special Unlock |
 |-------|-------------|----------------|
 | 5 | 5,000 | — |

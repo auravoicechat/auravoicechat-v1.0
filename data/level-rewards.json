@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "lastUpdated": "2025-11-28",
-  "description": "Level-to-coin rewards table with special unlocks",
+  "description": "Level-to-coin rewards table with special unlocks. Levels 1-10 have rewards at every level. Beyond level 10, rewards are at milestone levels (multiples of 5).",
   "vipScaling": false,
   "rewards": [
     {
@@ -332,6 +332,7 @@
     }
   },
   "totalCoinRewards": {
+    "description": "Sum of all coin rewards at levels included in this file (1-10 every level, then milestone levels 15, 20, 25, etc.)",
     "level1to10": 47000,
     "level1to50": 652000,
     "level1to100": 16852000
