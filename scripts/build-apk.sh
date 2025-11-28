@@ -1,16 +1,39 @@
 #!/bin/bash
 
+# ============================================================================
 # Aura Voice Chat - APK Build Script
-# Developer: Hawkaye Visions LTD — Pakistan
+# Developer: Hawkaye Visions LTD — Lahore, Pakistan
 #
 # This script automates building signed APK and AAB files
+#
+# Usage:
+#   ./build-apk.sh                    # Build prod release
+#   ./build-apk.sh --debug            # Build debug APK
+#   ./build-apk.sh --env=staging      # Build staging
+#   ./build-apk.sh --aab-only         # Build only AAB
+#   ./build-apk.sh --install          # Build and install to device
+# ============================================================================
 
 set -e
 
-echo "======================================"
-echo "Aura Voice Chat - Build Script"
-echo "Developer: Hawkaye Visions LTD"
-echo "======================================"
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+
+echo -e "${PURPLE}"
+echo "╔══════════════════════════════════════════════════════════════════╗"
+echo "║                                                                  ║"
+echo "║     🎤 AURA VOICE CHAT - APK BUILD                               ║"
+echo "║                                                                  ║"
+echo "║     Developer: Hawkaye Visions LTD — Lahore, Pakistan           ║"
+echo "║                                                                  ║"
+echo "╚══════════════════════════════════════════════════════════════════╝"
+echo -e "${NC}"
 echo ""
 
 # Configuration

@@ -23,6 +23,15 @@ import referralsRoutes from './routes/referrals';
 import roomsRoutes from './routes/rooms';
 import usersRoutes from './routes/users';
 import kycRoutes from './routes/kyc';
+import gamesRoutes from './routes/games';
+import familyRoutes from './routes/family';
+import cpRoutes from './routes/cp';
+import earningsRoutes from './routes/earnings';
+import resellerRoutes from './routes/reseller';
+import eventsRoutes from './routes/events';
+import levelsRoutes from './routes/levels';
+import adminRoutes from './routes/admin';
+import ownerRoutes from './routes/owner';
 
 const app = express();
 
@@ -64,6 +73,15 @@ app.use('/api/v1/referrals', referralsRoutes);
 app.use('/api/v1/rooms', roomsRoutes);
 app.use('/api/v1/users', usersRoutes);
 app.use('/api/v1/kyc', kycRoutes);
+app.use('/api/v1/games', gamesRoutes);
+app.use('/api/v1/family', familyRoutes);
+app.use('/api/v1/cp', cpRoutes);
+app.use('/api/v1/earnings', earningsRoutes);
+app.use('/api/v1/reseller', resellerRoutes);
+app.use('/api/v1/events', eventsRoutes);
+app.use('/api/v1/levels', levelsRoutes);
+app.use('/api/v1/admin', adminRoutes);
+app.use('/api/v1/owner', ownerRoutes);
 
 // 404 handler
 app.use(notFoundHandler);
