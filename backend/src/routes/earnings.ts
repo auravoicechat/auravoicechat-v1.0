@@ -10,8 +10,9 @@ import * as earningsController from '../controllers/earningsController';
 
 const router = Router();
 
-router.use(authenticate);
+// Apply rate limiting before authentication for security
 router.use(generalLimiter);
+router.use(authenticate);
 
 // Earning Targets
 router.get('/targets', earningsController.getTargets);

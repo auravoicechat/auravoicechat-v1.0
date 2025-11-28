@@ -10,9 +10,10 @@ import * as ownerController from '../controllers/ownerController';
 
 const router = Router();
 
+// Apply rate limiting before authentication for security
+router.use(generalLimiter);
 router.use(authenticate);
 router.use(requireOwner);
-router.use(generalLimiter);
 
 // Dashboard
 router.get('/dashboard', ownerController.getDashboard);

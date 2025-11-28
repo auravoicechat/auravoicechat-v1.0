@@ -12,9 +12,9 @@ import * as gamesController from '../controllers/gamesController';
 
 const router = Router();
 
-// All game routes require authentication
-router.use(authenticate);
+// Apply rate limiting before authentication for security
 router.use(generalLimiter);
+router.use(authenticate);
 
 // Get available games
 router.get('/', gamesController.getGames);

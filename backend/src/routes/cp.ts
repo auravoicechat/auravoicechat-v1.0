@@ -10,8 +10,9 @@ import * as cpController from '../controllers/cpController';
 
 const router = Router();
 
-router.use(authenticate);
+// Apply rate limiting before authentication for security
 router.use(generalLimiter);
+router.use(authenticate);
 
 // CP Management
 router.get('/my', cpController.getMyCP);

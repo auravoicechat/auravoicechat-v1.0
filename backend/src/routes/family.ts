@@ -10,8 +10,9 @@ import * as familyController from '../controllers/familyController';
 
 const router = Router();
 
-router.use(authenticate);
+// Apply rate limiting before authentication for security
 router.use(generalLimiter);
+router.use(authenticate);
 
 // Family CRUD
 router.post('/create', familyController.createFamily);

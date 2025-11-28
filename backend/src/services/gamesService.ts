@@ -99,10 +99,12 @@ const GAME_CONFIGS = {
   }
 };
 
-// In-memory storage (use Redis in production)
+// In-memory storage (use Redis in production for scalability)
+// TODO: Replace with Redis/Database for production deployment
+// Example: const redis = new Redis(process.env.REDIS_URL);
 const gameSessions = new Map<string, GameSession>();
 const jackpots: Record<string, number> = {
-  slot: 10000000 // Starting jackpot
+  slot: 10000000 // Starting jackpot - persist this in Redis/DB
 };
 
 interface GameSession {

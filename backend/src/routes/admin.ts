@@ -10,8 +10,9 @@ import * as adminController from '../controllers/adminController';
 
 const router = Router();
 
-router.use(authenticate);
+// Apply rate limiting before authentication for security
 router.use(generalLimiter);
+router.use(authenticate);
 
 // Dashboard (Admin+)
 router.get('/dashboard', requireAdmin, adminController.getDashboard);

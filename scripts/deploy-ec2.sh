@@ -56,10 +56,11 @@ NODE_VERSION="18"
 # Prompt for configuration
 echo -e "${CYAN}Configuration${NC}"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-read -p "Database password (or press Enter for auto-generate): " DB_PASSWORD
+read -p "Database password (or press Enter for auto-generate): " -s DB_PASSWORD
+echo ""
 if [ -z "$DB_PASSWORD" ]; then
     DB_PASSWORD=$(openssl rand -hex 16)
-    echo -e "${GREEN}Generated DB password: ${YELLOW}$DB_PASSWORD${NC}"
+    echo -e "${GREEN}Database password auto-generated and saved to .env${NC}"
 fi
 
 read -p "JWT Secret (or press Enter for auto-generate): " JWT_SECRET
