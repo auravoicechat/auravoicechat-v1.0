@@ -1,6 +1,6 @@
 # Games System
 
-Comprehensive documentation for all games in Aura Voice Chat, including mechanics, logic, Firebase integration, and reward systems.
+Comprehensive documentation for all games in Aura Voice Chat, including mechanics, logic, AWS integration, and reward systems.
 
 ## Overview
 
@@ -32,7 +32,7 @@ Aura Voice Chat features five interactive games that users can play in rooms. Ga
 - Minimum: 100 coins
 - Maximum: 500,000 coins
 
-**Firebase Structure:**
+**AWS Database Structure:**
 ```json
 {
   "games/lucky_777_pro/{sessionId}": {
@@ -73,7 +73,7 @@ Aura Voice Chat features five interactive games that users can play in rooms. Ga
 - Minimum: 100 coins
 - Maximum: 100,000 coins
 
-**Firebase Structure:**
+**AWS Database Structure:**
 ```json
 {
   "games/lucky_77_pro/{sessionId}": {
@@ -112,7 +112,7 @@ Aura Voice Chat features five interactive games that users can play in rooms. Ga
 
 **Bet Options:** 100, 1K, 5K, 10K, 50K, 100K coins
 
-**Firebase Structure:**
+**AWS Database Structure:**
 ```json
 {
   "games/greedy_baby/{sessionId}": {
@@ -153,7 +153,7 @@ Aura Voice Chat features five interactive games that users can play in rooms. Ga
 
 **Bet Options:** 5K, 10K, 50K, 100K, 500K coins
 
-**Firebase Structure:**
+**AWS Database Structure:**
 ```json
 {
   "games/lucky_fruit/{sessionId}": {
@@ -201,7 +201,7 @@ Aura Voice Chat features five interactive games that users can play in rooms. Ga
 - Shows draw type, items won, total value
 - Date and time of each draw
 
-**Firebase Structure:**
+**AWS Database Structure:**
 ```json
 {
   "games/gift_wheel/{sessionId}": {
@@ -250,7 +250,7 @@ All games use cryptographically secure RNG:
 
 ---
 
-## Firebase Database Structure
+## AWS RDS Database Structure
 
 ### Games Collection
 
@@ -306,7 +306,7 @@ All games use cryptographically secure RNG:
 
 ```javascript
 rules_version = '2';
-service cloud.firestore {
+-- PostgreSQL security policies {
   match /databases/{database}/documents {
     match /games/{gameType}/{sessionId} {
       allow read: if request.auth.uid == resource.data.userId;
@@ -454,4 +454,4 @@ GET /games/gift-wheel/draw-records
 - [EXP & Level System](./exp-level-system.md)
 - [Events System](./events-system.md)
 - [Wallet](./features/wallet.md)
-- [Firebase Setup](./firebase-setup.md)
+- [AWS Setup](./aws-setup.md)

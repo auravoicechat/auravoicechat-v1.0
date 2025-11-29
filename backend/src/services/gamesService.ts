@@ -16,6 +16,12 @@ import { logger } from '../utils/logger';
 // Game types
 type GameType = 'lucky_777_pro' | 'lucky_77_pro' | 'greedy_baby' | 'lucky_fruit' | 'gift_wheel';
 
+// Game constants
+const PAYOUT_DIVISOR = 1000000; // Divisor for converting raw payouts to bet-relative amounts
+const JACKPOT_CONTRIBUTION_RATE = 0.01; // 1% of bet goes to jackpot
+const LUCKY_777_PRO_JACKPOT_RESET = 100000000; // Reset jackpot value
+const LUCKY_77_PRO_JACKPOT_RESET = 10000000; // Reset jackpot value
+
 // Lucky 777 Pro symbols and payouts (based on screenshot)
 const LUCKY_777_PRO_SYMBOLS = ['777', 'bell', 'diamond', 'watermelon', 'orange', 'grape', 'mango', 'cherry'];
 const LUCKY_777_PRO_PAYOUTS: Record<string, number> = {
@@ -126,8 +132,8 @@ const GAME_CONFIGS = {
 const gameSessions = new Map<string, GameSession>();
 const giftWheelHistory = new Map<string, GiftWheelRecord[]>(); // userId -> draw records
 const jackpots: Record<string, number> = {
-  lucky_777_pro: 100000000, // Starting jackpot for Lucky 777 Pro
-  lucky_77_pro: 10000000    // Starting jackpot for Lucky 77 Pro
+  lucky_777_pro: LUCKY_777_PRO_JACKPOT_RESET, // Starting jackpot for Lucky 777 Pro
+  lucky_77_pro: LUCKY_77_PRO_JACKPOT_RESET    // Starting jackpot for Lucky 77 Pro
 };
 
 interface GiftWheelRecord {
@@ -376,21 +382,21 @@ const spinLucky777Pro = (session: GameSession) => {
   if (consecutive >= 3) {
     const basePayoutPerBet = config.payouts[firstSymbol] || 0;
     const multiplier = consecutive === 5 ? 5 : consecutive === 4 ? 2 : 1;
-    winAmount = Math.floor((session.betAmount / 5) * basePayoutPerBet * multiplier / 1000000);
+    winAmount = Math.floor((session.betAmount / 5) * basePayoutPerBet * multiplier / PAYOUT_DIVISOR);
     winningSymbol = firstSymbol;
     matchCount = consecutive;
   }
   
   // Add to jackpot if no win
   if (winAmount === 0) {
-    jackpots.lucky_777_pro += Math.floor(session.betAmount * 0.01);
+    jackpots.lucky_777_pro += Math.floor(session.betAmount * JACKPOT_CONTRIBUTION_RATE);
   }
   
   // Check for jackpot (all 777)
   const isJackpot = middleRow.every(s => s === '777');
   if (isJackpot) {
     winAmount = jackpots.lucky_777_pro;
-    jackpots.lucky_777_pro = 100000000; // Reset jackpot
+    jackpots.lucky_777_pro = LUCKY_777_PRO_JACKPOT_RESET;
   }
   
   session.status = 'completed';
@@ -433,13 +439,13 @@ const spinLucky77Pro = (session: GameSession) => {
     if (reels[0] === '7') {
       isJackpot = true;
       winAmount += jackpots.lucky_77_pro;
-      jackpots.lucky_77_pro = 10000000; // Reset
+      jackpots.lucky_77_pro = LUCKY_77_PRO_JACKPOT_RESET;
     }
   }
   
   // Add to jackpot
   if (!isJackpot) {
-    jackpots.lucky_77_pro += Math.floor(session.betAmount * 0.01);
+    jackpots.lucky_77_pro += Math.floor(session.betAmount * JACKPOT_CONTRIBUTION_RATE);
   }
   
   session.status = 'completed';

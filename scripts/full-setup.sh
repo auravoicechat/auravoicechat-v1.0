@@ -310,7 +310,7 @@ deploy_infrastructure() {
         --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
         2>&1 | tee -a "$LOG_FILE"
     
-    if [ ${PIPESTATUS[0]} -ne 0 ]; then
+    if [ ${PIPESTATUS[0]:-1} -ne 0 ]; then
         handle_error "Failed to create CloudFormation stack" "Infrastructure Deployment"
         return
     fi
@@ -320,7 +320,7 @@ deploy_infrastructure() {
     
     aws cloudformation wait stack-create-complete --stack-name "$STACK_NAME" 2>&1 | tee -a "$LOG_FILE"
     
-    if [ ${PIPESTATUS[0]} -ne 0 ]; then
+    if [ ${PIPESTATUS[0]:-1} -ne 0 ]; then
         handle_error "Stack creation failed or timed out. Check AWS Console for details." "Infrastructure Deployment"
         return
     fi
@@ -376,7 +376,7 @@ setup_database() {
             
             npm run prisma:migrate deploy 2>&1 | tee -a "../$LOG_FILE"
             
-            if [ ${PIPESTATUS[0]} -ne 0 ]; then
+            if [ ${PIPESTATUS[0]:-1} -ne 0 ]; then
                 handle_error "Prisma migration failed" "Database Setup"
             else
                 print_success "Prisma migrations applied!"
@@ -400,7 +400,7 @@ setup_database() {
             -d "$DB_NAME" \
             -f "$SCHEMA_FILE" 2>&1 | tee -a "$LOG_FILE"
         
-        if [ ${PIPESTATUS[0]} -ne 0 ]; then
+        if [ ${PIPESTATUS[0]:-1} -ne 0 ]; then
             handle_error "Failed to apply database schema" "Database Setup"
         else
             print_success "Database schema applied successfully!"
@@ -429,7 +429,7 @@ setup_backend() {
     print_step "Installing backend dependencies..."
     npm install 2>&1 | tee -a "../$LOG_FILE"
     
-    if [ ${PIPESTATUS[0]} -ne 0 ]; then
+    if [ ${PIPESTATUS[0]:-1} -ne 0 ]; then
         handle_error "Failed to install dependencies" "Backend Setup"
         cd ..
         return
@@ -440,7 +440,7 @@ setup_backend() {
     print_step "Building TypeScript..."
     npm run build 2>&1 | tee -a "../$LOG_FILE"
     
-    if [ ${PIPESTATUS[0]} -ne 0 ]; then
+    if [ ${PIPESTATUS[0]:-1} -ne 0 ]; then
         handle_error "TypeScript build failed" "Backend Setup"
         cd ..
         return
@@ -533,17 +533,48 @@ build_android() {
     
     cd android
     
-    # Check for google-services.json
-    if [ ! -f "app/google-services.json" ]; then
-        print_warning "google-services.json not found!"
-        print_info "Download from Firebase Console and place in android/app/"
-        wait_for_confirmation "Press ENTER after adding google-services.json (or to skip)"
+    # AWS-based build - No Firebase/google-services.json required
+    print_info "Building AWS-based Android app (No Firebase)"
+    
+    # Check for AWS configuration
+    if [ ! -f "app/src/main/res/raw/awsconfiguration.json" ]; then
+        print_warning "AWS configuration file not found"
+        print_info "Creating default AWS configuration..."
         
-        if [ ! -f "app/google-services.json" ]; then
-            print_warning "Skipping Android build (google-services.json required)"
-            cd ..
-            return
-        fi
+        mkdir -p app/src/main/res/raw
+        cat > app/src/main/res/raw/awsconfiguration.json << 'AWSEOF'
+{
+    "Version": "1.0",
+    "CredentialsProvider": {
+        "CognitoIdentity": {
+            "Default": {
+                "PoolId": "YOUR_IDENTITY_POOL_ID",
+                "Region": "us-east-1"
+            }
+        }
+    },
+    "CognitoUserPool": {
+        "Default": {
+            "PoolId": "YOUR_USER_POOL_ID",
+            "AppClientId": "YOUR_APP_CLIENT_ID",
+            "Region": "us-east-1"
+        }
+    },
+    "S3TransferUtility": {
+        "Default": {
+            "Bucket": "YOUR_S3_BUCKET",
+            "Region": "us-east-1"
+        }
+    },
+    "PinpointAnalytics": {
+        "Default": {
+            "AppId": "YOUR_PINPOINT_APP_ID",
+            "Region": "us-east-1"
+        }
+    }
+}
+AWSEOF
+        print_warning "Please update app/src/main/res/raw/awsconfiguration.json with your AWS values"
     fi
     
     # Check for gradlew
@@ -571,7 +602,7 @@ build_android() {
         print_step "Building debug APK..."
         ./gradlew assembleDebug 2>&1 | tee -a "../$LOG_FILE"
         
-        if [ ${PIPESTATUS[0]} -ne 0 ]; then
+        if [ ${PIPESTATUS[0]:-1} -ne 0 ]; then
             handle_error "Debug APK build failed" "Android Build"
         else
             print_success "Debug APK built!"
@@ -595,12 +626,12 @@ build_android() {
         
         ./gradlew assembleRelease bundleRelease 2>&1 | tee -a "../$LOG_FILE"
         
-        if [ ${PIPESTATUS[0]} -ne 0 ]; then
+        if [ ${PIPESTATUS[0]:-1} -ne 0 ]; then
             handle_error "Release build failed. Trying debug build..." "Android Build"
             
             ./gradlew assembleDebug 2>&1 | tee -a "../$LOG_FILE"
             
-            if [ ${PIPESTATUS[0]} -ne 0 ]; then
+            if [ ${PIPESTATUS[0]:-1} -ne 0 ]; then
                 handle_error "Debug build also failed" "Android Build"
             else
                 print_success "Debug APK built (release failed)"
@@ -668,13 +699,22 @@ print_summary() {
     echo "1. Review and update backend/.env with correct values"
     echo "2. Deploy backend to EC2 or your hosting platform"
     echo "3. Test the Android APK on a device"
-    echo "4. Configure Firebase for push notifications"
+    echo "4. Configure AWS SNS for push notifications"
     echo "5. Set up domain and SSL certificates"
+    echo "6. Update awsconfiguration.json with your AWS resource IDs"
+    echo ""
+    echo -e "${CYAN}AWS Services Used (No Firebase):${NC}"
+    echo "- Authentication: AWS Cognito"
+    echo "- Storage: AWS S3"
+    echo "- Database: AWS RDS PostgreSQL"
+    echo "- Push Notifications: AWS SNS"
+    echo "- Analytics: AWS Pinpoint"
     echo ""
     echo -e "${CYAN}Documentation:${NC}"
     echo "- AWS Setup: docs/aws-setup.md"
     echo "- RDS Setup: docs/rds-setup.md"
     echo "- Cognito Setup: docs/cognito-setup.md"
+    echo "- S3 Setup: docs/s3-setup.md"
     echo "- APK Build: docs/apk-build-guide.md"
     echo ""
     
