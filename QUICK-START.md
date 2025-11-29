@@ -11,11 +11,12 @@ Get Aura Voice Chat up and running in minutes!
 - **Node.js 18+** — [Download](https://nodejs.org/)
 - **Git** — [Download](https://git-scm.com/)
 - **Android Studio** (for Android builds) — [Download](https://developer.android.com/studio)
-- **Firebase Account** — [Create](https://console.firebase.google.com/)
+- **AWS Account** — [Create](https://aws.amazon.com/)
+- **AWS CLI** — [Install](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
 ---
 
-## 🏃‍♂️ Quick Setup (5 minutes)
+## 🏃‍♂️ Quick Setup (10 minutes)
 
 ### 1. Clone & Setup
 
@@ -32,7 +33,7 @@ The auto-setup script will:
 - ✅ Check prerequisites
 - ✅ Install dependencies
 - ✅ Create environment files
-- ✅ Guide you through Firebase setup
+- ✅ Guide you through AWS setup
 - ✅ Initialize database
 - ✅ Build APK (optional)
 
@@ -55,22 +56,73 @@ Output: `android/build-output/`
 
 ---
 
-## 🔥 Firebase Setup
+## ☁️ AWS Infrastructure Setup
 
 ### Auto Setup
 
 ```bash
-./scripts/setup-firebase-complete.sh
+./scripts/aws-setup.sh
 ```
 
 ### Manual Setup
 
-1. Go to [Firebase Console](https://console.firebase.google.com/)
-2. Create new project
-3. Enable Authentication (Phone, Google)
-4. Create Firestore database
-5. Download `google-services.json` to `android/app/`
-6. Generate service account for backend
+See [AWS Setup Guide](docs/aws-setup.md) for detailed instructions.
+
+### CloudFormation Deployment
+
+```bash
+aws cloudformation create-stack \
+    --stack-name aura-voice-chat-production \
+    --template-body file://aws/cloudformation/main.yaml \
+    --parameters \
+        ParameterKey=DBPassword,ParameterValue=YOUR_PASSWORD \
+        ParameterKey=AdminEmail,ParameterValue=admin@example.com \
+        ParameterKey=KeyPairName,ParameterValue=your-key-pair \
+    --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM
+```
+
+---
+
+## 🔐 AWS Cognito Setup
+
+Cognito handles user authentication:
+
+1. Created automatically with CloudFormation
+2. Get credentials:
+   ```bash
+   aws cloudformation describe-stacks \
+       --stack-name aura-voice-chat-production \
+       --query 'Stacks[0].Outputs'
+   ```
+3. Update `backend/.env` with Cognito IDs
+
+See [Cognito Setup Guide](docs/cognito-setup.md)
+
+---
+
+## 💾 Database Setup
+
+PostgreSQL database on AWS RDS:
+
+1. Created automatically with CloudFormation
+2. Initialize schema:
+   ```bash
+   psql -h YOUR_RDS_ENDPOINT -U aura_admin -d auravoicechat -f backend/src/database/schema.sql
+   ```
+
+See [RDS Setup Guide](docs/rds-setup.md)
+
+---
+
+## 📁 File Storage (S3)
+
+S3 bucket for file storage:
+
+1. Created automatically with CloudFormation
+2. Configure Android app with bucket name
+3. Use presigned URLs for uploads
+
+See [S3 Setup Guide](docs/s3-setup.md)
 
 ---
 
@@ -82,6 +134,13 @@ SSH into your EC2 instance and run:
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/venomvex/auravoicechatdoc/main/scripts/deploy-ec2.sh | bash
+```
+
+### Using Docker
+
+```bash
+cd backend
+docker-compose up -d
 ```
 
 ### Manual Deploy
@@ -109,8 +168,18 @@ See [Play Store Submission Guide](docs/play-store-submission.md)
 ```
 auravoicechatdoc/
 ├── android/          # Android app (Kotlin/Jetpack Compose)
+├── aws/              # AWS CloudFormation & scripts
+│   ├── cloudformation/
+│   ├── scripts/
+│   └── policies/
 ├── backend/          # Node.js/Express API
-├── firebase/         # Firebase configs & functions
+│   ├── src/
+│   │   ├── config/       # AWS & app configuration
+│   │   ├── database/     # PostgreSQL schema
+│   │   ├── services/     # Cognito, S3, SNS services
+│   │   └── sockets/      # Socket.io handlers
+│   ├── Dockerfile
+│   └── docker-compose.yml
 ├── data/             # JSON config files
 ├── docs/             # Documentation
 ├── scripts/          # Automation scripts
@@ -124,8 +193,9 @@ auravoicechatdoc/
 | File | Purpose |
 |------|---------|
 | `backend/.env` | Backend environment variables |
-| `android/app/google-services.json` | Firebase config for Android |
-| `firebase/firestore.rules` | Firestore security rules |
+| `android/app/src/main/res/raw/amplifyconfiguration.json` | AWS Amplify config |
+| `android/app/src/main/res/raw/awsconfiguration.json` | AWS services config |
+| `aws/cloudformation/main.yaml` | Infrastructure template |
 | `data/*.json` | App configuration data |
 
 ---
@@ -135,10 +205,12 @@ auravoicechatdoc/
 | Document | Description |
 |----------|-------------|
 | [COMPREHENSIVE-GUIDE.md](COMPREHENSIVE-GUIDE.md) | Complete app guide |
-| [docs/firebase-setup.md](docs/firebase-setup.md) | Firebase setup |
+| [docs/aws-setup.md](docs/aws-setup.md) | AWS infrastructure setup |
+| [docs/cognito-setup.md](docs/cognito-setup.md) | Cognito authentication |
+| [docs/rds-setup.md](docs/rds-setup.md) | PostgreSQL database |
+| [docs/s3-setup.md](docs/s3-setup.md) | S3 file storage |
 | [docs/aws-ec2-deployment.md](docs/aws-ec2-deployment.md) | AWS deployment |
 | [docs/play-store-submission.md](docs/play-store-submission.md) | Play Store guide |
-| [docs/setup/PAYMENT-GATEWAY-SETUP.md](docs/setup/PAYMENT-GATEWAY-SETUP.md) | Payment integration |
 
 ---
 
@@ -156,14 +228,14 @@ cat .env
 # Check database connection
 ```
 
-### Firebase errors
+### AWS errors
 
 ```bash
-# Login to Firebase
-firebase login
+# Check AWS credentials
+aws sts get-caller-identity
 
-# Check project
-firebase projects:list
+# Check CloudFormation stack
+aws cloudformation describe-stacks --stack-name aura-voice-chat-production
 ```
 
 ### Android build fails

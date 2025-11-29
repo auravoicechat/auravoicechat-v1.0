@@ -41,12 +41,13 @@ This document bundles core product decisions, UI layouts, economy rules, rewards
 | **Medals** | [docs/medals-system.md](docs/medals-system.md) | [data/medals.json](data/medals.json) |
 | **Animations & Effects** | [docs/animations-effects.md](docs/animations-effects.md) | [data/animations.json](data/animations.json), [data/cosmetics.json](data/cosmetics.json) |
 
-### Platform & Legal
+### Platform & Infrastructure
 | System | Documentation | Data |
 |--------|---------------|------|
 | **Privacy & Terms** | [docs/privacy-and-terms.md](docs/privacy-and-terms.md) | — |
 | **Owner CMS** | [docs/owner-cms.md](docs/owner-cms.md) | — |
-| **Firebase Setup** | [docs/firebase-setup.md](docs/firebase-setup.md) | — |
+| **AWS Setup** | [docs/aws-setup.md](docs/aws-setup.md) | — |
+| **Cognito Auth** | [docs/cognito-setup.md](docs/cognito-setup.md) | — |
 | **Build & Gradle** | [docs/build-and-gradle.md](docs/build-and-gradle.md) | — |
 
 ---

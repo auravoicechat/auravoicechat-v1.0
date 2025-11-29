@@ -66,17 +66,21 @@ All major features controlled by flags:
 | Variable          | Required | Description              |
 |-------------------|----------|--------------------------|
 | API_BASE_URL      | Yes      | Backend API endpoint     |
-| FIREBASE_CONFIG   | Yes      | Firebase configuration   |
+| AWS_REGION        | Yes      | AWS region               |
+| COGNITO_USER_POOL_ID | Yes   | Cognito User Pool ID     |
+| COGNITO_CLIENT_ID | Yes      | Cognito App Client ID    |
+| S3_BUCKET_NAME    | Yes      | S3 bucket for files      |
 | ANALYTICS_KEY     | No       | Analytics service key    |
 
 ### Secret Storage
 - **Development:** Local `.env` file (gitignored)
 - **CI/CD:** GitHub Actions secrets
-- **Production:** Secure vault service
+- **Production:** AWS Secrets Manager / Parameter Store
 
 ### Sensitive Values
-- OAuth client secrets
-- Firebase service accounts
+- Cognito Client Secret
+- Database credentials
+- JWT secrets
 - Payment gateway keys
 - API signing keys
 

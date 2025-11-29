@@ -5,8 +5,6 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
     id 'dagger.hilt.android.plugin'
 }
 
@@ -70,11 +68,6 @@ android {
             minifyEnabled false
             buildConfigField "boolean", "DEBUG_MODE", "true"
             buildConfigField "String", "API_BASE_URL", '"https://api-dev.auravoice.chat"'
-            
-            // Disable Crashlytics in debug
-            firebaseCrashlytics {
-                mappingFileUploadEnabled false
-            }
         }
         release {
             debuggable false
@@ -84,12 +77,6 @@ android {
             signingConfig signingConfigs.release
             buildConfigField "boolean", "DEBUG_MODE", "false"
             buildConfigField "String", "API_BASE_URL", '"https://api.auravoice.chat"'
-            
-            // Enable Crashlytics
-            firebaseCrashlytics {
-                mappingFileUploadEnabled true
-                nativeSymbolUploadEnabled true
-            }
         }
     }
 
@@ -210,17 +197,15 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
     
-    // Firebase BOM
-    implementation platform('com.google.firebase:firebase-bom:32.7.0')
-    implementation 'com.google.firebase:firebase-auth-ktx'
-    implementation 'com.google.firebase:firebase-firestore-ktx'
-    implementation 'com.google.firebase:firebase-database-ktx'
-    implementation 'com.google.firebase:firebase-analytics-ktx'
-    implementation 'com.google.firebase:firebase-crashlytics-ktx'
-    implementation 'com.google.firebase:firebase-config-ktx'
-    implementation 'com.google.firebase:firebase-messaging-ktx'
-    implementation 'com.google.firebase:firebase-perf-ktx'
-    implementation 'com.google.firebase:firebase-storage-ktx'
+    // AWS Amplify
+    implementation 'com.amplifyframework:core:2.14.5'
+    implementation 'com.amplifyframework:aws-auth-cognito:2.14.5'
+    implementation 'com.amplifyframework:aws-storage-s3:2.14.5'
+    implementation 'com.amplifyframework:aws-api:2.14.5'
+    implementation 'com.amplifyframework:aws-push-notifications-pinpoint:2.14.5'
+    
+    // AWS SDK (for direct S3 operations if needed)
+    implementation 'aws.sdk.kotlin:s3:0.30.0-beta'
     
     // Google Sign-In
     implementation 'com.google.android.gms:play-services-auth:20.7.0'
@@ -233,6 +218,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+    
+    // Socket.io for real-time
+    implementation 'io.socket:socket.io-client:2.1.0'
     
     // Serialization
     implementation 'com.google.code.gson:gson:2.10.1'

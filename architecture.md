@@ -61,13 +61,17 @@ Aura Voice Chat is a mobile-first voice and video chat application built on a mi
 - **Real-time:** WebSocket / Server-Sent Events
 
 ### Storage
-- **Primary Database:** PostgreSQL / MySQL
-- **Caching:** Redis
-- **File Storage:** Cloud storage for media assets
+- **Primary Database:** RDS PostgreSQL
+- **Caching:** Redis (ElastiCache or self-hosted)
+- **File Storage:** S3 for media assets
+- **CDN:** CloudFront for static assets
 
 ### Infrastructure
-- **Deployment:** Containerized (Docker/Kubernetes)
-- **CDN:** For static assets and media delivery
+- **Compute:** EC2 (Node.js + Socket.io)
+- **Authentication:** AWS Cognito
+- **Push Notifications:** AWS SNS / Pinpoint
+- **Deployment:** Docker / PM2
+- **Load Balancing:** Application Load Balancer (optional)
 
 ---
 
