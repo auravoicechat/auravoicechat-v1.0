@@ -27,7 +27,7 @@ class KycRepositoryImpl @Inject constructor(
     
     companion object {
         private const val S3_BUCKET = "aura-voice-chat-kyc"
-        private const val S3_REGION = "us-east-1"
+        private const val S3_REGION = "ap-south-1"
     }
     
     override suspend fun getKycStatus(): Result<KycData> {

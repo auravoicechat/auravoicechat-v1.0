@@ -37,6 +37,7 @@ android {
         // Build config fields
         buildConfigField("String", "API_BASE_URL", "\"https://api.auravoice.chat\"")
         buildConfigField("String", "AGORA_APP_ID", "\"YOUR_AGORA_APP_ID\"")
+        buildConfigField("String", "AWS_REGION", "\"ap-south-1\"")
     }
 
     signingConfigs {
@@ -167,6 +168,12 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force("androidx.test.ext:junit:1.2.1")
+    }
+}
+
 dependencies {
     // AndroidX Core
     implementation(libs.androidx.core.ktx)
@@ -176,7 +183,6 @@ dependencies {
     implementation(libs.androidx.multidex)
 
     // Updates
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
     coreLibraryDesugaring(libs.android.desugar.jdk.libs)
 
     // Lifecycle
@@ -206,6 +212,11 @@ dependencies {
 
     // AWS SDK (for direct S3 operations if needed)
     implementation(libs.aws.sdk.kotlin.s3)
+
+    // AWS SDK v2 (for Cognito, S3, SNS operations)
+    implementation("software.amazon.awssdk:cognitoidentityprovider:2.25.0")
+    implementation("software.amazon.awssdk:s3:2.25.0")
+    implementation("software.amazon.awssdk:sns:2.25.0")
 
     // Google Sign-In
     implementation(libs.play.services.auth)
