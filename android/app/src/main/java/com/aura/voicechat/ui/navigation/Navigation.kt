@@ -9,10 +9,12 @@ import androidx.navigation.navArgument
 import com.aura.voicechat.ui.auth.LoginScreen
 import com.aura.voicechat.ui.auth.OtpVerificationScreen
 import com.aura.voicechat.ui.home.HomeScreen
+import com.aura.voicechat.ui.inventory.InventoryScreen
 import com.aura.voicechat.ui.kyc.KycScreen
 import com.aura.voicechat.ui.profile.ProfileScreen
 import com.aura.voicechat.ui.rewards.DailyRewardsScreen
 import com.aura.voicechat.ui.room.RoomScreen
+import com.aura.voicechat.ui.store.StoreScreen
 import com.aura.voicechat.ui.wallet.WalletScreen
 
 /**
@@ -36,6 +38,10 @@ sealed class Screen(val route: String) {
     object DailyRewards : Screen("daily_rewards")
     object Kyc : Screen("kyc")
     object Store : Screen("store")
+    object StoreItem : Screen("store/item/{itemId}") {
+        fun createRoute(itemId: String) = "store/item/$itemId"
+    }
+    object Inventory : Screen("inventory")
     object Medals : Screen("medals")
     object Vip : Screen("vip")
     object CpPartner : Screen("cp_partner")
@@ -100,6 +106,12 @@ fun AuraNavHost(
                 },
                 onNavigateToKyc = {
                     navController.navigate(Screen.Kyc.route)
+                },
+                onNavigateToStore = {
+                    navController.navigate(Screen.Store.route)
+                },
+                onNavigateToInventory = {
+                    navController.navigate(Screen.Inventory.route)
                 }
             )
         }
@@ -146,6 +158,24 @@ fun AuraNavHost(
             KycScreen(
                 onNavigateBack = { navController.popBackStack() },
                 onKycComplete = { navController.popBackStack() }
+            )
+        }
+        
+        composable(Screen.Store.route) {
+            StoreScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToItem = { itemId ->
+                    navController.navigate(Screen.StoreItem.createRoute(itemId))
+                }
+            )
+        }
+        
+        composable(Screen.Inventory.route) {
+            InventoryScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToStore = {
+                    navController.navigate(Screen.Store.route)
+                }
             )
         }
     }
