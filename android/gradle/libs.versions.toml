@@ -13,6 +13,7 @@ ksp = "2.0.21-1.0.27"
 # Updates
 glance = "1.2.0-beta01"
 stream-webrtc = "1.0.10"
+desugarJdkLibs = "2.0.4"
 
 # Android SDK
 compileSdk = "35"
@@ -238,6 +239,7 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 
 #Updates
 stream-webrtc = { group = "io.getstream", name = "stream-webrtc-android", version.ref = "stream-webrtc" }
+android-desugar-jdk-libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugarJdkLibs" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
