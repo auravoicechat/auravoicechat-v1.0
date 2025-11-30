@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Aura Voice Chat - Splash Screen Background
+  Developer: Hawkaye Visions LTD — Pakistan
+  
+  Purple gradient splash background
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Base dark background -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="135"
+                android:startColor="#12141A"
+                android:centerColor="#1A1C24"
+                android:endColor="#22242E" />
+        </shape>
+    </item>
+    
+    <!-- Centered logo placeholder -->
+    <item
+        android:gravity="center"
+        android:width="120dp"
+        android:height="120dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="60dp"
+                android:centerX="0.5"
+                android:centerY="0.5"
+                android:startColor="#8551C5"
+                android:endColor="#00000000" />
+        </shape>
+    </item>
+    
+</layer-list>

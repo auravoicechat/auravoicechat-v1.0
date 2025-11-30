@@ -94,25 +94,74 @@ Each feature has detailed configuration:
 
 ## Content Management
 
-### Gift Catalog
+### Gift Catalog (120+ Gifts)
+
+The platform supports 120+ gifts across 8 categories. All gifts are fully manageable via the CMS.
 
 | Action | Description |
 |--------|-------------|
 | Add Gift | Create new gift with pricing, animation |
 | Edit Gift | Modify existing gift properties |
-| Disable Gift | Remove from catalog (soft delete) |
+| Delete Gift | Permanently remove gift from catalog |
+| Disable Gift | Temporarily hide from catalog (soft delete) |
+| Enable Gift | Re-activate disabled gift |
 | Set Regional | Assign to specific regions |
-| Upload Animation | Add/update gift animation |
-| Price Change | Modify gift pricing |
+| Upload Animation | Add/update Lottie animation file |
+| Upload Icon | Add/update gift thumbnail |
+| Price Change | Modify gift pricing (coins) |
+| Set Diamond Value | Configure diamond payout to recipient |
+| Set Rarity | common/rare/epic/legendary |
+| Toggle Full-Screen | Enable/disable full-screen animation |
 
 **Gift Properties:**
-- ID, Name, Description
+- ID (unique identifier)
+- Name, Description
+- Category (love, celebration, luxury, nature, fantasy, special, custom, legendary)
 - Price (coins)
-- Category
-- Animation file (Lottie/video)
+- Diamond Value (recipient receives)
+- Rarity Tier (common, rare, epic, legendary)
+- Animation Type (simple, animated, fullscreen)
+- Animation file (Lottie JSON)
+- Icon/Thumbnail
 - Sound effect (optional)
+- Duration (animation length in ms)
 - Regional availability
-- Active status
+- Active status (enabled/disabled)
+- Custom flag (Aura exclusive)
+- Legendary flag (special effects)
+
+**Gift Categories:**
+| Category | Count | Price Range |
+|----------|-------|-------------|
+| Love | 16 | 50 - 100,000 coins |
+| Celebration | 20 | 50 - 10,000 coins |
+| Luxury | 15 | 5,000 - 1,000,000 coins |
+| Nature | 12 | 50 - 10,000 coins |
+| Fantasy | 10 | 2,000 - 100,000 coins |
+| Special | 31 | 10 - 50,000 coins |
+| Custom (Aura) | 8 | 100,000 - 10,000,000 coins |
+| Legendary | 4 | 50,000,000 - 200,000,000 coins |
+
+**Gift Animation Upload:**
+```json
+{
+  "giftId": "gift_new_001",
+  "name": "New Custom Gift",
+  "category": "custom",
+  "price": 500000,
+  "diamondValue": 500000,
+  "rarity": "epic",
+  "animationType": "fullscreen",
+  "animationFile": "gift_new_001.json",
+  "iconFile": "ic_gift_new_001.png",
+  "duration": 5000,
+  "isAnimated": true,
+  "isFullScreen": true,
+  "isCustom": true,
+  "regions": ["all"],
+  "enabled": true
+}
+```
 
 ### Cosmetic Items
 
@@ -461,6 +510,6 @@ Configure webhooks for events:
 ## Related Documentation
 
 - [Configuration](../configuration.md)
-- [Firebase Setup](./firebase-setup.md)
+- [AWS Setup](./aws-setup.md)
 - [Operations](../operations.md)
 - [Security](../security.md)

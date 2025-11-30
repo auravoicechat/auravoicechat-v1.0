@@ -160,4 +160,79 @@ interface ApiService {
         @Query("page") page: Int,
         @Query("limit") limit: Int
     ): Response<GiftWheelRecordsResponse>
+    
+    // ============================================
+    // Gifts - Gift Catalog and Sending
+    // ============================================
+    
+    // Get gift catalog
+    @GET("gifts/catalog")
+    suspend fun getGiftCatalog(
+        @Query("region") region: String? = null,
+        @Query("category") category: String? = null
+    ): Response<GiftCatalogResponse>
+    
+    // Send gift
+    @POST("gifts/send")
+    suspend fun sendGift(@Body request: GiftSendRequestDto): Response<GiftSendResponseDto>
+    
+    // Send baggage gift (free)
+    @POST("gifts/send/baggage")
+    suspend fun sendBaggageGift(@Body request: BaggageSendRequestDto): Response<GiftSendResponseDto>
+    
+    // Get gift transaction history
+    @GET("gifts/history")
+    suspend fun getGiftHistory(
+        @Query("type") type: String, // "sent" or "received"
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): Response<GiftHistoryResponse>
+    
+    // ============================================
+    // Inventory - User's owned items
+    // ============================================
+    
+    // Get user inventory
+    @GET("profile/inventory")
+    suspend fun getInventory(
+        @Query("category") category: String? = null
+    ): Response<InventoryResponse>
+    
+    // Get equipped items
+    @GET("profile/inventory/equipped")
+    suspend fun getEquippedItems(): Response<EquippedItemsResponse>
+    
+    // Equip item
+    @POST("profile/inventory/equip")
+    suspend fun equipItem(@Body request: EquipItemRequest): Response<Unit>
+    
+    // Unequip item
+    @POST("profile/inventory/unequip")
+    suspend fun unequipItem(@Body request: UnequipItemRequest): Response<Unit>
+    
+    // Get baggage (free gifts to send)
+    @GET("profile/baggage")
+    suspend fun getBaggage(): Response<BaggageResponse>
+    
+    // ============================================
+    // Store - Items for purchase
+    // ============================================
+    
+    // Get store catalog
+    @GET("store/catalog")
+    suspend fun getStoreCatalog(
+        @Query("category") category: String? = null
+    ): Response<StoreCatalogResponse>
+    
+    // Get featured items
+    @GET("store/featured")
+    suspend fun getFeaturedItems(): Response<StoreCatalogResponse>
+    
+    // Purchase item
+    @POST("store/purchase")
+    suspend fun purchaseItem(@Body request: PurchaseItemRequest): Response<PurchaseItemResponse>
+    
+    // Get item details
+    @GET("store/items/{itemId}")
+    suspend fun getStoreItem(@Path("itemId") itemId: String): Response<StoreItemDto>
 }
