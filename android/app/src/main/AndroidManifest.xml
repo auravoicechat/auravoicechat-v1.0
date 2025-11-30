@@ -143,11 +143,7 @@
         <!-- AWS Pinpoint Push Notification Service -->
         <service
             android:name=".services.AuraPushNotificationService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.amazonaws.mobileconnectors.pinpoint.PUSH_NOTIFICATION" />
-            </intent-filter>
-        </service>
+            android:exported="false" />
         
         <!-- Work Manager Provider -->
         <provider

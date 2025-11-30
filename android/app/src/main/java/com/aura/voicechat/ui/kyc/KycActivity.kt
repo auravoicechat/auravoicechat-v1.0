@@ -74,12 +74,10 @@ class KycActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    // Use the existing KycScreen composable
                     KycScreen(
-                        onCaptureSelfie = { captureSelfie() },
-                        onCaptureIdFront = { captureIdDocument(DocumentType.ID_FRONT) },
-                        onCaptureIdBack = { captureIdDocument(DocumentType.ID_BACK) },
-                        onSubmitKyc = { submitKycVerification() },
-                        onClose = { finish() }
+                        onNavigateBack = { finish() },
+                        onKycComplete = { finishWithResult() }
                     )
                 }
             }
@@ -134,45 +132,17 @@ class KycActivity : ComponentActivity() {
     }
     
     /**
-     * Captures selfie with face detection validation
+     * Finishes activity with successful KYC result
      */
-    private fun captureSelfie() {
-        lifecycleScope.launch {
-            Log.i(TAG, "Capturing selfie with face detection")
-            // Face detection and image capture handled by ViewModel
-        }
-    }
-    
-    /**
-     * Captures ID document image
-     */
-    private fun captureIdDocument(type: DocumentType) {
-        lifecycleScope.launch {
-            Log.i(TAG, "Capturing ID document: $type")
-            // Document capture handled by ViewModel
-        }
-    }
-    
-    /**
-     * Submits KYC verification to backend
-     */
-    private fun submitKycVerification() {
-        lifecycleScope.launch {
-            Log.i(TAG, "Submitting KYC verification")
-            // Upload to S3 and submit to backend via ViewModel
-        }
+    private fun finishWithResult() {
+        setResult(RESULT_OK)
+        finish()
     }
     
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
         faceDetector.close()
-    }
-    
-    enum class DocumentType {
-        ID_FRONT,
-        ID_BACK,
-        SELFIE
     }
     
     companion object {

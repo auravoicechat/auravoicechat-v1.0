@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
 import com.aura.voicechat.ui.theme.AuraVoiceChatTheme
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -55,13 +54,12 @@ class AuthActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val navController = rememberNavController()
-                    // Auth navigation will be handled by LoginScreen composable
+                    // Use the existing LoginScreen composable
                     LoginScreen(
-                        onGoogleSignIn = { initiateGoogleSignIn() },
-                        onFacebookSignIn = { initiateFacebookSignIn() },
-                        onPhoneSignIn = { phoneNumber -> initiatePhoneSignIn(phoneNumber) },
-                        onAuthSuccess = { finishWithResult(true) }
+                        onNavigateToHome = { finishWithResult(true) },
+                        onNavigateToOtp = { phoneNumber -> 
+                            Log.i(TAG, "Navigating to OTP for: ${phoneNumber.take(4)}****")
+                        }
                     )
                 }
             }

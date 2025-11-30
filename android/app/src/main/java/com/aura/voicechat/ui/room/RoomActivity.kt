@@ -10,10 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.aura.voicechat.services.VoiceRoomService
 import com.aura.voicechat.ui.theme.AuraVoiceChatTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,20 +51,10 @@ class RoomActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val viewModel: RoomViewModel = hiltViewModel()
-                    val roomState by viewModel.roomState.collectAsState()
-                    
+                    // Use the existing RoomScreen composable
                     RoomScreen(
                         roomId = roomId!!,
-                        roomState = roomState,
-                        onMuteToggle = { viewModel.toggleMute() },
-                        onVideoToggle = { viewModel.toggleVideo() },
-                        onSendGift = { giftId, userId, quantity ->
-                            viewModel.sendGift(giftId, userId, quantity)
-                        },
-                        onJoinSeat = { seatIndex -> viewModel.joinSeat(seatIndex) },
-                        onLeaveSeat = { viewModel.leaveSeat() },
-                        onLeaveRoom = { leaveRoom() }
+                        onNavigateBack = { leaveRoom() }
                     )
                 }
             }

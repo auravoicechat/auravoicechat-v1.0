@@ -3,15 +3,13 @@ package com.aura.voicechat.services
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.Service
 import android.content.Intent
+import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.amazonaws.mobileconnectors.pinpoint.targeting.notification.NotificationClient
-import com.amazonaws.mobileconnectors.pinpoint.targeting.notification.NotificationDetails
 import com.aura.voicechat.R
 import com.aura.voicechat.ui.MainActivity
-import com.google.firebase.messaging.FirebaseMessagingService
-import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -24,9 +22,13 @@ import dagger.hilt.android.AndroidEntryPoint
  * - Room invite notifications
  * - System announcements
  * - Deep link handling
+ * 
+ * Note: AWS Amplify Push Notifications plugin handles the FCM token registration
+ * and message receiving automatically. This service processes the notification
+ * payloads and displays them to the user.
  */
 @AndroidEntryPoint
-class AuraPushNotificationService : FirebaseMessagingService() {
+class AuraPushNotificationService : Service() {
     
     override fun onCreate() {
         super.onCreate()
@@ -34,53 +36,32 @@ class AuraPushNotificationService : FirebaseMessagingService() {
         Log.i(TAG, "AuraPushNotificationService created")
     }
     
-    override fun onNewToken(token: String) {
-        super.onNewToken(token)
-        Log.i(TAG, "New FCM token received")
-        // Register token with AWS Pinpoint
-        registerTokenWithPinpoint(token)
+    override fun onBind(intent: Intent?): IBinder? = null
+    
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        intent?.let { handlePushNotification(it) }
+        return START_NOT_STICKY
     }
     
-    override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        super.onMessageReceived(remoteMessage)
-        Log.i(TAG, "Push notification received from: ${remoteMessage.from}")
+    /**
+     * Handles incoming push notification from AWS Pinpoint via Amplify
+     */
+    private fun handlePushNotification(intent: Intent) {
+        val title = intent.getStringExtra(EXTRA_TITLE)
+        val body = intent.getStringExtra(EXTRA_BODY)
+        val data = intent.extras?.let { bundle ->
+            bundle.keySet().associateWith { bundle.getString(it) ?: "" }
+        } ?: emptyMap()
         
-        // Check if this is a Pinpoint notification
-        val isPinpointNotification = NotificationClient.isNotificationEnabled(
-            applicationContext
-        )
-        
-        if (isPinpointNotification && remoteMessage.data.isNotEmpty()) {
-            handlePinpointNotification(remoteMessage.data)
-        } else {
-            // Handle as standard notification
-            remoteMessage.notification?.let { notification ->
-                showLocalNotification(
-                    title = notification.title ?: "Aura Voice Chat",
-                    body = notification.body ?: "",
-                    data = remoteMessage.data
-                )
-            }
+        if (title != null || body != null) {
+            processNotification(title ?: "Aura Voice Chat", body ?: "", data)
         }
     }
     
     /**
-     * Registers device token with AWS Pinpoint
+     * Processes notification and determines how to display it
      */
-    private fun registerTokenWithPinpoint(token: String) {
-        try {
-            // Token registration is handled by Amplify Push Notifications
-            // The Amplify library automatically registers tokens
-            Log.i(TAG, "Token registered with Pinpoint")
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to register token with Pinpoint", e)
-        }
-    }
-    
-    /**
-     * Handles AWS Pinpoint specific notifications
-     */
-    private fun handlePinpointNotification(data: Map<String, String>) {
+    private fun processNotification(title: String, body: String, data: Map<String, String>) {
         val notificationType = data["type"] ?: "general"
         
         when (notificationType) {
@@ -91,8 +72,8 @@ class AuraPushNotificationService : FirebaseMessagingService() {
             TYPE_CP_REQUEST -> handleCpRequest(data)
             TYPE_SYSTEM -> handleSystemNotification(data)
             else -> showLocalNotification(
-                title = data["title"] ?: "Aura Voice Chat",
-                body = data["body"] ?: "",
+                title = title,
+                body = body,
                 data = data
             )
         }
@@ -265,6 +246,10 @@ class AuraPushNotificationService : FirebaseMessagingService() {
     
     companion object {
         private const val TAG = "AuraPushService"
+        
+        // Intent extras
+        const val EXTRA_TITLE = "title"
+        const val EXTRA_BODY = "body"
         
         // Notification channels
         private const val CHANNEL_DEFAULT = "aura_default"
