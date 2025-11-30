@@ -10,6 +10,7 @@ Get Aura Voice Chat up and running in minutes!
 
 - **Node.js 18+** — [Download](https://nodejs.org/)
 - **Git** — [Download](https://git-scm.com/)
+- **JDK 17+** (for Android builds) — [Download](https://adoptium.net/)
 - **Android Studio** (for Android builds) — [Download](https://developer.android.com/studio)
 - **AWS Account** — [Create](https://aws.amazon.com/)
 - **AWS CLI** — [Install](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
@@ -25,11 +26,11 @@ Get Aura Voice Chat up and running in minutes!
 git clone https://github.com/venomvex/auravoicechatdoc.git
 cd auravoicechatdoc
 
-# Run auto-setup
-./scripts/auto-setup.sh
+# Run master setup script
+./setup.sh
 ```
 
-The auto-setup script will:
+The setup script will:
 - ✅ Check prerequisites
 - ✅ Install dependencies
 - ✅ Create environment files
@@ -49,26 +50,22 @@ Backend runs at: `http://localhost:3000`
 ### 3. Build Android App
 
 ```bash
-./scripts/build-apk.sh
+./setup.sh --android
 ```
 
-Output: `android/build-output/`
+Output: `android/app/build/outputs/apk/`
 
 ---
 
 ## ☁️ AWS Infrastructure Setup
 
-### Auto Setup
+### Using Setup Script
 
 ```bash
-./scripts/aws-setup.sh
+./setup.sh --aws
 ```
 
-### Manual Setup
-
-See [AWS Setup Guide](docs/aws-setup.md) for detailed instructions.
-
-### CloudFormation Deployment
+### Manual CloudFormation Deployment
 
 ```bash
 aws cloudformation create-stack \
@@ -80,6 +77,8 @@ aws cloudformation create-stack \
         ParameterKey=KeyPairName,ParameterValue=your-key-pair \
     --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM
 ```
+
+See [AWS Setup Guide](docs/aws-setup.md) for detailed instructions.
 
 ---
 
@@ -107,7 +106,8 @@ PostgreSQL database on AWS RDS:
 1. Created automatically with CloudFormation
 2. Initialize schema:
    ```bash
-   psql -h YOUR_RDS_ENDPOINT -U aura_admin -d auravoicechat -f backend/src/database/schema.sql
+   cd backend
+   npx prisma db push
    ```
 
 See [RDS Setup Guide](docs/rds-setup.md)
@@ -128,12 +128,10 @@ See [S3 Setup Guide](docs/s3-setup.md)
 
 ## ☁️ Deploy to AWS EC2
 
-### Auto Deploy
-
-SSH into your EC2 instance and run:
+### Using Setup Script
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/venomvex/auravoicechatdoc/main/scripts/deploy-ec2.sh | bash
+./setup.sh --deploy
 ```
 
 ### Using Docker
@@ -152,11 +150,13 @@ See [AWS EC2 Deployment Guide](docs/aws-ec2-deployment.md)
 ## 📱 Build APK for Play Store
 
 ```bash
-# Debug APK
-./scripts/build-apk.sh --debug
+# Using setup script
+./setup.sh --android
 
-# Release AAB (for Play Store)
-./scripts/build-apk.sh --release
+# Or manually
+cd android
+./gradlew assembleDevDebug      # Debug APK
+./gradlew bundleProdRelease     # Release AAB for Play Store
 ```
 
 See [Play Store Submission Guide](docs/play-store-submission.md)
@@ -168,6 +168,11 @@ See [Play Store Submission Guide](docs/play-store-submission.md)
 ```
 auravoicechatdoc/
 ├── android/          # Android app (Kotlin/Jetpack Compose)
+│   ├── app/          # App module
+│   │   └── build.gradle.kts    # App dependencies (Kotlin DSL)
+│   ├── gradle/
+│   │   └── libs.versions.toml  # Version catalog
+│   └── build.gradle  # Project configuration
 ├── aws/              # AWS CloudFormation & scripts
 │   ├── cloudformation/
 │   ├── scripts/
@@ -175,15 +180,16 @@ auravoicechatdoc/
 ├── backend/          # Node.js/Express API
 │   ├── src/
 │   │   ├── config/       # AWS & app configuration
-│   │   ├── database/     # PostgreSQL schema
 │   │   ├── services/     # Cognito, S3, SNS services
-│   │   └── sockets/      # Socket.io handlers
+│   │   └── routes/       # API routes
+│   ├── prisma/           # Database schema
 │   ├── Dockerfile
 │   └── docker-compose.yml
 ├── data/             # JSON config files
 ├── docs/             # Documentation
-├── scripts/          # Automation scripts
-└── COMPREHENSIVE-GUIDE.md  # Complete documentation
+├── setup.sh          # Master setup script
+├── DEVELOPER-GUIDE.md    # Complete developer guide
+└── COMPREHENSIVE-GUIDE.md  # Product specification
 ```
 
 ---
@@ -193,7 +199,7 @@ auravoicechatdoc/
 | File | Purpose |
 |------|---------|
 | `backend/.env` | Backend environment variables |
-| `android/app/src/main/res/raw/amplifyconfiguration.json` | AWS Amplify config |
+| `android/gradle/libs.versions.toml` | Dependency versions |
 | `android/app/src/main/res/raw/awsconfiguration.json` | AWS services config |
 | `aws/cloudformation/main.yaml` | Infrastructure template |
 | `data/*.json` | App configuration data |
@@ -204,7 +210,8 @@ auravoicechatdoc/
 
 | Document | Description |
 |----------|-------------|
-| [COMPREHENSIVE-GUIDE.md](COMPREHENSIVE-GUIDE.md) | Complete app guide |
+| [DEVELOPER-GUIDE.md](DEVELOPER-GUIDE.md) | Complete developer guide |
+| [COMPREHENSIVE-GUIDE.md](COMPREHENSIVE-GUIDE.md) | Product specification |
 | [docs/aws-setup.md](docs/aws-setup.md) | AWS infrastructure setup |
 | [docs/cognito-setup.md](docs/cognito-setup.md) | Cognito authentication |
 | [docs/rds-setup.md](docs/rds-setup.md) | PostgreSQL database |
@@ -223,9 +230,10 @@ auravoicechatdoc/
 npm run dev
 
 # Verify .env file exists
-cat .env
+cat backend/.env
 
 # Check database connection
+cd backend && npx prisma db push
 ```
 
 ### AWS errors
@@ -241,6 +249,9 @@ aws cloudformation describe-stacks --stack-name aura-voice-chat-production
 ### Android build fails
 
 ```bash
+# Check Java version
+java -version
+
 # Check Android SDK
 echo $ANDROID_HOME
 
@@ -252,7 +263,7 @@ cd android && ./gradlew clean
 
 ## 📞 Support
 
-- **Documentation:** [COMPREHENSIVE-GUIDE.md](COMPREHENSIVE-GUIDE.md)
+- **Documentation:** [DEVELOPER-GUIDE.md](DEVELOPER-GUIDE.md)
 - **Issues:** Open a GitHub issue
 - **Email:** support@auravoice.chat
 
