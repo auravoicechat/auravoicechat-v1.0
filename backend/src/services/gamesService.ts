@@ -402,26 +402,24 @@ export const startGameSession = async (params: StartGameParams) => {
     }
   }
   
-  // Check user balance and deduct bet
-  const balanceResult = await query(
-    'SELECT coins FROM users WHERE id = $1',
-    [userId]
-  );
-  
-  if (balanceResult.rows.length === 0) {
-    throw new Error('User not found');
-  }
-  
-  const userCoins = Number(balanceResult.rows[0].coins);
-  if (userCoins < betAmount) {
-    throw new Error('Insufficient balance');
-  }
-  
-  // Deduct bet amount
-  await query(
-    'UPDATE users SET coins = coins - $1 WHERE id = $2',
+  // Check user balance and deduct bet atomically
+  // Using UPDATE with returning to prevent race conditions
+  const deductResult = await query(
+    `UPDATE users 
+     SET coins = coins - $1 
+     WHERE id = $2 AND coins >= $1
+     RETURNING coins`,
     [betAmount, userId]
   );
+  
+  if (deductResult.rows.length === 0) {
+    // Either user not found or insufficient balance
+    const userCheck = await query('SELECT coins FROM users WHERE id = $1', [userId]);
+    if (userCheck.rows.length === 0) {
+      throw new Error('User not found');
+    }
+    throw new Error('Insufficient balance');
+  }
   
   const sessionId = uuidv4();
   const session: GameSession = {

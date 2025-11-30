@@ -202,10 +202,13 @@ export const paymentWebhook = async (req: AuthRequest, res: Response, next: Next
     logger.info('Payment webhook received', { provider, payload });
     
     // Verify webhook signature based on provider
-    // In production: Implement proper signature verification for each provider
+    // In production: Each provider has different signature verification methods
+    // Stripe: Use stripe.webhooks.constructEvent()
+    // PayPal: Verify IPN/webhook signature
+    // JazzCash/EasyPaisa: Verify hash signature
     
-    let purchaseId: string;
-    let transactionId: string;
+    let purchaseId: string | undefined;
+    let transactionId: string | undefined;
     
     switch (provider) {
       case 'jazzcash':
@@ -229,17 +232,30 @@ export const paymentWebhook = async (req: AuthRequest, res: Response, next: Next
         transactionId = payload.resource?.id;
         break;
       default:
-        throw new AppError('Unknown payment provider', 400, 'UNKNOWN_PROVIDER');
+        logger.warn('Unknown payment provider webhook', { provider });
+        res.status(400).json({ error: 'Unknown payment provider' });
+        return;
     }
     
-    if (purchaseId && transactionId) {
-      await walletService.completeCoinPurchase(purchaseId, transactionId, payload);
+    if (!purchaseId || !transactionId) {
+      logger.warn('Missing purchase or transaction ID in webhook', { provider, purchaseId, transactionId });
+      res.status(400).json({ error: 'Missing required fields' });
+      return;
     }
     
-    res.json({ received: true });
-  } catch (error) {
-    logger.error('Payment webhook error', { error });
-    // Return 200 to prevent retries for webhook errors
-    res.json({ received: true, error: 'Processing error' });
+    await walletService.completeCoinPurchase(purchaseId, transactionId, payload);
+    
+    // Return 200 to acknowledge receipt
+    res.json({ received: true, status: 'processed' });
+  } catch (error: any) {
+    logger.error('Payment webhook error', { error: error.message });
+    
+    // Return 500 for server errors to allow retries
+    // Return 400 for client errors (bad data)
+    if (error.message?.includes('not found') || error.message?.includes('Invalid')) {
+      res.status(400).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: 'Processing error, please retry' });
+    }
   }
 };
