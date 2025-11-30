@@ -84,7 +84,4 @@ data class VipUiState(
     val nextTierProgress: Float = 0f,
     val allTiers: List<Int> = emptyList(),
     val purchasePackages: List<VipPackage> = emptyList()
-) {
-    fun getBenefitsForTier(tier: Int): List<VipBenefit> = emptyList()
-    fun getExclusiveItems(tier: Int): List<VipExclusiveItemData> = emptyList()
-}
+)

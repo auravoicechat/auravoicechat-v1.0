@@ -14,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -180,10 +181,6 @@ private fun EmojiItem(
         }
     }
 }
-
-private fun Modifier.alpha(alpha: Float): Modifier = this.then(
-    Modifier.graphicsLayer(alpha = alpha)
-)
 
 private fun getEmojisForCategory(category: EmojiCategory): List<RoomEmoji> {
     return when (category) {
