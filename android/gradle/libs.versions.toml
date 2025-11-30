@@ -9,7 +9,10 @@
 agp = "8.7.3"
 kotlin = "2.0.21"
 ksp = "2.0.21-1.0.27"
+
+# Updates
 glance = "1.2.0-beta01"
+stream-webrtc = "1.0.10"
 
 # Android SDK
 compileSdk = "35"
@@ -65,7 +68,7 @@ hilt = "2.54"
 coil = "2.7.0"
 
 # WebRTC
-webrtc = "1.0.32006"
+webrtc-dafruits = "123.0.0"
 
 # ExoPlayer / Media3
 media3 = "1.5.0"
@@ -179,7 +182,7 @@ coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coi
 coil-gif = { group = "io.coil-kt", name = "coil-gif", version.ref = "coil" }
 
 # WebRTC
-webrtc = { group = "org.webrtc", name = "google-webrtc", version.ref = "webrtc" }
+webrtc-dafruits = { group = "com.dafruits", name = "webrtc", version.ref = "webrtc-dafruits" }
 
 # ExoPlayer / Media3
 media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3" }
@@ -233,6 +236,9 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 
+#Updates
+stream-webrtc = { group = "io.getstream", name = "stream-webrtc-android", version.ref = "stream-webrtc" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
@@ -240,6 +246,8 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+
+#Updates
 glance-appwidget = { id = "androidx.glance.appwidget", version.ref = "glance" }
 
 [bundles]
