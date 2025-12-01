@@ -26,7 +26,46 @@ data class VerifyOtpRequest(
 data class VerifyOtpResponse(
     @SerializedName("success") val success: Boolean,
     @SerializedName("token") val token: String,
+    @SerializedName("refreshToken") val refreshToken: String? = null,
     @SerializedName("user") val user: UserDto
+)
+
+// Token refresh
+data class RefreshTokenRequest(
+    @SerializedName("refreshToken") val refreshToken: String
+)
+
+data class RefreshTokenResponse(
+    @SerializedName("token") val token: String
+)
+
+// Logout
+data class LogoutResponse(
+    @SerializedName("success") val success: Boolean
+)
+
+// Social Sign-In - Google
+data class GoogleSignInRequest(
+    @SerializedName("idToken") val idToken: String,
+    @SerializedName("email") val email: String? = null,
+    @SerializedName("displayName") val displayName: String? = null
+)
+
+// Social Sign-In - Facebook
+data class FacebookSignInRequest(
+    @SerializedName("accessToken") val accessToken: String,
+    @SerializedName("userId") val userId: String? = null,
+    @SerializedName("email") val email: String? = null,
+    @SerializedName("displayName") val displayName: String? = null
+)
+
+// Social Sign-In Response (used for both Google and Facebook)
+data class SocialSignInResponse(
+    @SerializedName("success") val success: Boolean,
+    @SerializedName("token") val token: String,
+    @SerializedName("refreshToken") val refreshToken: String? = null,
+    @SerializedName("user") val user: UserDto,
+    @SerializedName("isNewUser") val isNewUser: Boolean = false
 )
 
 // Daily Rewards

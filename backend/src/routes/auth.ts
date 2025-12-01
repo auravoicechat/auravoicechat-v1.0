@@ -5,6 +5,10 @@
  * Endpoints:
  * POST /auth/otp/send - Send OTP
  * POST /auth/otp/verify - Verify OTP
+ * POST /auth/refresh - Refresh JWT token
+ * POST /auth/logout - Logout user
+ * POST /auth/google - Google Sign-In
+ * POST /auth/facebook - Facebook Sign-In
  */
 
 import { Router } from 'express';
@@ -25,5 +29,11 @@ router.post('/refresh', generalLimiter, authController.refreshToken);
 
 // Logout
 router.post('/logout', generalLimiter, authController.logout);
+
+// Social Sign-In - Google
+router.post('/google', authLimiter, authController.signInWithGoogle);
+
+// Social Sign-In - Facebook
+router.post('/facebook', authLimiter, authController.signInWithFacebook);
 
 export default router;

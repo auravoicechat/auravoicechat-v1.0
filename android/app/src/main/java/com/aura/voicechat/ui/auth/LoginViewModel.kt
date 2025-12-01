@@ -18,6 +18,11 @@ import javax.inject.Inject
  * 
  * Handles authentication flows (Phone OTP, Google, Facebook) and 
  * backend health checks via HealthApi.
+ * 
+ * Uses AuthRepository which implements:
+ * - Phone OTP authentication via backend API
+ * - Google Sign-In via AWS Amplify/Cognito
+ * - Facebook Sign-In via AWS Amplify/Cognito
  */
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -32,11 +37,30 @@ class LoginViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
     
+    init {
+        // Check if user is already logged in
+        checkLoginStatus()
+    }
+    
+    /**
+     * Check if user is already logged in and update UI state.
+     */
+    private fun checkLoginStatus() {
+        viewModelScope.launch {
+            try {
+                val isLoggedIn = authRepository.isLoggedIn()
+                if (isLoggedIn) {
+                    _uiState.value = _uiState.value.copy(isLoggedIn = true)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error checking login status", e)
+            }
+        }
+    }
+    
     /**
      * Ping the backend to verify connectivity.
      * Called once when the login screen appears (via LaunchedEffect).
-     * 
-     * TODO: Consider showing connection status to user or handling offline mode.
      */
     fun pingBackend() {
         viewModelScope.launch {
@@ -75,65 +99,111 @@ class LoginViewModel @Inject constructor(
         }
     }
     
+    /**
+     * Send OTP to the provided phone number.
+     * Uses the backend API at /api/v1/auth/otp/send
+     */
     fun sendOtp(phoneNumber: String) {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
-            try {
-                authRepository.sendOtp(phoneNumber)
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    otpSent = true
-                )
-            } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    error = e.message
-                )
-            }
+            _uiState.value = _uiState.value.copy(isLoading = true, error = null)
+            
+            val result = authRepository.sendOtp(phoneNumber)
+            
+            result.fold(
+                onSuccess = {
+                    Log.d(TAG, "OTP sent successfully to ${phoneNumber.takeLast(4)}")
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        otpSent = true
+                    )
+                },
+                onFailure = { e ->
+                    Log.e(TAG, "Failed to send OTP", e)
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        error = e.message ?: "Failed to send OTP. Please try again."
+                    )
+                }
+            )
         }
     }
     
+    /**
+     * Sign in with Google using AWS Amplify/Cognito.
+     * Falls back to backend API if Amplify is not configured.
+     */
     fun signInWithGoogle() {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
-            try {
-                authRepository.signInWithGoogle()
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    isLoggedIn = true
-                )
-            } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    error = e.message
-                )
-            }
+            _uiState.value = _uiState.value.copy(isLoading = true, error = null)
+            
+            val result = authRepository.signInWithGoogle()
+            
+            result.fold(
+                onSuccess = {
+                    Log.i(TAG, "Google Sign-In successful")
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        isLoggedIn = true
+                    )
+                },
+                onFailure = { e ->
+                    Log.e(TAG, "Google Sign-In failed", e)
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        error = e.message ?: "Google Sign-In failed. Please try again."
+                    )
+                }
+            )
         }
     }
     
+    /**
+     * Sign in with Facebook using AWS Amplify/Cognito.
+     * Falls back to backend API if Amplify is not configured.
+     */
     fun signInWithFacebook() {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
-            try {
-                authRepository.signInWithFacebook()
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    isLoggedIn = true
-                )
-            } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    error = e.message
-                )
-            }
+            _uiState.value = _uiState.value.copy(isLoading = true, error = null)
+            
+            val result = authRepository.signInWithFacebook()
+            
+            result.fold(
+                onSuccess = {
+                    Log.i(TAG, "Facebook Sign-In successful")
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        isLoggedIn = true
+                    )
+                },
+                onFailure = { e ->
+                    Log.e(TAG, "Facebook Sign-In failed", e)
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        error = e.message ?: "Facebook Sign-In failed. Please try again."
+                    )
+                }
+            )
         }
     }
     
+    /**
+     * Clear the current error message.
+     */
     fun clearError() {
         _uiState.value = _uiState.value.copy(error = null)
     }
+    
+    /**
+     * Reset the OTP sent state (used when navigating back from OTP screen).
+     */
+    fun resetOtpSent() {
+        _uiState.value = _uiState.value.copy(otpSent = false)
+    }
 }
 
+/**
+ * UI State for the Login screen.
+ */
 data class LoginUiState(
     val isLoading: Boolean = false,
     val isLoggedIn: Boolean = false,

@@ -3,6 +3,7 @@ package com.aura.voicechat.di
 import android.content.Context
 import com.aura.voicechat.BuildConfig
 import com.aura.voicechat.data.remote.ApiService
+import com.aura.voicechat.data.remote.AuthInterceptor
 import com.aura.voicechat.data.remote.HealthApi
 import dagger.Module
 import dagger.Provides
@@ -33,15 +34,26 @@ import javax.inject.Singleton
  * Backend URL is configured via BuildConfig.API_BASE_URL
  * Currently pointing to EC2 instance at http://43.204.130.237
  * 
+ * Includes AuthInterceptor to inject authentication tokens into API requests.
+ * 
  * TODO: For production, update to use HTTPS with a proper domain name.
  */
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
     
+    /**
+     * Provides AuthInterceptor for injecting auth tokens into API requests.
+     */
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideAuthInterceptor(@ApplicationContext context: Context): AuthInterceptor {
+        return AuthInterceptor(context)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG_MODE) {
                 HttpLoggingInterceptor.Level.BODY
@@ -51,6 +63,7 @@ object NetworkModule {
         }
         
         return OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
             .addInterceptor(loggingInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
@@ -61,8 +74,13 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+        // Ensure base URL ends with a slash for proper path resolution
+        val baseUrl = BuildConfig.API_BASE_URL.let {
+            if (it.endsWith("/")) it else "$it/"
+        }
+        
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.API_BASE_URL)
+            .baseUrl(baseUrl)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

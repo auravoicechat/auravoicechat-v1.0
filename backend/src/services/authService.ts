@@ -2,7 +2,10 @@
  * Authentication Service
  * Developer: Hawkaye Visions LTD — Pakistan
  * 
- * OTP-based authentication with Twilio SMS support
+ * Supports:
+ * - OTP-based authentication with Twilio SMS
+ * - Google Sign-In
+ * - Facebook Sign-In
  */
 
 import { v4 as uuidv4 } from 'uuid';
@@ -22,6 +25,24 @@ interface VerifyResult {
   userId: string;
   userName: string;
   isNewUser: boolean;
+}
+
+interface SocialSignInResult {
+  success: boolean;
+  userId: string;
+  userName: string;
+  userAvatar?: string;
+  userLevel: number;
+  userVipTier: number;
+  isNewUser: boolean;
+}
+
+interface SocialSignInData {
+  token: string;
+  socialUserId?: string;
+  email?: string;
+  displayName?: string;
+  avatarUrl?: string;
 }
 
 // In-memory OTP storage with rate limiting
@@ -227,6 +248,101 @@ export const verifyOtp = async (phone: string, otp: string): Promise<VerifyResul
       success: false,
       userId: '',
       userName: '',
+      isNewUser: false
+    };
+  }
+};
+
+/**
+ * Sign in with social provider (Google or Facebook).
+ * Creates a new user if not exists, or returns existing user.
+ */
+export const signInWithSocial = async (
+  provider: 'google' | 'facebook',
+  data: SocialSignInData
+): Promise<SocialSignInResult> => {
+  try {
+    const { token, socialUserId, email, displayName, avatarUrl } = data;
+    
+    // In production, verify the token with the provider's API:
+    // - Google: https://oauth2.googleapis.com/tokeninfo?id_token=...
+    // - Facebook: https://graph.facebook.com/debug_token?input_token=...
+    
+    // For now, we'll trust the token and use the provided data
+    // In a real implementation, you would validate the token and extract user info
+    
+    logger.info(`Social sign-in attempt with ${provider}`, { email, hasToken: !!token });
+    
+    // Create a unique identifier for the social login
+    const socialId = socialUserId || `${provider}_${email || uuidv4()}`;
+    const providerColumn = provider === 'google' ? 'google_id' : 'facebook_id';
+    
+    // Check if user exists by social ID or email
+    let userResult = await query(
+      `SELECT id, username, display_name, avatar_url, level, vip_tier 
+       FROM users 
+       WHERE ${providerColumn} = $1 OR (email = $2 AND email IS NOT NULL)`,
+      [socialId, email]
+    );
+    
+    if (userResult.rows.length > 0) {
+      const user = userResult.rows[0];
+      
+      // Update last login and social ID if not set
+      await query(
+        `UPDATE users 
+         SET last_login_at = NOW(), 
+             login_streak = login_streak + 1,
+             ${providerColumn} = COALESCE(${providerColumn}, $2)
+         WHERE id = $1`,
+        [user.id, socialId]
+      );
+      
+      logger.info(`Existing user signed in via ${provider}`, { userId: user.id });
+      
+      return {
+        success: true,
+        userId: user.id,
+        userName: user.username || user.display_name,
+        userAvatar: user.avatar_url,
+        userLevel: user.level || 1,
+        userVipTier: user.vip_tier || 0,
+        isNewUser: false
+      };
+    }
+    
+    // Create new user
+    const userId = uuidv4();
+    const username = displayName || email?.split('@')[0] || `User_${userId.slice(0, 8)}`;
+    
+    await query(
+      `INSERT INTO users (
+        id, email, username, display_name, avatar_url, 
+        ${providerColumn}, coins, diamonds, level, vip_tier,
+        created_at, last_login_at
+      ) VALUES ($1, $2, $3, $3, $4, $5, 1000, 100, 1, 0, NOW(), NOW())`,
+      [userId, email, username, avatarUrl, socialId]
+    );
+    
+    logger.info(`New user created via ${provider}`, { userId, email });
+    
+    return {
+      success: true,
+      userId,
+      userName: username,
+      userAvatar: avatarUrl,
+      userLevel: 1,
+      userVipTier: 0,
+      isNewUser: true
+    };
+  } catch (error) {
+    logger.error(`Failed to sign in with ${provider}`, { error });
+    return {
+      success: false,
+      userId: '',
+      userName: '',
+      userLevel: 0,
+      userVipTier: 0,
       isNewUser: false
     };
   }
