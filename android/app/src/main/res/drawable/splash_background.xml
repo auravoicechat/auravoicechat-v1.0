@@ -3,7 +3,7 @@
   Aura Voice Chat - Splash Screen Background
   Developer: Hawkaye Visions LTD — Pakistan
   
-  Purple gradient splash background
+  Purple gradient splash background with centered logo
 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     
@@ -19,20 +19,11 @@
         </shape>
     </item>
     
-    <!-- Centered logo placeholder -->
+    <!-- Centered Aura Voice Chat logo -->
     <item
         android:gravity="center"
         android:width="120dp"
-        android:height="120dp">
-        <shape android:shape="oval">
-            <gradient
-                android:type="radial"
-                android:gradientRadius="60dp"
-                android:centerX="0.5"
-                android:centerY="0.5"
-                android:startColor="#8551C5"
-                android:endColor="#00000000" />
-        </shape>
-    </item>
+        android:height="120dp"
+        android:drawable="@drawable/ic_aura_logo" />
     
 </layer-list>

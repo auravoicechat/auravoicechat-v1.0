@@ -41,7 +41,7 @@
     
     <!-- Splash Theme -->
     <style name="Theme.AuraVoiceChat.Splash" parent="Theme.AuraVoiceChat">
-        <item name="android:windowBackground">@color/purple_40</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
     
     <!-- Light Theme -->

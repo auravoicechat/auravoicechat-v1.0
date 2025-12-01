@@ -2,27 +2,192 @@ package com.aura.voicechat.ui.auth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.aura.voicechat.R
 import com.aura.voicechat.ui.theme.GradientPurpleEnd
 import com.aura.voicechat.ui.theme.GradientPurpleStart
 import com.aura.voicechat.ui.theme.Purple80
+
+/**
+ * Country data class for country code picker
+ */
+data class Country(
+    val name: String,
+    val code: String,
+    val dialCode: String,
+    val flag: String
+)
+
+/**
+ * List of countries with their dial codes and flags
+ */
+private val countries = listOf(
+    Country("United States", "US", "+1", "🇺🇸"),
+    Country("United Kingdom", "GB", "+44", "🇬🇧"),
+    Country("India", "IN", "+91", "🇮🇳"),
+    Country("Pakistan", "PK", "+92", "🇵🇰"),
+    Country("Canada", "CA", "+1", "🇨🇦"),
+    Country("Australia", "AU", "+61", "🇦🇺"),
+    Country("Germany", "DE", "+49", "🇩🇪"),
+    Country("France", "FR", "+33", "🇫🇷"),
+    Country("Italy", "IT", "+39", "🇮🇹"),
+    Country("Spain", "ES", "+34", "🇪🇸"),
+    Country("Brazil", "BR", "+55", "🇧🇷"),
+    Country("Mexico", "MX", "+52", "🇲🇽"),
+    Country("Japan", "JP", "+81", "🇯🇵"),
+    Country("China", "CN", "+86", "🇨🇳"),
+    Country("South Korea", "KR", "+82", "🇰🇷"),
+    Country("Russia", "RU", "+7", "🇷🇺"),
+    Country("Saudi Arabia", "SA", "+966", "🇸🇦"),
+    Country("United Arab Emirates", "AE", "+971", "🇦🇪"),
+    Country("Turkey", "TR", "+90", "🇹🇷"),
+    Country("South Africa", "ZA", "+27", "🇿🇦"),
+    Country("Nigeria", "NG", "+234", "🇳🇬"),
+    Country("Egypt", "EG", "+20", "🇪🇬"),
+    Country("Indonesia", "ID", "+62", "🇮🇩"),
+    Country("Malaysia", "MY", "+60", "🇲🇾"),
+    Country("Singapore", "SG", "+65", "🇸🇬"),
+    Country("Thailand", "TH", "+66", "🇹🇭"),
+    Country("Philippines", "PH", "+63", "🇵🇭"),
+    Country("Vietnam", "VN", "+84", "🇻🇳"),
+    Country("Bangladesh", "BD", "+880", "🇧🇩"),
+    Country("Afghanistan", "AF", "+93", "🇦🇫"),
+    Country("Argentina", "AR", "+54", "🇦🇷"),
+    Country("Belgium", "BE", "+32", "🇧🇪"),
+    Country("Chile", "CL", "+56", "🇨🇱"),
+    Country("Colombia", "CO", "+57", "🇨🇴"),
+    Country("Denmark", "DK", "+45", "🇩🇰"),
+    Country("Finland", "FI", "+358", "🇫🇮"),
+    Country("Greece", "GR", "+30", "🇬🇷"),
+    Country("Hong Kong", "HK", "+852", "🇭🇰"),
+    Country("Ireland", "IE", "+353", "🇮🇪"),
+    Country("Israel", "IL", "+972", "🇮🇱"),
+    Country("Kenya", "KE", "+254", "🇰🇪"),
+    Country("Kuwait", "KW", "+965", "🇰🇼"),
+    Country("Netherlands", "NL", "+31", "🇳🇱"),
+    Country("New Zealand", "NZ", "+64", "🇳🇿"),
+    Country("Norway", "NO", "+47", "🇳🇴"),
+    Country("Poland", "PL", "+48", "🇵🇱"),
+    Country("Portugal", "PT", "+351", "🇵🇹"),
+    Country("Qatar", "QA", "+974", "🇶🇦"),
+    Country("Sweden", "SE", "+46", "🇸🇪"),
+    Country("Switzerland", "CH", "+41", "🇨🇭")
+)
+
+/**
+ * Country Code Picker Dialog
+ */
+@Composable
+fun CountryPickerDialog(
+    countries: List<Country>,
+    onCountrySelected: (Country) -> Unit,
+    onDismiss: () -> Unit
+) {
+    var searchQuery by remember { mutableStateOf("") }
+    val filteredCountries = remember(searchQuery) {
+        if (searchQuery.isEmpty()) {
+            countries
+        } else {
+            countries.filter { 
+                it.name.contains(searchQuery, ignoreCase = true) || 
+                it.dialCode.contains(searchQuery) 
+            }
+        }
+    }
+    
+    Dialog(onDismissRequest = onDismiss) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.8f),
+            shape = RoundedCornerShape(16.dp),
+            color = MaterialTheme.colorScheme.surface
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Text(
+                    text = "Select Country",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                // Search field
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    placeholder = { Text("Search country...") },
+                    leadingIcon = {
+                        Icon(Icons.Default.Search, contentDescription = "Search")
+                    },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Purple80,
+                        focusedLabelColor = Purple80
+                    )
+                )
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                LazyColumn {
+                    items(filteredCountries) { country ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { onCountrySelected(country) }
+                                .padding(vertical = 12.dp, horizontal = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = country.flag,
+                                style = MaterialTheme.typography.titleLarge
+                            )
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Text(
+                                text = country.name,
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.weight(1f)
+                            )
+                            Text(
+                                text = country.dialCode,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                            )
+                        }
+                        HorizontalDivider()
+                    }
+                }
+            }
+        }
+    }
+}
 
 /**
  * Login Screen with Google, Facebook, and Phone (OTP) login
@@ -39,10 +204,24 @@ fun LoginScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var phoneNumber by remember { mutableStateOf("") }
+    var selectedCountry by remember { mutableStateOf(countries[0]) } // Default to US
+    var showCountryPicker by remember { mutableStateOf(false) }
     
     // Ping backend on first load to verify connectivity
     LaunchedEffect(Unit) {
         viewModel.pingBackend()
+    }
+    
+    // Country picker dialog
+    if (showCountryPicker) {
+        CountryPickerDialog(
+            countries = countries,
+            onCountrySelected = { country ->
+                selectedCountry = country
+                showCountryPicker = false
+            },
+            onDismiss = { showCountryPicker = false }
+        )
     }
     
     Box(
@@ -61,22 +240,15 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // Logo
-            Box(
+            // Logo - Using actual Aura Voice Chat logo
+            Image(
+                painter = painterResource(id = R.drawable.ic_aura_logo),
+                contentDescription = "Aura Voice Chat Logo",
                 modifier = Modifier
                     .size(120.dp)
-                    .clip(RoundedCornerShape(24.dp))
-                    .background(MaterialTheme.colorScheme.surface)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Phone,
-                    contentDescription = "Aura Voice Chat Logo",
-                    modifier = Modifier
-                        .size(80.dp)
-                        .align(Alignment.Center),
-                    tint = Purple80
-                )
-            }
+                    .clip(RoundedCornerShape(24.dp)),
+                contentScale = ContentScale.Fit
+            )
             
             Spacer(modifier = Modifier.height(24.dp))
             
@@ -97,23 +269,50 @@ fun LoginScreen(
             
             Spacer(modifier = Modifier.height(48.dp))
             
-            // Phone Number Input
-            OutlinedTextField(
-                value = phoneNumber,
-                onValueChange = { phoneNumber = it },
-                label = { Text("Phone Number") },
-                placeholder = { Text("+1 234 567 8900") },
-                leadingIcon = {
-                    Icon(Icons.Default.Phone, contentDescription = null)
-                },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                singleLine = true,
+            // Phone Number Input with Country Code Picker
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Purple80,
-                    focusedLabelColor = Purple80
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Country Code Picker Button
+                OutlinedButton(
+                    onClick = { showCountryPicker = true },
+                    modifier = Modifier.height(56.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    contentPadding = PaddingValues(horizontal = 12.dp)
+                ) {
+                    Text(
+                        text = selectedCountry.flag,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = selectedCountry.dialCode,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = "Select country"
+                    )
+                }
+                
+                Spacer(modifier = Modifier.width(8.dp))
+                
+                // Phone Number Field
+                OutlinedTextField(
+                    value = phoneNumber,
+                    onValueChange = { phoneNumber = it.filter { char -> char.isDigit() } },
+                    label = { Text("Phone Number") },
+                    placeholder = { Text("234 567 8900") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                    singleLine = true,
+                    modifier = Modifier.weight(1f),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Purple80,
+                        focusedLabelColor = Purple80
+                    )
                 )
-            )
+            }
             
             Spacer(modifier = Modifier.height(16.dp))
             
@@ -121,8 +320,9 @@ fun LoginScreen(
             Button(
                 onClick = {
                     if (phoneNumber.isNotBlank()) {
-                        viewModel.sendOtp(phoneNumber)
-                        onNavigateToOtp(phoneNumber)
+                        val fullPhoneNumber = "${selectedCountry.dialCode}$phoneNumber"
+                        viewModel.sendOtp(fullPhoneNumber)
+                        onNavigateToOtp(fullPhoneNumber)
                     }
                 },
                 modifier = Modifier
@@ -131,7 +331,8 @@ fun LoginScreen(
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Purple80
-                )
+                ),
+                enabled = phoneNumber.isNotBlank()
             ) {
                 Text(
                     text = "Continue with Phone",
@@ -158,13 +359,18 @@ fun LoginScreen(
             
             Spacer(modifier = Modifier.height(24.dp))
             
-            // Google Sign In
-            OutlinedButton(
+            // Google Sign In - Enabled
+            Button(
                 onClick = { viewModel.signInWithGoogle() },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    contentColor = MaterialTheme.colorScheme.onSurface
+                ),
+                enabled = true
             ) {
                 Text(
                     text = "Continue with Google",
@@ -174,13 +380,18 @@ fun LoginScreen(
             
             Spacer(modifier = Modifier.height(12.dp))
             
-            // Facebook Sign In
-            OutlinedButton(
+            // Facebook Sign In - Enabled
+            Button(
                 onClick = { viewModel.signInWithFacebook() },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    contentColor = MaterialTheme.colorScheme.onSurface
+                ),
+                enabled = true
             ) {
                 Text(
                     text = "Continue with Facebook",
