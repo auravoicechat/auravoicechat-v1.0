@@ -101,6 +101,15 @@ interface ApiService {
     @GET("api/v1/rooms/mine")
     suspend fun getMyRooms(): Response<RoomsResponse>
     
+    @GET("api/v1/rooms/recent")
+    suspend fun getRecentRooms(): Response<RoomsResponse>
+    
+    @GET("api/v1/rooms/following")
+    suspend fun getFollowingRooms(): Response<RoomsResponse>
+    
+    @GET("api/v1/rooms/video-music")
+    suspend fun getVideoMusicRooms(): Response<RoomsResponse>
+    
     @GET("api/v1/rooms/{roomId}")
     suspend fun getRoom(@Path("roomId") roomId: String): Response<RoomResponse>
     
@@ -113,12 +122,39 @@ interface ApiService {
     @POST("api/v1/rooms/{roomId}/video/exit")
     suspend fun exitVideo(@Path("roomId") roomId: String): Response<Unit>
     
+    // Banners
+    @GET("api/v1/banners")
+    suspend fun getBanners(): Response<BannersResponse>
+    
     // User Profile
+    @GET("api/v1/users/me")
+    suspend fun getCurrentUser(): Response<UserResponse>
+    
     @GET("api/v1/users/{userId}")
     suspend fun getUser(@Path("userId") userId: String): Response<UserResponse>
     
     @PUT("api/v1/users/me")
     suspend fun updateProfile(@Body request: UpdateProfileRequest): Response<Unit>
+    
+    @GET("api/v1/users/{userId}/followers")
+    suspend fun getUserFollowers(
+        @Path("userId") userId: String,
+        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = 20
+    ): Response<FollowersResponse>
+    
+    @GET("api/v1/users/{userId}/following")
+    suspend fun getUserFollowing(
+        @Path("userId") userId: String,
+        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = 20
+    ): Response<FollowersResponse>
+    
+    @POST("api/v1/users/{userId}/follow")
+    suspend fun followUser(@Path("userId") userId: String): Response<Unit>
+    
+    @POST("api/v1/users/{userId}/unfollow")
+    suspend fun unfollowUser(@Path("userId") userId: String): Response<Unit>
     
     // KYC
     @GET("api/v1/kyc/status")
@@ -601,4 +637,247 @@ interface ApiService {
     // Leave room
     @POST("api/v1/rooms/{roomId}/leave")
     suspend fun leaveRoom(@Path("roomId") roomId: String): Response<Unit>
+    
+    // ============================================
+    // Family System
+    // ============================================
+    
+    // Get my family
+    @GET("api/v1/family/my")
+    suspend fun getMyFamily(): Response<MyFamilyResponse>
+    
+    // Get family by ID
+    @GET("api/v1/family/{familyId}")
+    suspend fun getFamily(@Path("familyId") familyId: String): Response<FamilyDetailsResponse>
+    
+    // Create family
+    @POST("api/v1/family/create")
+    suspend fun createFamily(@Body request: CreateFamilyRequest): Response<CreateFamilyResponse>
+    
+    // Search families
+    @GET("api/v1/family/search")
+    suspend fun searchFamilies(@Query("q") query: String): Response<FamilySearchResponse>
+    
+    // Join family
+    @POST("api/v1/family/{familyId}/join")
+    suspend fun joinFamily(@Path("familyId") familyId: String): Response<Unit>
+    
+    // Leave family
+    @POST("api/v1/family/{familyId}/leave")
+    suspend fun leaveFamily(@Path("familyId") familyId: String): Response<Unit>
+    
+    // Get family members
+    @GET("api/v1/family/{familyId}/members")
+    suspend fun getFamilyMembers(@Path("familyId") familyId: String): Response<FamilyMembersResponse>
+    
+    // Get family activity
+    @GET("api/v1/family/{familyId}/activity")
+    suspend fun getFamilyActivity(@Path("familyId") familyId: String): Response<FamilyActivityResponse>
+    
+    // Kick member
+    @POST("api/v1/family/{familyId}/kick/{userId}")
+    suspend fun kickFamilyMember(
+        @Path("familyId") familyId: String,
+        @Path("userId") userId: String
+    ): Response<Unit>
+    
+    // Update member role
+    @POST("api/v1/family/{familyId}/role/{userId}")
+    suspend fun updateFamilyMemberRole(
+        @Path("familyId") familyId: String,
+        @Path("userId") userId: String,
+        @Body request: UpdateFamilyRoleRequest
+    ): Response<Unit>
+    
+    // Get family rankings
+    @GET("api/v1/family/rankings")
+    suspend fun getFamilyRankings(
+        @Query("type") type: String = "weekly",
+        @Query("page") page: Int = 1
+    ): Response<FamilyRankingsResponse>
+    
+    // ============================================
+    // CP Partnership System
+    // ============================================
+    
+    // Get CP status
+    @GET("api/v1/cp/status")
+    suspend fun getCpStatus(): Response<CpStatusResponse>
+    
+    // Send CP request
+    @POST("api/v1/cp/request")
+    suspend fun sendCpRequest(@Body request: CpRequestDto): Response<CpRequestResponse>
+    
+    // Accept/Reject CP request
+    @POST("api/v1/cp/request/{requestId}/respond")
+    suspend fun respondToCpRequest(
+        @Path("requestId") requestId: String,
+        @Body request: CpRespondRequest
+    ): Response<Unit>
+    
+    // Dissolve CP
+    @POST("api/v1/cp/dissolve")
+    suspend fun dissolveCp(): Response<Unit>
+    
+    // Get CP rankings
+    @GET("api/v1/cp/rankings")
+    suspend fun getCpRankings(
+        @Query("type") type: String = "weekly",
+        @Query("page") page: Int = 1
+    ): Response<CpRankingsResponse>
+    
+    // Get CP progress
+    @GET("api/v1/cp/progress")
+    suspend fun getCpProgress(): Response<CpProgressResponse>
+    
+    // ============================================
+    // Ranking System
+    // ============================================
+    
+    // Get gift rankings
+    @GET("api/v1/rankings/gifts")
+    suspend fun getGiftRankings(
+        @Query("type") type: String = "daily",
+        @Query("category") category: String = "sender",
+        @Query("page") page: Int = 1
+    ): Response<GiftRankingsResponse>
+    
+    // Get level rankings
+    @GET("api/v1/rankings/level")
+    suspend fun getLevelRankings(@Query("page") page: Int = 1): Response<LevelRankingsResponse>
+    
+    // Get wealth rankings
+    @GET("api/v1/rankings/wealth")
+    suspend fun getWealthRankings(@Query("page") page: Int = 1): Response<WealthRankingsResponse>
+    
+    // Get charm rankings
+    @GET("api/v1/rankings/charm")
+    suspend fun getCharmRankings(
+        @Query("type") type: String = "daily",
+        @Query("page") page: Int = 1
+    ): Response<CharmRankingsResponse>
+    
+    // ============================================
+    // Friends System
+    // ============================================
+    
+    // Get friends list
+    @GET("api/v1/friends")
+    suspend fun getFriends(@Query("page") page: Int = 1): Response<FriendsResponse>
+    
+    // Get friend requests
+    @GET("api/v1/friends/requests")
+    suspend fun getFriendRequests(): Response<FriendRequestsResponse>
+    
+    // Send friend request
+    @POST("api/v1/friends/request")
+    suspend fun sendFriendRequest(@Body request: FriendRequestDto): Response<Unit>
+    
+    // Accept friend request
+    @POST("api/v1/friends/accept/{userId}")
+    suspend fun acceptFriendRequest(@Path("userId") userId: String): Response<Unit>
+    
+    // Reject friend request
+    @POST("api/v1/friends/reject/{userId}")
+    suspend fun rejectFriendRequest(@Path("userId") userId: String): Response<Unit>
+    
+    // Remove friend
+    @DELETE("api/v1/friends/{userId}")
+    suspend fun removeFriend(@Path("userId") userId: String): Response<Unit>
+    
+    // ============================================
+    // Events System
+    // ============================================
+    
+    // Get active events
+    @GET("api/v1/events")
+    suspend fun getEvents(): Response<EventsListResponse>
+    
+    // Get event details
+    @GET("api/v1/events/{eventId}")
+    suspend fun getEventDetails(@Path("eventId") eventId: String): Response<EventDetailsResponse>
+    
+    // Participate in event
+    @POST("api/v1/events/{eventId}/participate")
+    suspend fun participateInEvent(@Path("eventId") eventId: String): Response<Unit>
+    
+    // Get event progress
+    @GET("api/v1/events/{eventId}/progress")
+    suspend fun getEventProgress(@Path("eventId") eventId: String): Response<EventProgressResponse>
+    
+    // ============================================
+    // Search
+    // ============================================
+    
+    // Search users
+    @GET("api/v1/search/users")
+    suspend fun searchUsers(@Query("q") query: String): Response<SearchUsersResponse>
+    
+    // Search rooms
+    @GET("api/v1/search/rooms")
+    suspend fun searchRooms(@Query("q") query: String): Response<RoomsResponse>
+    
+    // ============================================
+    // Admin Panel
+    // ============================================
+    
+    // Get admin dashboard
+    @GET("api/v1/admin/dashboard")
+    suspend fun getAdminDashboard(): Response<AdminDashboardResponse>
+    
+    // Get users list (admin)
+    @GET("api/v1/admin/users")
+    suspend fun getAdminUsers(
+        @Query("page") page: Int = 1,
+        @Query("search") search: String? = null
+    ): Response<AdminUsersResponse>
+    
+    // Ban user (admin)
+    @POST("api/v1/admin/users/{userId}/ban")
+    suspend fun adminBanUser(
+        @Path("userId") userId: String,
+        @Body request: AdminBanRequest
+    ): Response<Unit>
+    
+    // Unban user (admin)
+    @POST("api/v1/admin/users/{userId}/unban")
+    suspend fun adminUnbanUser(@Path("userId") userId: String): Response<Unit>
+    
+    // Get reports (admin)
+    @GET("api/v1/admin/reports")
+    suspend fun getAdminReports(@Query("status") status: String? = null): Response<AdminReportsResponse>
+    
+    // Resolve report (admin)
+    @POST("api/v1/admin/reports/{reportId}/resolve")
+    suspend fun resolveReport(
+        @Path("reportId") reportId: String,
+        @Body request: ResolveReportRequest
+    ): Response<Unit>
+    
+    // Get KYC applications (admin)
+    @GET("api/v1/admin/kyc")
+    suspend fun getKycApplications(@Query("status") status: String? = null): Response<KycApplicationsResponse>
+    
+    // Approve KYC (admin)
+    @POST("api/v1/admin/kyc/{userId}/approve")
+    suspend fun approveKyc(@Path("userId") userId: String): Response<Unit>
+    
+    // Reject KYC (admin)
+    @POST("api/v1/admin/kyc/{userId}/reject")
+    suspend fun rejectKyc(
+        @Path("userId") userId: String,
+        @Body request: RejectKycRequest
+    ): Response<Unit>
+    
+    // Get guide applications (admin)
+    @GET("api/v1/admin/guides")
+    suspend fun getGuideApplications(@Query("status") status: String? = null): Response<GuideApplicationsResponse>
+    
+    // Approve guide (admin)
+    @POST("api/v1/admin/guides/{userId}/approve")
+    suspend fun approveGuide(@Path("userId") userId: String): Response<Unit>
+    
+    // Reject guide (admin)
+    @POST("api/v1/admin/guides/{userId}/reject")
+    suspend fun rejectGuide(@Path("userId") userId: String): Response<Unit>
 }

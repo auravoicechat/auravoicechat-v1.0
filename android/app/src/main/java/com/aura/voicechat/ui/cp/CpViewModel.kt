@@ -1,7 +1,9 @@
 package com.aura.voicechat.ui.cp
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aura.voicechat.data.remote.ApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -10,11 +12,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * CP System ViewModel
+ * CP System ViewModel (Live API Connected)
  * Developer: Hawkaye Visions LTD — Pakistan
  */
 @HiltViewModel
-class CpViewModel @Inject constructor() : ViewModel() {
+class CpViewModel @Inject constructor(
+    private val apiService: ApiService
+) : ViewModel() {
+    
+    companion object {
+        private const val TAG = "CpViewModel"
+    }
     
     private val _uiState = MutableStateFlow(CpUiState())
     val uiState: StateFlow<CpUiState> = _uiState.asStateFlow()
@@ -25,38 +33,84 @@ class CpViewModel @Inject constructor() : ViewModel() {
     
     private fun loadCpData() {
         viewModelScope.launch {
-            // Sample data - would come from API
-            _uiState.value = CpUiState(
-                hasPartner = true,
-                partnerId = "partner123",
-                partnerName = "StarLight",
-                partnerAvatar = null,
-                cpLevel = 5,
-                cpExp = 45000,
-                cpExpRequired = 100000,
-                cpDays = 45,
-                currentBenefits = listOf(
-                    "Exclusive CP Frame",
-                    "CP Chat Bubble",
-                    "CP Entry Animation",
-                    "2x Gift EXP when gifting partner",
-                    "Special CP Badge"
-                ),
-                dailyTasks = listOf(
-                    CpTask("task1", "Send gift to CP", 3, 5, 500, false, false),
-                    CpTask("task2", "Chat with CP", 10, 10, 200, true, false),
-                    CpTask("task3", "Be in same room for 30min", 20, 30, 300, false, false),
-                    CpTask("task4", "Like CP's message", 5, 5, 100, true, true)
-                ),
-                cpCosmetics = listOf(
-                    CpCosmetic("frame1", "Love Frame Lv.1", "frame", 1),
-                    CpCosmetic("frame2", "Love Frame Lv.3", "frame", 3),
-                    CpCosmetic("vehicle1", "Love Carriage", "vehicle", 5),
-                    CpCosmetic("bubble1", "Heart Bubble", "bubble", 2),
-                    CpCosmetic("theme1", "Romance Theme", "theme", 7),
-                    CpCosmetic("frame3", "Eternal Love Frame", "frame", 10)
+            _uiState.value = _uiState.value.copy(isLoading = true)
+            try {
+                // Load CP status from backend
+                val response = apiService.getCpStatus()
+                if (response.isSuccessful && response.body() != null) {
+                    val data = response.body()!!
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        hasPartner = data.hasPartner,
+                        partnerId = data.partner?.userId ?: "",
+                        partnerName = data.partner?.name ?: "",
+                        partnerAvatar = data.partner?.avatar,
+                        cpLevel = data.level,
+                        cpDays = calculateCpDays(data.anniversaryDate),
+                        pendingRequests = data.pendingRequests?.map { req ->
+                            CpRequest(
+                                id = req.id,
+                                fromUserId = req.fromUserId,
+                                fromUserName = req.fromUserName,
+                                fromUserAvatar = req.fromUserAvatar,
+                                message = req.message
+                            )
+                        } ?: emptyList()
+                    )
+                    
+                    // Load CP progress if has partner
+                    if (data.hasPartner) {
+                        loadCpProgress()
+                    }
+                    Log.d(TAG, "Loaded CP data: hasPartner=${data.hasPartner}")
+                } else {
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        hasPartner = false
+                    )
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error loading CP data", e)
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    error = e.message
                 )
-            )
+            }
+        }
+    }
+    
+    private suspend fun loadCpProgress() {
+        try {
+            val response = apiService.getCpProgress()
+            if (response.isSuccessful && response.body() != null) {
+                val data = response.body()!!
+                _uiState.value = _uiState.value.copy(
+                    cpExp = data.currentPoints,
+                    cpExpRequired = data.nextLevelPoints,
+                    currentBenefits = data.perks.filter { it.isUnlocked }.map { it.description },
+                    cpCosmetics = data.perks.map { perk ->
+                        CpCosmetic(
+                            id = perk.id,
+                            name = perk.name,
+                            type = "cosmetic",
+                            requiredLevel = perk.requiredLevel
+                        )
+                    }
+                )
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error loading CP progress", e)
+        }
+    }
+    
+    private fun calculateCpDays(anniversaryDate: String?): Int {
+        if (anniversaryDate == null) return 0
+        return try {
+            val anniversary = java.time.Instant.parse(anniversaryDate)
+            val now = java.time.Instant.now()
+            java.time.Duration.between(anniversary, now).toDays().toInt()
+        } catch (e: Exception) {
+            0
         }
     }
     
@@ -68,21 +122,120 @@ class CpViewModel @Inject constructor() : ViewModel() {
         _uiState.value = _uiState.value.copy(showFindPartnerDialog = false)
     }
     
-    fun sendCpRequest(userId: String) {
+    fun sendCpRequest(userId: String, message: String? = null) {
         viewModelScope.launch {
-            // Call API to send CP request
-            dismissFindPartnerDialog()
+            try {
+                val response = apiService.sendCpRequest(
+                    com.aura.voicechat.data.model.CpRequestDto(
+                        id = "",
+                        fromUserId = "",
+                        fromUserName = "",
+                        fromUserAvatar = null,
+                        toUserId = userId,
+                        message = message,
+                        createdAt = ""
+                    )
+                )
+                if (response.isSuccessful && response.body()?.success == true) {
+                    dismissFindPartnerDialog()
+                    _uiState.value = _uiState.value.copy(message = "CP request sent!")
+                    Log.d(TAG, "CP request sent successfully")
+                } else {
+                    _uiState.value = _uiState.value.copy(
+                        error = response.body()?.message ?: "Failed to send CP request"
+                    )
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error sending CP request", e)
+                _uiState.value = _uiState.value.copy(error = e.message)
+            }
         }
     }
     
-    fun claimTaskReward(taskId: String) {
+    fun acceptCpRequest(requestId: String) {
         viewModelScope.launch {
-            // Call API to claim reward
-            val tasks = _uiState.value.dailyTasks.map { task ->
-                if (task.id == taskId) task.copy(isClaimed = true) else task
+            try {
+                val response = apiService.respondToCpRequest(
+                    requestId,
+                    com.aura.voicechat.data.model.CpRespondRequest(accept = true)
+                )
+                if (response.isSuccessful) {
+                    loadCpData() // Refresh
+                    _uiState.value = _uiState.value.copy(message = "CP request accepted!")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error accepting CP request", e)
+                _uiState.value = _uiState.value.copy(error = e.message)
             }
-            _uiState.value = _uiState.value.copy(dailyTasks = tasks)
         }
+    }
+    
+    fun rejectCpRequest(requestId: String) {
+        viewModelScope.launch {
+            try {
+                val response = apiService.respondToCpRequest(
+                    requestId,
+                    com.aura.voicechat.data.model.CpRespondRequest(accept = false)
+                )
+                if (response.isSuccessful) {
+                    val requests = _uiState.value.pendingRequests.filter { it.id != requestId }
+                    _uiState.value = _uiState.value.copy(pendingRequests = requests)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error rejecting CP request", e)
+            }
+        }
+    }
+    
+    fun dissolveCp() {
+        viewModelScope.launch {
+            try {
+                val response = apiService.dissolveCp()
+                if (response.isSuccessful) {
+                    loadCpData() // Refresh
+                    _uiState.value = _uiState.value.copy(message = "CP partnership dissolved")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error dissolving CP", e)
+                _uiState.value = _uiState.value.copy(error = e.message)
+            }
+        }
+    }
+    
+    fun loadRankings() {
+        viewModelScope.launch {
+            try {
+                val response = apiService.getCpRankings()
+                if (response.isSuccessful && response.body() != null) {
+                    val rankings = response.body()!!.rankings.map { r ->
+                        CpRankingItem(
+                            rank = r.rank,
+                            user1Name = r.user1.name,
+                            user1Avatar = r.user1.avatar,
+                            user2Name = r.user2.name,
+                            user2Avatar = r.user2.avatar,
+                            level = r.level,
+                            points = r.points
+                        )
+                    }
+                    _uiState.value = _uiState.value.copy(rankings = rankings)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error loading CP rankings", e)
+            }
+        }
+    }
+    
+    fun refresh() {
+        loadCpData()
+    }
+    
+    fun dismissMessage() {
+        _uiState.value = _uiState.value.copy(message = null)
+    }
+    
+    fun dismissError() {
+        _uiState.value = _uiState.value.copy(error = null)
     }
 }
 
@@ -99,5 +252,27 @@ data class CpUiState(
     val currentBenefits: List<String> = emptyList(),
     val dailyTasks: List<CpTask> = emptyList(),
     val cpCosmetics: List<CpCosmetic> = emptyList(),
-    val showFindPartnerDialog: Boolean = false
+    val pendingRequests: List<CpRequest> = emptyList(),
+    val rankings: List<CpRankingItem> = emptyList(),
+    val showFindPartnerDialog: Boolean = false,
+    val message: String? = null,
+    val error: String? = null
+)
+
+data class CpRequest(
+    val id: String,
+    val fromUserId: String,
+    val fromUserName: String,
+    val fromUserAvatar: String?,
+    val message: String?
+)
+
+data class CpRankingItem(
+    val rank: Int,
+    val user1Name: String,
+    val user1Avatar: String?,
+    val user2Name: String,
+    val user2Avatar: String?,
+    val level: Int,
+    val points: Long
 )

@@ -3,6 +3,7 @@ package com.aura.voicechat.ui.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aura.voicechat.data.remote.ApiService
 import com.aura.voicechat.domain.model.RoomCard
 import com.aura.voicechat.domain.model.RoomType
 import com.aura.voicechat.domain.repository.AuthRepository
@@ -15,15 +16,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * Home ViewModel
+ * Home ViewModel (Live API Connected - No Mock Data)
  * Developer: Hawkaye Visions LTD — Pakistan
  * 
- * Fetches rooms and user data from the backend API.
+ * Fetches rooms, banners, and user data from the backend API.
  */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val roomRepository: RoomRepository,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val apiService: ApiService
 ) : ViewModel() {
     
     companion object {
@@ -35,23 +37,18 @@ class HomeViewModel @Inject constructor(
     
     init {
         loadUserInfo()
-        loadRooms()
+        loadAllRooms()
         loadBanners()
     }
     
     /**
-     * Load current user information.
+     * Load current user information from backend.
      */
     private fun loadUserInfo() {
         viewModelScope.launch {
             try {
                 val userId = authRepository.getCurrentUserId()
-                val hasRoom = _uiState.value.myRooms.isNotEmpty()
-                
-                _uiState.value = _uiState.value.copy(
-                    currentUserId = userId,
-                    isNewUser = userId == null || !hasRoom
-                )
+                _uiState.value = _uiState.value.copy(currentUserId = userId)
             } catch (e: Exception) {
                 Log.e(TAG, "Error loading user info", e)
             }
@@ -59,9 +56,9 @@ class HomeViewModel @Inject constructor(
     }
     
     /**
-     * Load rooms from the backend API.
+     * Load all room categories from the backend API.
      */
-    private fun loadRooms() {
+    private fun loadAllRooms() {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
             try {
@@ -69,19 +66,12 @@ class HomeViewModel @Inject constructor(
                 val popularResult = roomRepository.getPopularRooms()
                 popularResult.fold(
                     onSuccess = { rooms ->
-                        Log.d(TAG, "Loaded ${rooms.size} popular rooms from backend")
-                        _uiState.value = _uiState.value.copy(
-                            isLoading = false,
-                            popularRooms = rooms
-                        )
+                        Log.d(TAG, "Loaded ${rooms.size} popular rooms")
+                        _uiState.value = _uiState.value.copy(popularRooms = rooms)
                     },
                     onFailure = { e ->
-                        Log.e(TAG, "Failed to load popular rooms from backend", e)
-                        // Use mock data as fallback
-                        _uiState.value = _uiState.value.copy(
-                            isLoading = false,
-                            popularRooms = getMockPopularRooms()
-                        )
+                        Log.e(TAG, "Failed to load popular rooms", e)
+                        _uiState.value = _uiState.value.copy(error = "Failed to load rooms: ${e.message}")
                     }
                 )
                 
@@ -89,39 +79,158 @@ class HomeViewModel @Inject constructor(
                 val myRoomsResult = roomRepository.getMyRooms()
                 myRoomsResult.fold(
                     onSuccess = { rooms ->
-                        Log.d(TAG, "Loaded ${rooms.size} my rooms from backend")
+                        Log.d(TAG, "Loaded ${rooms.size} my rooms")
                         _uiState.value = _uiState.value.copy(
                             myRooms = rooms,
                             isNewUser = rooms.isEmpty()
                         )
                     },
                     onFailure = { e ->
-                        Log.e(TAG, "Failed to load my rooms from backend", e)
+                        Log.e(TAG, "Failed to load my rooms", e)
                         _uiState.value = _uiState.value.copy(
                             myRooms = emptyList(),
                             isNewUser = true
                         )
                     }
                 )
+                
+                // Load recent rooms (rooms user recently visited)
+                loadRecentRooms()
+                
+                // Load following rooms (rooms from followed users)
+                loadFollowingRooms()
+                
+                // Load video/music rooms
+                loadVideoMusicRooms()
+                
+                _uiState.value = _uiState.value.copy(isLoading = false)
             } catch (e: Exception) {
                 Log.e(TAG, "Error loading rooms", e)
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
-                    error = e.message,
-                    popularRooms = getMockPopularRooms()
+                    error = e.message
                 )
             }
         }
     }
     
     /**
-     * Load banners - for now uses mock data.
+     * Load recent rooms from backend.
+     */
+    private suspend fun loadRecentRooms() {
+        try {
+            val response = apiService.getRecentRooms()
+            if (response.isSuccessful) {
+                val data = response.body()
+                val rooms = data?.data?.map { dto ->
+                    RoomCard(
+                        id = dto.id,
+                        name = dto.name,
+                        coverImage = dto.coverImage,
+                        ownerName = dto.ownerName,
+                        ownerAvatar = dto.ownerAvatar,
+                        type = when (dto.type.lowercase()) {
+                            "video" -> RoomType.VIDEO
+                            "music" -> RoomType.MUSIC
+                            else -> RoomType.VOICE
+                        },
+                        userCount = dto.userCount,
+                        capacity = dto.capacity,
+                        isLive = dto.isLive,
+                        tags = dto.tags
+                    )
+                } ?: emptyList()
+                _uiState.value = _uiState.value.copy(recentRooms = rooms)
+                Log.d(TAG, "Loaded ${rooms.size} recent rooms")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error loading recent rooms", e)
+        }
+    }
+    
+    /**
+     * Load following rooms from backend.
+     */
+    private suspend fun loadFollowingRooms() {
+        try {
+            val response = apiService.getFollowingRooms()
+            if (response.isSuccessful) {
+                val data = response.body()
+                val rooms = data?.data?.map { dto ->
+                    RoomCard(
+                        id = dto.id,
+                        name = dto.name,
+                        coverImage = dto.coverImage,
+                        ownerName = dto.ownerName,
+                        ownerAvatar = dto.ownerAvatar,
+                        type = when (dto.type.lowercase()) {
+                            "video" -> RoomType.VIDEO
+                            "music" -> RoomType.MUSIC
+                            else -> RoomType.VOICE
+                        },
+                        userCount = dto.userCount,
+                        capacity = dto.capacity,
+                        isLive = dto.isLive,
+                        tags = dto.tags
+                    )
+                } ?: emptyList()
+                _uiState.value = _uiState.value.copy(followingRooms = rooms)
+                Log.d(TAG, "Loaded ${rooms.size} following rooms")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error loading following rooms", e)
+        }
+    }
+    
+    /**
+     * Load video/music rooms from backend.
+     */
+    private suspend fun loadVideoMusicRooms() {
+        try {
+            val response = apiService.getVideoMusicRooms()
+            if (response.isSuccessful) {
+                val data = response.body()
+                val rooms = data?.data?.map { dto ->
+                    RoomCard(
+                        id = dto.id,
+                        name = dto.name,
+                        coverImage = dto.coverImage,
+                        ownerName = dto.ownerName,
+                        ownerAvatar = dto.ownerAvatar,
+                        type = when (dto.type.lowercase()) {
+                            "video" -> RoomType.VIDEO
+                            "music" -> RoomType.MUSIC
+                            else -> RoomType.VOICE
+                        },
+                        userCount = dto.userCount,
+                        capacity = dto.capacity,
+                        isLive = dto.isLive,
+                        tags = dto.tags
+                    )
+                } ?: emptyList()
+                _uiState.value = _uiState.value.copy(videoMusicRooms = rooms)
+                Log.d(TAG, "Loaded ${rooms.size} video/music rooms")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error loading video/music rooms", e)
+        }
+    }
+    
+    /**
+     * Load banners from backend API.
      */
     private fun loadBanners() {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(
-                banners = listOf("banner1", "banner2", "banner3")
-            )
+            try {
+                val response = apiService.getBanners()
+                if (response.isSuccessful) {
+                    val banners = response.body()?.banners?.map { it.imageUrl } ?: emptyList()
+                    _uiState.value = _uiState.value.copy(banners = banners)
+                    Log.d(TAG, "Loaded ${banners.size} banners")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error loading banners", e)
+            }
         }
     }
     
@@ -129,8 +238,9 @@ class HomeViewModel @Inject constructor(
      * Refresh all data from the backend.
      */
     fun refresh() {
-        loadRooms()
+        loadAllRooms()
         loadUserInfo()
+        loadBanners()
     }
     
     /**
@@ -145,47 +255,38 @@ class HomeViewModel @Inject constructor(
     }
     
     /**
-     * Get mock popular rooms as fallback when backend is unavailable.
+     * Create a new room via backend API.
      */
-    private fun getMockPopularRooms(): List<RoomCard> {
-        return listOf(
-            RoomCard(
-                id = "room_1",
-                name = "Music Lounge 🎵",
-                coverImage = null,
-                ownerName = "DJ Mike",
-                ownerAvatar = null,
-                type = RoomType.MUSIC,
-                userCount = 45,
-                capacity = 100,
-                isLive = true,
-                tags = listOf("Music", "Chill", "English")
-            ),
-            RoomCard(
-                id = "room_2",
-                name = "Late Night Talk",
-                coverImage = null,
-                ownerName = "Sarah",
-                ownerAvatar = null,
-                type = RoomType.VOICE,
-                userCount = 23,
-                capacity = 50,
-                isLive = true,
-                tags = listOf("Talk", "Dating")
-            ),
-            RoomCard(
-                id = "room_3",
-                name = "Gaming Zone 🎮",
-                coverImage = null,
-                ownerName = "GamerPro",
-                ownerAvatar = null,
-                type = RoomType.VIDEO,
-                userCount = 67,
-                capacity = 100,
-                isLive = true,
-                tags = listOf("Gaming", "Fun")
-            )
-        )
+    fun createRoom(name: String, type: String, capacity: Int) {
+        viewModelScope.launch {
+            try {
+                _uiState.value = _uiState.value.copy(isCreatingRoom = true)
+                val response = apiService.createRoom(
+                    com.aura.voicechat.data.model.CreateRoomRequest(
+                        name = name,
+                        type = type,
+                        capacity = capacity
+                    )
+                )
+                if (response.isSuccessful && response.body()?.success == true) {
+                    Log.d(TAG, "Room created successfully")
+                    refresh() // Refresh to load new room
+                } else {
+                    _uiState.value = _uiState.value.copy(
+                        error = response.body()?.message ?: "Failed to create room"
+                    )
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error creating room", e)
+                _uiState.value = _uiState.value.copy(error = e.message)
+            } finally {
+                _uiState.value = _uiState.value.copy(isCreatingRoom = false)
+            }
+        }
+    }
+    
+    fun dismissError() {
+        _uiState.value = _uiState.value.copy(error = null)
     }
 }
 
@@ -199,12 +300,14 @@ sealed class HomeAction {
 
 data class HomeUiState(
     val isLoading: Boolean = false,
+    val isCreatingRoom: Boolean = false,
     val currentUserId: String? = null,
     val isNewUser: Boolean = true,
     val myRooms: List<RoomCard> = emptyList(),
     val popularRooms: List<RoomCard> = emptyList(),
     val recentRooms: List<RoomCard> = emptyList(),
     val followingRooms: List<RoomCard> = emptyList(),
+    val videoMusicRooms: List<RoomCard> = emptyList(),
     val banners: List<String> = emptyList(),
     val error: String? = null
 )

@@ -277,6 +277,39 @@ data class AddToPlaylistRequest(
     @SerializedName("url") val url: String
 )
 
+// Banners
+data class BannersResponse(
+    @SerializedName("banners") val banners: List<BannerDto>
+)
+
+data class BannerDto(
+    @SerializedName("id") val id: String,
+    @SerializedName("imageUrl") val imageUrl: String,
+    @SerializedName("targetUrl") val targetUrl: String?,
+    @SerializedName("type") val type: String,
+    @SerializedName("startAt") val startAt: Long?,
+    @SerializedName("endAt") val endAt: Long?,
+    @SerializedName("isActive") val isActive: Boolean
+)
+
+// Followers
+data class FollowersResponse(
+    @SerializedName("users") val users: List<FollowerDto>,
+    @SerializedName("total") val total: Int,
+    @SerializedName("pagination") val pagination: PaginationDto
+)
+
+data class FollowerDto(
+    @SerializedName("id") val id: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("avatar") val avatar: String?,
+    @SerializedName("level") val level: Int,
+    @SerializedName("vipTier") val vipTier: Int,
+    @SerializedName("isOnline") val isOnline: Boolean,
+    @SerializedName("isFollowing") val isFollowing: Boolean,
+    @SerializedName("followedAt") val followedAt: Long
+)
+
 // User
 data class UserDto(
     @SerializedName("id") val id: String,
@@ -305,6 +338,10 @@ data class UserResponse(
     @SerializedName("kycStatus") val kycStatus: String,
     @SerializedName("cpPartnerId") val cpPartnerId: String?,
     @SerializedName("familyId") val familyId: String?,
+    @SerializedName("followersCount") val followersCount: Int?,
+    @SerializedName("followingCount") val followingCount: Int?,
+    @SerializedName("giftsReceivedCount") val giftsReceivedCount: Int?,
+    @SerializedName("isFollowing") val isFollowing: Boolean?,
     @SerializedName("createdAt") val createdAt: Long
 )
 
@@ -1432,4 +1469,407 @@ data class CreateRoomResponse(
     @SerializedName("success") val success: Boolean,
     @SerializedName("room") val room: RoomDetailsResponse?,
     @SerializedName("message") val message: String?
+)
+
+// ============================================
+// Family System Models
+// ============================================
+
+data class MyFamilyResponse(
+    @SerializedName("hasFamily") val hasFamily: Boolean,
+    @SerializedName("family") val family: FamilyDto?
+)
+
+data class FamilyDto(
+    @SerializedName("id") val id: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("badge") val badge: String?,
+    @SerializedName("level") val level: Int,
+    @SerializedName("memberCount") val memberCount: Int,
+    @SerializedName("maxMembers") val maxMembers: Int,
+    @SerializedName("weeklyGifts") val weeklyGifts: Long,
+    @SerializedName("totalGifts") val totalGifts: Long,
+    @SerializedName("weeklyRanking") val weeklyRanking: Int,
+    @SerializedName("createdAt") val createdAt: String,
+    @SerializedName("ownerName") val ownerName: String,
+    @SerializedName("notice") val notice: String?,
+    @SerializedName("isOwner") val isOwner: Boolean,
+    @SerializedName("isAdmin") val isAdmin: Boolean,
+    @SerializedName("members") val members: List<FamilyMemberDto>?,
+    @SerializedName("perks") val perks: List<FamilyPerkDto>?,
+    @SerializedName("isOpen") val isOpen: Boolean
+)
+
+data class FamilyMemberDto(
+    @SerializedName("userId") val userId: String,
+    @SerializedName("userName") val userName: String,
+    @SerializedName("userAvatar") val userAvatar: String?,
+    @SerializedName("role") val role: String,
+    @SerializedName("contribution") val contribution: Long,
+    @SerializedName("joinedAt") val joinedAt: String?
+)
+
+data class FamilyPerkDto(
+    @SerializedName("id") val id: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("description") val description: String,
+    @SerializedName("requiredLevel") val requiredLevel: Int
+)
+
+data class FamilyDetailsResponse(
+    @SerializedName("family") val family: FamilyDto
+)
+
+data class CreateFamilyRequest(
+    @SerializedName("name") val name: String,
+    @SerializedName("badge") val badge: String?
+)
+
+data class CreateFamilyResponse(
+    @SerializedName("success") val success: Boolean,
+    @SerializedName("family") val family: FamilyDto?,
+    @SerializedName("message") val message: String?
+)
+
+data class FamilySearchResponse(
+    @SerializedName("families") val families: List<FamilyDto>
+)
+
+data class FamilyMembersResponse(
+    @SerializedName("members") val members: List<FamilyMemberDto>
+)
+
+data class FamilyActivityResponse(
+    @SerializedName("activities") val activities: List<FamilyActivityDto>
+)
+
+data class FamilyActivityDto(
+    @SerializedName("id") val id: String,
+    @SerializedName("type") val type: String,
+    @SerializedName("message") val message: String,
+    @SerializedName("timeAgo") val timeAgo: String,
+    @SerializedName("timestamp") val timestamp: Long?
+)
+
+data class UpdateFamilyRoleRequest(
+    @SerializedName("role") val role: String
+)
+
+data class FamilyRankingsResponse(
+    @SerializedName("rankings") val rankings: List<FamilyRankingDto>,
+    @SerializedName("pagination") val pagination: PaginationDto
+)
+
+data class FamilyRankingDto(
+    @SerializedName("rank") val rank: Int,
+    @SerializedName("familyId") val familyId: String,
+    @SerializedName("familyName") val familyName: String,
+    @SerializedName("badge") val badge: String?,
+    @SerializedName("level") val level: Int,
+    @SerializedName("weeklyGifts") val weeklyGifts: Long,
+    @SerializedName("memberCount") val memberCount: Int
+)
+
+// ============================================
+// CP Partnership Models
+// ============================================
+
+data class CpStatusResponse(
+    @SerializedName("hasPartner") val hasPartner: Boolean,
+    @SerializedName("partner") val partner: CpPartnerDto?,
+    @SerializedName("level") val level: Int,
+    @SerializedName("points") val points: Long,
+    @SerializedName("anniversaryDate") val anniversaryDate: String?,
+    @SerializedName("pendingRequests") val pendingRequests: List<CpRequestDto>?
+)
+
+data class CpPartnerDto(
+    @SerializedName("userId") val userId: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("avatar") val avatar: String?,
+    @SerializedName("level") val level: Int,
+    @SerializedName("vipTier") val vipTier: Int,
+    @SerializedName("isOnline") val isOnline: Boolean
+)
+
+data class CpRequestDto(
+    @SerializedName("id") val id: String,
+    @SerializedName("fromUserId") val fromUserId: String,
+    @SerializedName("fromUserName") val fromUserName: String,
+    @SerializedName("fromUserAvatar") val fromUserAvatar: String?,
+    @SerializedName("toUserId") val toUserId: String,
+    @SerializedName("message") val message: String?,
+    @SerializedName("createdAt") val createdAt: String
+)
+
+data class CpRequestResponse(
+    @SerializedName("success") val success: Boolean,
+    @SerializedName("message") val message: String
+)
+
+data class CpRespondRequest(
+    @SerializedName("accept") val accept: Boolean
+)
+
+data class CpRankingsResponse(
+    @SerializedName("rankings") val rankings: List<CpRankingDto>,
+    @SerializedName("pagination") val pagination: PaginationDto
+)
+
+data class CpRankingDto(
+    @SerializedName("rank") val rank: Int,
+    @SerializedName("user1") val user1: CpPartnerDto,
+    @SerializedName("user2") val user2: CpPartnerDto,
+    @SerializedName("level") val level: Int,
+    @SerializedName("points") val points: Long
+)
+
+data class CpProgressResponse(
+    @SerializedName("currentLevel") val currentLevel: Int,
+    @SerializedName("currentPoints") val currentPoints: Long,
+    @SerializedName("nextLevelPoints") val nextLevelPoints: Long,
+    @SerializedName("perks") val perks: List<CpPerkDto>
+)
+
+data class CpPerkDto(
+    @SerializedName("id") val id: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("description") val description: String,
+    @SerializedName("requiredLevel") val requiredLevel: Int,
+    @SerializedName("isUnlocked") val isUnlocked: Boolean
+)
+
+// ============================================
+// Ranking System Models
+// ============================================
+
+data class GiftRankingsResponse(
+    @SerializedName("rankings") val rankings: List<UserRankingDto>,
+    @SerializedName("myRank") val myRank: Int?,
+    @SerializedName("pagination") val pagination: PaginationDto
+)
+
+data class UserRankingDto(
+    @SerializedName("rank") val rank: Int,
+    @SerializedName("userId") val userId: String,
+    @SerializedName("userName") val userName: String,
+    @SerializedName("userAvatar") val userAvatar: String?,
+    @SerializedName("userLevel") val userLevel: Int,
+    @SerializedName("userVip") val userVip: Int,
+    @SerializedName("value") val value: Long
+)
+
+data class LevelRankingsResponse(
+    @SerializedName("rankings") val rankings: List<UserRankingDto>,
+    @SerializedName("myRank") val myRank: Int?,
+    @SerializedName("pagination") val pagination: PaginationDto
+)
+
+data class WealthRankingsResponse(
+    @SerializedName("rankings") val rankings: List<UserRankingDto>,
+    @SerializedName("myRank") val myRank: Int?,
+    @SerializedName("pagination") val pagination: PaginationDto
+)
+
+data class CharmRankingsResponse(
+    @SerializedName("rankings") val rankings: List<UserRankingDto>,
+    @SerializedName("myRank") val myRank: Int?,
+    @SerializedName("pagination") val pagination: PaginationDto
+)
+
+// ============================================
+// Friends System Models
+// ============================================
+
+data class FriendsResponse(
+    @SerializedName("friends") val friends: List<FriendDto>,
+    @SerializedName("pagination") val pagination: PaginationDto
+)
+
+data class FriendDto(
+    @SerializedName("userId") val userId: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("avatar") val avatar: String?,
+    @SerializedName("level") val level: Int,
+    @SerializedName("vipTier") val vipTier: Int,
+    @SerializedName("isOnline") val isOnline: Boolean,
+    @SerializedName("intimacy") val intimacy: Int,
+    @SerializedName("friendSince") val friendSince: String
+)
+
+data class FriendRequestsResponse(
+    @SerializedName("requests") val requests: List<FriendRequestItem>
+)
+
+data class FriendRequestItem(
+    @SerializedName("id") val id: String,
+    @SerializedName("fromUserId") val fromUserId: String,
+    @SerializedName("fromUserName") val fromUserName: String,
+    @SerializedName("fromUserAvatar") val fromUserAvatar: String?,
+    @SerializedName("message") val message: String?,
+    @SerializedName("createdAt") val createdAt: String
+)
+
+data class FriendRequestDto(
+    @SerializedName("userId") val userId: String,
+    @SerializedName("message") val message: String?
+)
+
+// ============================================
+// Events System Models
+// ============================================
+
+data class EventsListResponse(
+    @SerializedName("events") val events: List<EventDto>
+)
+
+data class EventDto(
+    @SerializedName("id") val id: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("description") val description: String,
+    @SerializedName("type") val type: String,
+    @SerializedName("bannerUrl") val bannerUrl: String?,
+    @SerializedName("startAt") val startAt: Long,
+    @SerializedName("endAt") val endAt: Long,
+    @SerializedName("isActive") val isActive: Boolean,
+    @SerializedName("rewards") val rewards: List<EventRewardDto>?
+)
+
+data class EventRewardDto(
+    @SerializedName("id") val id: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("type") val type: String,
+    @SerializedName("value") val value: Long,
+    @SerializedName("requirement") val requirement: Long
+)
+
+data class EventDetailsResponse(
+    @SerializedName("event") val event: EventDto,
+    @SerializedName("rankings") val rankings: List<UserRankingDto>?,
+    @SerializedName("myProgress") val myProgress: Long?
+)
+
+data class EventProgressResponse(
+    @SerializedName("eventId") val eventId: String,
+    @SerializedName("progress") val progress: Long,
+    @SerializedName("rank") val rank: Int?,
+    @SerializedName("rewards") val rewards: List<EventRewardProgressDto>
+)
+
+data class EventRewardProgressDto(
+    @SerializedName("rewardId") val rewardId: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("requirement") val requirement: Long,
+    @SerializedName("isClaimed") val isClaimed: Boolean
+)
+
+// ============================================
+// Search Models
+// ============================================
+
+data class SearchUsersResponse(
+    @SerializedName("users") val users: List<SearchUserDto>
+)
+
+data class SearchUserDto(
+    @SerializedName("id") val id: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("avatar") val avatar: String?,
+    @SerializedName("level") val level: Int,
+    @SerializedName("vipTier") val vipTier: Int,
+    @SerializedName("isOnline") val isOnline: Boolean
+)
+
+// ============================================
+// Admin Panel Models
+// ============================================
+
+data class AdminDashboardResponse(
+    @SerializedName("totalUsers") val totalUsers: Long,
+    @SerializedName("activeUsers") val activeUsers: Long,
+    @SerializedName("totalRooms") val totalRooms: Long,
+    @SerializedName("activeRooms") val activeRooms: Long,
+    @SerializedName("totalRevenue") val totalRevenue: Double,
+    @SerializedName("todayRevenue") val todayRevenue: Double,
+    @SerializedName("pendingReports") val pendingReports: Int,
+    @SerializedName("pendingKyc") val pendingKyc: Int,
+    @SerializedName("pendingGuides") val pendingGuides: Int
+)
+
+data class AdminUsersResponse(
+    @SerializedName("users") val users: List<AdminUserDto>,
+    @SerializedName("pagination") val pagination: PaginationDto
+)
+
+data class AdminUserDto(
+    @SerializedName("id") val id: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("avatar") val avatar: String?,
+    @SerializedName("email") val email: String?,
+    @SerializedName("phone") val phone: String?,
+    @SerializedName("level") val level: Int,
+    @SerializedName("vipTier") val vipTier: Int,
+    @SerializedName("coins") val coins: Long,
+    @SerializedName("diamonds") val diamonds: Long,
+    @SerializedName("isBanned") val isBanned: Boolean,
+    @SerializedName("createdAt") val createdAt: String
+)
+
+data class AdminBanRequest(
+    @SerializedName("reason") val reason: String,
+    @SerializedName("duration") val duration: Int? // Days, null = permanent
+)
+
+data class AdminReportsResponse(
+    @SerializedName("reports") val reports: List<AdminReportDto>
+)
+
+data class AdminReportDto(
+    @SerializedName("id") val id: String,
+    @SerializedName("reporterId") val reporterId: String,
+    @SerializedName("reporterName") val reporterName: String,
+    @SerializedName("targetId") val targetId: String,
+    @SerializedName("targetName") val targetName: String,
+    @SerializedName("targetType") val targetType: String, // "user", "room", "message"
+    @SerializedName("reason") val reason: String,
+    @SerializedName("description") val description: String?,
+    @SerializedName("status") val status: String,
+    @SerializedName("createdAt") val createdAt: String
+)
+
+data class ResolveReportRequest(
+    @SerializedName("action") val action: String, // "dismiss", "warn", "ban"
+    @SerializedName("notes") val notes: String?
+)
+
+data class KycApplicationsResponse(
+    @SerializedName("applications") val applications: List<KycApplicationDto>
+)
+
+data class KycApplicationDto(
+    @SerializedName("userId") val userId: String,
+    @SerializedName("userName") val userName: String,
+    @SerializedName("userAvatar") val userAvatar: String?,
+    @SerializedName("status") val status: String,
+    @SerializedName("idCardFront") val idCardFront: String?,
+    @SerializedName("idCardBack") val idCardBack: String?,
+    @SerializedName("selfie") val selfie: String?,
+    @SerializedName("submittedAt") val submittedAt: String
+)
+
+data class RejectKycRequest(
+    @SerializedName("reason") val reason: String
+)
+
+data class GuideApplicationsResponse(
+    @SerializedName("applications") val applications: List<GuideApplicationDto>
+)
+
+data class GuideApplicationDto(
+    @SerializedName("userId") val userId: String,
+    @SerializedName("userName") val userName: String,
+    @SerializedName("userAvatar") val userAvatar: String?,
+    @SerializedName("userLevel") val userLevel: Int,
+    @SerializedName("status") val status: String,
+    @SerializedName("appliedAt") val appliedAt: String
 )
