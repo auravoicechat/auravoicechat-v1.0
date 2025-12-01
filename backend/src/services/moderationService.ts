@@ -233,9 +233,22 @@ export async function checkImageContent(
             }
         }
         
-        // Mark for manual review if it's a new upload (not from our CDN)
-        // In production, queue this for AI analysis
-        if (!imageUrl.includes('aura-assets') && !imageUrl.includes('amazonaws.com')) {
+        // Mark for manual review if it's a new upload (not from our trusted CDN domains)
+        // Use URL parsing for proper host checking to avoid substring bypass attacks
+        try {
+            const url = new URL(imageUrl);
+            const trustedHosts = [
+                'aura-assets.s3.amazonaws.com',
+                's3.amazonaws.com',
+                'aura-cdn.com'
+            ];
+            const isTrustedHost = trustedHosts.some(host => url.hostname === host || url.hostname.endsWith('.' + host));
+            
+            if (!isTrustedHost) {
+                await queueImageForReview(userId, imageUrl, context);
+            }
+        } catch (urlError) {
+            // Invalid URL - queue for review
             await queueImageForReview(userId, imageUrl, context);
         }
         
