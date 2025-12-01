@@ -1,7 +1,9 @@
 package com.aura.voicechat.ui.rewards
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aura.voicechat.data.remote.ApiService
 import com.aura.voicechat.domain.model.ClaimRewardResult
 import com.aura.voicechat.domain.model.DailyRewardSchedule
 import com.aura.voicechat.domain.model.DayReward
@@ -9,7 +11,6 @@ import com.aura.voicechat.domain.model.RewardStatus
 import com.aura.voicechat.domain.model.VipTiers
 import com.aura.voicechat.domain.repository.RewardsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * Daily Rewards ViewModel
+ * Daily Rewards ViewModel (Live API Connected)
  * Developer: Hawkaye Visions LTD — Pakistan
  * 
  * 7-day cycle: Day 1 (5K) → Day 7 (50K)
@@ -25,8 +26,13 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class DailyRewardsViewModel @Inject constructor(
-    private val rewardsRepository: RewardsRepository
+    private val rewardsRepository: RewardsRepository,
+    private val apiService: ApiService
 ) : ViewModel() {
+    
+    companion object {
+        private const val TAG = "DailyRewardsViewModel"
+    }
     
     private val _uiState = MutableStateFlow(DailyRewardsUiState())
     val uiState: StateFlow<DailyRewardsUiState> = _uiState.asStateFlow()
@@ -39,32 +45,40 @@ class DailyRewardsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
             try {
-                // Mock data - in real app, fetch from repository
-                val currentDay = 6
-                val streak = 5
-                val vipTier = 5
-                val vipMultiplier = VipTiers.getMultiplier(vipTier)
-                
-                val cycle = DailyRewardSchedule.rewards.mapIndexed { index, reward ->
-                    reward.copy(
-                        status = when {
-                            index < currentDay - 1 -> RewardStatus.CLAIMED
-                            index == currentDay - 1 -> RewardStatus.CLAIMABLE
-                            else -> RewardStatus.LOCKED
-                        }
+                val response = apiService.getDailyRewardStatus()
+                if (response.isSuccessful && response.body() != null) {
+                    val data = response.body()!!
+                    val vipMultiplier = VipTiers.getMultiplier(data.vipTier)
+                    
+                    val cycle = DailyRewardSchedule.rewards.mapIndexed { index, reward ->
+                        reward.copy(
+                            status = when {
+                                index < data.currentDay - 1 -> RewardStatus.CLAIMED
+                                index == data.currentDay - 1 && data.canClaim -> RewardStatus.CLAIMABLE
+                                index == data.currentDay - 1 && !data.canClaim -> RewardStatus.CLAIMED
+                                else -> RewardStatus.LOCKED
+                            }
+                        )
+                    }
+                    
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        currentDay = data.currentDay,
+                        claimable = data.canClaim,
+                        cycle = cycle,
+                        streak = data.streak,
+                        vipTier = data.vipTier,
+                        vipMultiplier = vipMultiplier
+                    )
+                    Log.d(TAG, "Loaded daily reward status: day=${data.currentDay}, canClaim=${data.canClaim}")
+                } else {
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        error = "Failed to load reward status"
                     )
                 }
-                
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    currentDay = currentDay,
-                    claimable = true,
-                    cycle = cycle,
-                    streak = streak,
-                    vipTier = vipTier,
-                    vipMultiplier = vipMultiplier
-                )
             } catch (e: Exception) {
+                Log.e(TAG, "Error loading reward status", e)
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
                     error = e.message
@@ -77,42 +91,47 @@ class DailyRewardsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
             try {
-                // Simulate API call
-                delay(1000)
-                
-                val currentDay = _uiState.value.currentDay
-                val baseCoins = DailyRewardSchedule.getReward(currentDay)
-                val vipMultiplier = _uiState.value.vipMultiplier
-                val totalCoins = (baseCoins * vipMultiplier).toLong()
-                
-                val result = ClaimRewardResult(
-                    success = true,
-                    day = currentDay,
-                    baseCoins = baseCoins,
-                    vipMultiplier = vipMultiplier,
-                    totalCoins = totalCoins
-                )
-                
-                // Update cycle to show claimed
-                val updatedCycle = _uiState.value.cycle.map { dayReward ->
-                    if (dayReward.day == currentDay) {
-                        dayReward.copy(status = RewardStatus.CLAIMED)
-                    } else if (dayReward.day == currentDay + 1 && currentDay < 7) {
-                        dayReward.copy(status = RewardStatus.CLAIMABLE)
-                    } else {
-                        dayReward
+                val response = apiService.claimDailyReward()
+                if (response.isSuccessful && response.body() != null) {
+                    val data = response.body()!!
+                    
+                    val result = ClaimRewardResult(
+                        success = true,
+                        day = _uiState.value.currentDay,
+                        baseCoins = data.baseCoins,
+                        vipMultiplier = _uiState.value.vipMultiplier,
+                        totalCoins = data.totalCoins
+                    )
+                    
+                    // Update cycle to show claimed
+                    val currentDay = _uiState.value.currentDay
+                    val updatedCycle = _uiState.value.cycle.map { dayReward ->
+                        if (dayReward.day == currentDay) {
+                            dayReward.copy(status = RewardStatus.CLAIMED)
+                        } else if (dayReward.day == currentDay + 1 && currentDay < 7) {
+                            dayReward.copy(status = RewardStatus.LOCKED) // Tomorrow
+                        } else {
+                            dayReward
+                        }
                     }
+                    
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        claimable = false,
+                        cycle = updatedCycle,
+                        streak = _uiState.value.streak + 1,
+                        currentDay = if (currentDay < 7) currentDay + 1 else 1,
+                        claimResult = result
+                    )
+                    Log.d(TAG, "Claimed daily reward: ${data.totalCoins} coins")
+                } else {
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        error = "Failed to claim reward"
+                    )
                 }
-                
-                _uiState.value = _uiState.value.copy(
-                    isLoading = false,
-                    claimable = false,
-                    cycle = updatedCycle,
-                    streak = _uiState.value.streak + 1,
-                    currentDay = if (currentDay < 7) currentDay + 1 else 1,
-                    claimResult = result
-                )
             } catch (e: Exception) {
+                Log.e(TAG, "Error claiming reward", e)
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
                     error = e.message
@@ -123,6 +142,14 @@ class DailyRewardsViewModel @Inject constructor(
     
     fun clearClaimResult() {
         _uiState.value = _uiState.value.copy(claimResult = null)
+    }
+    
+    fun refresh() {
+        loadRewardStatus()
+    }
+    
+    fun dismissError() {
+        _uiState.value = _uiState.value.copy(error = null)
     }
 }
 

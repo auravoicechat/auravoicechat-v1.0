@@ -1,7 +1,9 @@
 package com.aura.voicechat.ui.inventory
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aura.voicechat.data.remote.ApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -10,11 +12,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * Inventory ViewModel
+ * Inventory ViewModel (Live API Connected)
  * Developer: Hawkaye Visions LTD — Pakistan
  */
 @HiltViewModel
-class InventoryViewModel @Inject constructor() : ViewModel() {
+class InventoryViewModel @Inject constructor(
+    private val apiService: ApiService
+) : ViewModel() {
+    
+    companion object {
+        private const val TAG = "InventoryViewModel"
+    }
     
     private val _uiState = MutableStateFlow(InventoryUiState())
     val uiState: StateFlow<InventoryUiState> = _uiState.asStateFlow()
@@ -28,16 +36,53 @@ class InventoryViewModel @Inject constructor() : ViewModel() {
     private fun loadInventory() {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
-            
-            // In production, this would fetch from API
-            allItems = getSampleInventory()
-            val equipped = getSampleEquipped()
-            
-            _uiState.value = _uiState.value.copy(
-                isLoading = false,
-                items = allItems,
-                equippedItems = equipped
-            )
+            try {
+                val response = apiService.getInventory()
+                if (response.isSuccessful && response.body() != null) {
+                    val data = response.body()!!
+                    allItems = data.items.map { dto ->
+                        InventoryItem(
+                            id = dto.id,
+                            name = dto.name,
+                            description = dto.description,
+                            category = dto.category,
+                            rarity = dto.rarity,
+                            expiresIn = dto.expiresIn,
+                            isExpiringSoon = dto.isExpiringSoon,
+                            isBaggage = dto.isBaggage
+                        )
+                    }
+                    
+                    val equipped = data.equippedItems.map { dto ->
+                        InventoryItem(
+                            id = dto.id,
+                            name = dto.name,
+                            description = dto.description,
+                            category = dto.category,
+                            rarity = dto.rarity,
+                            expiresIn = dto.expiresIn
+                        )
+                    }
+                    
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        items = allItems,
+                        equippedItems = equipped
+                    )
+                    Log.d(TAG, "Loaded ${allItems.size} inventory items")
+                } else {
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        items = emptyList()
+                    )
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error loading inventory", e)
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    error = e.message
+                )
+            }
         }
     }
     
@@ -60,70 +105,71 @@ class InventoryViewModel @Inject constructor() : ViewModel() {
     }
     
     fun equipItem(itemId: String) {
-        val item = allItems.find { it.id == itemId } ?: return
-        val currentEquipped = _uiState.value.equippedItems.toMutableList()
-        
-        // Remove any existing item in same category
-        currentEquipped.removeAll { it.category == item.category }
-        currentEquipped.add(item)
-        
-        _uiState.value = _uiState.value.copy(
-            equippedItems = currentEquipped,
-            selectedItem = null
-        )
+        viewModelScope.launch {
+            try {
+                val response = apiService.equipItem(com.aura.voicechat.data.model.EquipItemRequest(itemId))
+                if (response.isSuccessful) {
+                    val item = allItems.find { it.id == itemId } ?: return@launch
+                    val currentEquipped = _uiState.value.equippedItems.toMutableList()
+                    
+                    // Remove any existing item in same category
+                    currentEquipped.removeAll { it.category == item.category }
+                    currentEquipped.add(item)
+                    
+                    _uiState.value = _uiState.value.copy(
+                        equippedItems = currentEquipped,
+                        selectedItem = null,
+                        message = "Equipped ${item.name}!"
+                    )
+                    Log.d(TAG, "Equipped item: $itemId")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error equipping item", e)
+                _uiState.value = _uiState.value.copy(error = e.message)
+            }
+        }
     }
     
     fun unequipItem(itemId: String) {
-        val currentEquipped = _uiState.value.equippedItems.toMutableList()
-        currentEquipped.removeAll { it.id == itemId }
-        
-        _uiState.value = _uiState.value.copy(
-            equippedItems = currentEquipped,
-            selectedItem = null
-        )
+        viewModelScope.launch {
+            try {
+                val response = apiService.unequipItem(com.aura.voicechat.data.model.UnequipItemRequest(itemId))
+                if (response.isSuccessful) {
+                    val currentEquipped = _uiState.value.equippedItems.toMutableList()
+                    currentEquipped.removeAll { it.id == itemId }
+                    
+                    _uiState.value = _uiState.value.copy(
+                        equippedItems = currentEquipped,
+                        selectedItem = null,
+                        message = "Item unequipped"
+                    )
+                    Log.d(TAG, "Unequipped item: $itemId")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error unequipping item", e)
+                _uiState.value = _uiState.value.copy(error = e.message)
+            }
+        }
     }
     
-    private fun getSampleInventory(): List<InventoryItem> = listOf(
-        // Owned Frames
-        InventoryItem("frame_owned_001", "Blue Aura", "Cool blue glow frame", "frames", "common", expiresIn = "5 days"),
-        InventoryItem("frame_owned_002", "Fire Ring", "Burning flames border", "frames", "rare", expiresIn = "25 days"),
-        InventoryItem("frame_owned_003", "Golden Crown", "Majestic royal frame", "frames", "legendary"),
-        
-        // Owned Vehicles
-        InventoryItem("vehicle_owned_001", "Sports Car", "Red luxury sports car", "vehicles", "epic", expiresIn = "18 days"),
-        InventoryItem("vehicle_owned_002", "Jet Ski", "Wave riding machine", "vehicles", "rare", expiresIn = "8 days"),
-        
-        // Owned Themes
-        InventoryItem("theme_owned_001", "Cherry Blossom", "Pink sakura theme", "themes", "rare", expiresIn = "10 days"),
-        
-        // Owned Mic Skins
-        InventoryItem("mic_owned_001", "Star Mic", "Sparkling star effects", "mic_skins", "rare", expiresIn = "12 days"),
-        
-        // Owned Seat Effects
-        InventoryItem("seat_owned_001", "Bubbles", "Floating bubble effects", "seat_effects", "common", expiresIn = "3 days", isExpiringSoon = true),
-        InventoryItem("seat_owned_002", "Flame Throne", "Royal fire effects", "seat_effects", "epic", expiresIn = "20 days"),
-        
-        // Owned Chat Bubbles
-        InventoryItem("bubble_owned_001", "Neon Glow", "Bright neon style", "chat_bubbles", "rare", expiresIn = "7 days"),
-        
-        // Baggage Items (free gifts)
-        InventoryItem("baggage_001", "Event Rose", "Special event gift", "baggage", "rare", isBaggage = true),
-        InventoryItem("baggage_002", "Birthday Cake", "Anniversary reward", "baggage", "epic", isBaggage = true),
-        InventoryItem("baggage_003", "Lucky Star", "Login bonus gift", "baggage", "common", isBaggage = true),
-        InventoryItem("baggage_004", "CP Heart", "Partnership reward", "baggage", "epic", isBaggage = true),
-        InventoryItem("baggage_005", "Friend Medal", "Friendship milestone", "baggage", "rare", isBaggage = true)
-    )
+    fun refresh() {
+        loadInventory()
+    }
     
-    private fun getSampleEquipped(): List<InventoryItem> = listOf(
-        InventoryItem("frame_owned_003", "Golden Crown", "Majestic royal frame", "frames", "legendary"),
-        InventoryItem("vehicle_owned_001", "Sports Car", "Red luxury sports car", "vehicles", "epic", expiresIn = "18 days"),
-        InventoryItem("mic_owned_001", "Star Mic", "Sparkling star effects", "mic_skins", "rare", expiresIn = "12 days")
-    )
+    fun dismissMessage() {
+        _uiState.value = _uiState.value.copy(message = null)
+    }
+    
+    fun dismissError() {
+        _uiState.value = _uiState.value.copy(error = null)
+    }
 }
 
 data class InventoryUiState(
     val isLoading: Boolean = false,
     val items: List<InventoryItem> = emptyList(),
     val equippedItems: List<InventoryItem> = emptyList(),
-    val selectedItem: InventoryItem? = null
+    val selectedItem: InventoryItem? = null,
+    val message: String? = null,
+    val error: String? = null
 )
