@@ -1,8 +1,10 @@
 package com.aura.voicechat.ui.games
 
+import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aura.voicechat.data.remote.ApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -15,14 +17,18 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 /**
- * ViewModel for Greedy Baby Game
+ * ViewModel for Greedy Baby Game (Live API Connected)
  * Circular betting wheel game with live multiplayer betting, timer-based rounds
  * Developer: Hawkaye Visions LTD — Pakistan
  */
 @HiltViewModel
 class GreedyBabyViewModel @Inject constructor(
-    // TODO: Inject WebSocket service, repository, etc.
+    private val apiService: ApiService
 ) : ViewModel() {
+    
+    companion object {
+        private const val TAG = "GreedyBabyViewModel"
+    }
 
     private val _uiState = MutableStateFlow(GreedyBabyUiState())
     val uiState: StateFlow<GreedyBabyUiState> = _uiState.asStateFlow()
@@ -32,6 +38,8 @@ class GreedyBabyViewModel @Inject constructor(
 
     init {
         initializeGame()
+        loadUserCoins()
+        loadGameHistory()
         startGameLoop()
     }
 
@@ -68,21 +76,52 @@ class GreedyBabyViewModel @Inject constructor(
                 wheelItems = wheelItems,
                 chips = chips,
                 selectedChip = chips.first(),
-                userCoins = 10_000_000L, // Initial value - will be updated from WebSocket/API
                 timerSeconds = 15,
                 gamePhase = GamePhase.BETTING
             )
         }
-        
-        // Load user coins from repository (async)
-        loadUserCoins()
     }
     
     private fun loadUserCoins() {
         viewModelScope.launch {
-            // In production, this would call the user repository to get actual balance
-            // Example: val coins = userRepository.getUserCoins()
-            // For now, we use the initialized value
+            try {
+                val response = apiService.getWalletBalance()
+                if (response.isSuccessful && response.body() != null) {
+                    _uiState.update { state ->
+                        state.copy(userCoins = response.body()!!.coins)
+                    }
+                    Log.d(TAG, "Loaded user coins: ${response.body()!!.coins}")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error loading user coins", e)
+            }
+        }
+    }
+    
+    private fun loadGameHistory() {
+        viewModelScope.launch {
+            try {
+                val response = apiService.getGameHistory("greedy_baby", 1, 10)
+                if (response.isSuccessful && response.body() != null) {
+                    val records = response.body()!!.records.map { dto ->
+                        WinningRecord(
+                            roundId = dto.id,
+                            item = _uiState.value.wheelItems.find { it.id == dto.result } 
+                                ?: _uiState.value.wheelItems.first(),
+                            totalBet = dto.bet,
+                            won = dto.won,
+                            payout = dto.payout,
+                            timestamp = dto.createdAt
+                        )
+                    }
+                    _uiState.update { state ->
+                        state.copy(winningRecords = records)
+                    }
+                    Log.d(TAG, "Loaded ${records.size} game history records")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error loading game history", e)
+            }
         }
     }
 
