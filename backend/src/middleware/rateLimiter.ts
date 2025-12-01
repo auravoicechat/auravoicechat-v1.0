@@ -65,3 +65,18 @@ export const withdrawalLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false
 });
+
+// Gift sending rate limiter
+export const giftLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 30, // 30 gift sends per minute
+  message: {
+    error: {
+      code: 'RATE_LIMIT_EXCEEDED',
+      message: 'Too many gift sends. Please try again later.',
+      retryAfter: 60
+    }
+  },
+  standardHeaders: true,
+  legacyHeaders: false
+});

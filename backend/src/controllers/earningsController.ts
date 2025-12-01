@@ -138,11 +138,22 @@ export const claimReward = async (req: Request, res: Response, next: NextFunctio
       throw new AppError('Target not reached', 400, 'TARGET_NOT_REACHED');
     }
 
-    // Check if already claimed
-    const periodInterval = target.period === 'weekly' ? '7 days' : target.period === 'monthly' ? '30 days' : '365 days';
+    // Check if already claimed (use parameterized interval to avoid SQL injection)
+    let periodDays: number;
+    switch (target.period) {
+      case 'weekly':
+        periodDays = 7;
+        break;
+      case 'monthly':
+        periodDays = 30;
+        break;
+      default:
+        periodDays = 365;
+    }
+    
     const claimResult = await query(
-      `SELECT * FROM earning_claims WHERE user_id = $1 AND target_id = $2 AND created_at > NOW() - INTERVAL '${periodInterval}'`,
-      [userId, targetId]
+      `SELECT * FROM earning_claims WHERE user_id = $1 AND target_id = $2 AND created_at > NOW() - INTERVAL '1 day' * $3`,
+      [userId, targetId, periodDays]
     );
 
     if (claimResult.rows.length > 0) {

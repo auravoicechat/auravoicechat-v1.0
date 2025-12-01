@@ -139,18 +139,27 @@ class GiftPanelViewModel @Inject constructor(
                         Log.d(TAG, "Gift sent successfully: $giftId x $quantity")
                     } else {
                         Log.e(TAG, "Failed to send gift: ${response.code()}")
+                        _uiState.value = _uiState.value.copy(
+                            error = "Failed to send gift. Please try again."
+                        )
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "Error sending gift", e)
-                    // Optimistic update for offline support
+                    // Show error instead of optimistic update to prevent inconsistent state
                     _uiState.value = _uiState.value.copy(
-                        coins = currentCoins - totalCost,
-                        lastSentGift = gift,
-                        lastSentQuantity = quantity
+                        error = "Network error. Please check your connection."
                     )
                 }
+            } else {
+                _uiState.value = _uiState.value.copy(
+                    error = "Insufficient coins"
+                )
             }
         }
+    }
+    
+    fun clearError() {
+        _uiState.value = _uiState.value.copy(error = null)
     }
     
     /**
