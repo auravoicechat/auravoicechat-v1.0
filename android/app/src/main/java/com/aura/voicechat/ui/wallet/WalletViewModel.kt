@@ -94,6 +94,7 @@ class WalletViewModel @Inject constructor(
                     val data = response.body()
                     val coinsReceived = data?.coinsReceived ?: (diamonds * 0.30).toLong()
                     
+                    // Use response data directly instead of making additional API call
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
                         diamonds = data?.newBalance?.diamonds ?: (_uiState.value.diamonds - diamonds),
@@ -101,8 +102,6 @@ class WalletViewModel @Inject constructor(
                         message = "Successfully exchanged $diamonds diamonds for $coinsReceived coins!"
                     )
                     
-                    // Reload wallet to get fresh data
-                    loadWallet()
                     Log.d(TAG, "Exchange successful: $diamonds diamonds -> $coinsReceived coins")
                 } else {
                     Log.e(TAG, "Exchange failed: ${response.code()}")

@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.aura.voicechat.domain.model.Gender
 import com.aura.voicechat.domain.model.Medal
 import com.aura.voicechat.domain.model.MedalCategory
 import com.aura.voicechat.ui.theme.*
@@ -250,7 +251,7 @@ fun ProfileScreen(
                     Spacer(modifier = Modifier.height(8.dp))
                     
                     // Guide System (for female users)
-                    if (uiState.user?.gender == "female" && !uiState.isGuideApplied) {
+                    if (uiState.user?.gender == Gender.FEMALE && !uiState.isGuideApplied) {
                         GuideApplicationCard(
                             onApply = { /* Apply for guide */ }
                         )
