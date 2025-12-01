@@ -23,9 +23,12 @@ interface HealthApi {
 }
 
 /**
- * Response model for health check endpoint
+ * Response model for health check endpoint.
+ * 
+ * The backend should always return a status field, but we keep it nullable
+ * to handle edge cases where the response format might be unexpected.
  */
 data class HealthResponse(
-    val status: String?,
-    val message: String?
+    val status: String = "unknown",
+    val message: String? = null
 )

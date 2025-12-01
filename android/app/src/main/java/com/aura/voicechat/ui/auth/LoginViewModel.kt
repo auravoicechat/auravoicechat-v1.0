@@ -44,11 +44,20 @@ class LoginViewModel @Inject constructor(
                 val response = healthApi.checkHealth()
                 if (response.isSuccessful) {
                     val healthResponse = response.body()
-                    Log.d(TAG, "Backend health check passed: ${healthResponse?.status}")
-                    _uiState.value = _uiState.value.copy(
-                        isBackendReachable = true,
-                        backendStatus = healthResponse?.status ?: "ok"
-                    )
+                    if (healthResponse != null) {
+                        Log.d(TAG, "Backend health check passed: ${healthResponse.status}")
+                        _uiState.value = _uiState.value.copy(
+                            isBackendReachable = true,
+                            backendStatus = healthResponse.status
+                        )
+                    } else {
+                        // HTTP 200 but null body - unexpected response format
+                        Log.w(TAG, "Backend health check returned null body")
+                        _uiState.value = _uiState.value.copy(
+                            isBackendReachable = true,
+                            backendStatus = "connected (no status)"
+                        )
+                    }
                 } else {
                     Log.w(TAG, "Backend health check failed: ${response.code()}")
                     _uiState.value = _uiState.value.copy(
