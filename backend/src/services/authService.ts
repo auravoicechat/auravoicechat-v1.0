@@ -264,6 +264,20 @@ export const signInWithSocial = async (
   try {
     const { token, socialUserId, email, displayName, avatarUrl } = data;
     
+    // Validate provider to prevent SQL injection
+    const validProviders = ['google', 'facebook'] as const;
+    if (!validProviders.includes(provider)) {
+      logger.error(`Invalid provider: ${provider}`);
+      return {
+        success: false,
+        userId: '',
+        userName: '',
+        userLevel: 0,
+        userVipTier: 0,
+        isNewUser: false
+      };
+    }
+    
     // In production, verify the token with the provider's API:
     // - Google: https://oauth2.googleapis.com/tokeninfo?id_token=...
     // - Facebook: https://graph.facebook.com/debug_token?input_token=...
@@ -275,28 +289,49 @@ export const signInWithSocial = async (
     
     // Create a unique identifier for the social login
     const socialId = socialUserId || `${provider}_${email || uuidv4()}`;
-    const providerColumn = provider === 'google' ? 'google_id' : 'facebook_id';
     
-    // Check if user exists by social ID or email
-    let userResult = await query(
-      `SELECT id, username, display_name, avatar_url, level, vip_tier 
-       FROM users 
-       WHERE ${providerColumn} = $1 OR (email = $2 AND email IS NOT NULL)`,
-      [socialId, email]
-    );
+    // Use separate queries for each provider to avoid SQL injection
+    // The provider is validated above, so this is safe
+    let userResult;
+    if (provider === 'google') {
+      userResult = await query(
+        `SELECT id, username, display_name, avatar_url, level, vip_tier 
+         FROM users 
+         WHERE google_id = $1 OR (email = $2 AND email IS NOT NULL)`,
+        [socialId, email]
+      );
+    } else {
+      userResult = await query(
+        `SELECT id, username, display_name, avatar_url, level, vip_tier 
+         FROM users 
+         WHERE facebook_id = $1 OR (email = $2 AND email IS NOT NULL)`,
+        [socialId, email]
+      );
+    }
     
     if (userResult.rows.length > 0) {
       const user = userResult.rows[0];
       
-      // Update last login and social ID if not set
-      await query(
-        `UPDATE users 
-         SET last_login_at = NOW(), 
-             login_streak = login_streak + 1,
-             ${providerColumn} = COALESCE(${providerColumn}, $2)
-         WHERE id = $1`,
-        [user.id, socialId]
-      );
+      // Update last login and social ID if not set - use separate queries for each provider
+      if (provider === 'google') {
+        await query(
+          `UPDATE users 
+           SET last_login_at = NOW(), 
+               login_streak = login_streak + 1,
+               google_id = COALESCE(google_id, $2)
+           WHERE id = $1`,
+          [user.id, socialId]
+        );
+      } else {
+        await query(
+          `UPDATE users 
+           SET last_login_at = NOW(), 
+               login_streak = login_streak + 1,
+               facebook_id = COALESCE(facebook_id, $2)
+           WHERE id = $1`,
+          [user.id, socialId]
+        );
+      }
       
       logger.info(`Existing user signed in via ${provider}`, { userId: user.id });
       
@@ -311,18 +346,29 @@ export const signInWithSocial = async (
       };
     }
     
-    // Create new user
+    // Create new user - use separate queries for each provider
     const userId = uuidv4();
     const username = displayName || email?.split('@')[0] || `User_${userId.slice(0, 8)}`;
     
-    await query(
-      `INSERT INTO users (
-        id, email, username, display_name, avatar_url, 
-        ${providerColumn}, coins, diamonds, level, vip_tier,
-        created_at, last_login_at
-      ) VALUES ($1, $2, $3, $3, $4, $5, 1000, 100, 1, 0, NOW(), NOW())`,
-      [userId, email, username, avatarUrl, socialId]
-    );
+    if (provider === 'google') {
+      await query(
+        `INSERT INTO users (
+          id, email, username, display_name, avatar_url, 
+          google_id, coins, diamonds, level, vip_tier,
+          created_at, last_login_at
+        ) VALUES ($1, $2, $3, $3, $4, $5, 1000, 100, 1, 0, NOW(), NOW())`,
+        [userId, email, username, avatarUrl, socialId]
+      );
+    } else {
+      await query(
+        `INSERT INTO users (
+          id, email, username, display_name, avatar_url, 
+          facebook_id, coins, diamonds, level, vip_tier,
+          created_at, last_login_at
+        ) VALUES ($1, $2, $3, $3, $4, $5, 1000, 100, 1, 0, NOW(), NOW())`,
+        [userId, email, username, avatarUrl, socialId]
+      );
+    }
     
     logger.info(`New user created via ${provider}`, { userId, email });
     

@@ -1,10 +1,10 @@
 package com.aura.voicechat.data.repository
 
+import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.amplifyframework.auth.AuthProvider
-import com.amplifyframework.auth.options.AuthSignInOptions
 import com.amplifyframework.core.Amplify
 import com.aura.voicechat.data.model.FacebookSignInRequest
 import com.aura.voicechat.data.model.GoogleSignInRequest
@@ -15,6 +15,7 @@ import com.aura.voicechat.data.remote.ApiService
 import com.aura.voicechat.domain.repository.AuthRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.suspendCancellableCoroutine
+import java.lang.ref.WeakReference
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.resume
@@ -30,6 +31,9 @@ import kotlin.coroutines.resumeWithException
  * - Facebook Sign-In via AWS Amplify/Cognito
  * 
  * Tokens are stored persistently using SharedPreferences.
+ * 
+ * Note: For social sign-in with Amplify, an Activity reference must be set
+ * using setActivity() before calling signInWithGoogle() or signInWithFacebook().
  */
 @Singleton
 class AuthRepositoryImpl @Inject constructor(
@@ -39,6 +43,9 @@ class AuthRepositoryImpl @Inject constructor(
     
     private val prefs: SharedPreferences = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
     
+    // Weak reference to the current activity for Amplify social sign-in
+    private var activityRef: WeakReference<Activity>? = null
+    
     companion object {
         private const val TAG = "AuthRepositoryImpl"
         private const val KEY_USER_ID = "user_id"
@@ -47,6 +54,21 @@ class AuthRepositoryImpl @Inject constructor(
         private const val KEY_REFRESH_TOKEN = "refresh_token"
         private const val KEY_TOKEN_EXPIRY = "token_expiry"
         private const val KEY_AUTH_PROVIDER = "auth_provider"
+    }
+    
+    /**
+     * Set the current activity for Amplify social sign-in.
+     * Should be called from the activity before initiating social sign-in.
+     */
+    fun setActivity(activity: Activity) {
+        activityRef = WeakReference(activity)
+    }
+    
+    /**
+     * Get the current activity, or null if not set or activity was garbage collected.
+     */
+    private fun getActivity(): Activity? {
+        return activityRef?.get()
     }
     
     /**
@@ -104,15 +126,24 @@ class AuthRepositoryImpl @Inject constructor(
     /**
      * Sign in with Google using AWS Amplify/Cognito.
      * Uses federated sign-in with Google as the identity provider.
+     * 
+     * Note: setActivity() must be called before this method for Amplify to work.
+     * If no activity is available, falls back to backend API.
      */
     override suspend fun signInWithGoogle(): Result<Unit> {
+        val activity = getActivity()
+        if (activity == null) {
+            Log.w(TAG, "No activity available for Amplify sign-in, trying backend fallback")
+            return tryBackendGoogleSignIn(Exception("No activity context available for social sign-in"))
+        }
+        
         return try {
             Log.d(TAG, "Starting Google Sign-In via Amplify")
             
             val result = suspendCancellableCoroutine<Unit> { continuation ->
                 Amplify.Auth.signInWithSocialWebUI(
                     AuthProvider.google(),
-                    context as android.app.Activity,
+                    activity,
                     { signInResult ->
                         Log.i(TAG, "Google Sign-In successful: ${signInResult.isSignedIn}")
                         continuation.resume(Unit)
@@ -139,15 +170,24 @@ class AuthRepositoryImpl @Inject constructor(
     /**
      * Sign in with Facebook using AWS Amplify/Cognito.
      * Uses federated sign-in with Facebook as the identity provider.
+     * 
+     * Note: setActivity() must be called before this method for Amplify to work.
+     * If no activity is available, falls back to backend API.
      */
     override suspend fun signInWithFacebook(): Result<Unit> {
+        val activity = getActivity()
+        if (activity == null) {
+            Log.w(TAG, "No activity available for Amplify sign-in, trying backend fallback")
+            return tryBackendFacebookSignIn(Exception("No activity context available for social sign-in"))
+        }
+        
         return try {
             Log.d(TAG, "Starting Facebook Sign-In via Amplify")
             
             val result = suspendCancellableCoroutine<Unit> { continuation ->
                 Amplify.Auth.signInWithSocialWebUI(
                     AuthProvider.facebook(),
-                    context as android.app.Activity,
+                    activity,
                     { signInResult ->
                         Log.i(TAG, "Facebook Sign-In successful: ${signInResult.isSignedIn}")
                         continuation.resume(Unit)
