@@ -182,6 +182,12 @@ android {
 configurations.all {
     resolutionStrategy {
         force("androidx.test.ext:junit:1.2.1")
+        // Force kotlin-stdlib to match the Kotlin compiler version (2.0.21)
+        // This prevents transitive dependencies from pulling in incompatible versions
+        force("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+        force("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.21")
+        force("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.21")
+        force("org.jetbrains.kotlin:kotlin-stdlib-common:2.0.21")
     }
 }
 

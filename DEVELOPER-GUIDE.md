@@ -736,6 +736,25 @@ packaging {
 -dontwarn org.apache.http.conn.ssl.DefaultHostnameVerifier
 ```
 
+#### Kotlin Stdlib Version Mismatch
+
+**Issue:** `Module was compiled with an incompatible version of Kotlin. The binary version of its metadata is 2.1.0, expected version is 1.9.0.`
+
+**Cause:** A transitive dependency pulls in a newer version of kotlin-stdlib that is incompatible with the project's Kotlin compiler version.
+
+**Resolution:** Force kotlin-stdlib versions in `build.gradle.kts`:
+```kotlin
+configurations.all {
+    resolutionStrategy {
+        // Force kotlin-stdlib to match the Kotlin compiler version
+        force("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+        force("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.21")
+        force("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.21")
+        force("org.jetbrains.kotlin:kotlin-stdlib-common:2.0.21")
+    }
+}
+```
+
 #### Deprecation Warnings During Compilation
 
 During compilation, you may see deprecation warnings for:
