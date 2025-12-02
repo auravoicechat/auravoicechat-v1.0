@@ -1333,6 +1333,7 @@ CREATE INDEX idx_admin_logs_action ON admin_logs(action_type);
 CREATE INDEX idx_admin_logs_created ON admin_logs(created_at DESC);
 
 -- Conversations (for direct messaging)
+-- Note: user1_id should always be < user2_id to prevent duplicate conversations
 CREATE TABLE IF NOT EXISTS conversations (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user1_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -1342,7 +1343,8 @@ CREATE TABLE IF NOT EXISTS conversations (
     unread_count INTEGER DEFAULT 0,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(user1_id, user2_id)
+    UNIQUE(user1_id, user2_id),
+    CONSTRAINT conversation_user_order CHECK (user1_id < user2_id)
 );
 
 CREATE INDEX idx_conversations_user1 ON conversations(user1_id);
@@ -1425,7 +1427,8 @@ CREATE TABLE IF NOT EXISTS level_claims (
     level INTEGER NOT NULL,
     reward_id UUID REFERENCES level_rewards(id),
     claimed_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(user_id, level)
+    UNIQUE(user_id, level),
+    CONSTRAINT valid_level CHECK (level >= 1 AND level <= 100)
 );
 
 -- Level History
@@ -1480,7 +1483,7 @@ CREATE TABLE IF NOT EXISTS cp_rewards (
 -- CP Claims
 CREATE TABLE IF NOT EXISTS cp_claims (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    partnership_id UUID NOT NULL,
+    partnership_id UUID NOT NULL REFERENCES cp_partnerships(id) ON DELETE CASCADE,
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     cp_level INTEGER NOT NULL,
     reward_id UUID REFERENCES cp_rewards(id),

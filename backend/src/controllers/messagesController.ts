@@ -167,16 +167,24 @@ export const sendMessage = async (req: Request, res: Response, next: NextFunctio
     const userId = req.user?.id;
     const { recipientId, content, type = 'text' } = req.body;
 
+    if (!userId) {
+      res.status(401).json({ error: 'Authentication required' });
+      return;
+    }
+
     if (!recipientId || !content) {
       res.status(400).json({ error: 'Recipient ID and content are required' });
       return;
     }
 
     // Find or create conversation
+    // Ensure user1_id < user2_id to satisfy the constraint
+    const [user1, user2] = userId < recipientId ? [userId, recipientId] : [recipientId, userId];
+    
     let conversationResult = await query(
       `SELECT id FROM conversations 
-       WHERE (user1_id = $1 AND user2_id = $2) OR (user1_id = $2 AND user2_id = $1)`,
-      [userId, recipientId]
+       WHERE user1_id = $1 AND user2_id = $2`,
+      [user1, user2]
     );
 
     let conversationId: string;
@@ -186,7 +194,7 @@ export const sendMessage = async (req: Request, res: Response, next: NextFunctio
       await query(
         `INSERT INTO conversations (id, user1_id, user2_id, created_at, last_message, last_message_at, unread_count)
          VALUES ($1, $2, $3, NOW(), $4, NOW(), 1)`,
-        [conversationId, userId, recipientId, content]
+        [conversationId, user1, user2, content]
       );
     } else {
       conversationId = conversationResult.rows[0].id;
