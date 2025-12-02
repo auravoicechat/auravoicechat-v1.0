@@ -43,6 +43,13 @@
 -keep class aws.sdk.kotlin.** { *; }
 -dontwarn aws.sdk.kotlin.**
 
+# AWS SDK v2 (Java)
+-keep class software.amazon.awssdk.** { *; }
+-dontwarn software.amazon.awssdk.**
+
+# AWS CRT (Common Runtime) - optional native components
+-dontwarn software.amazon.awssdk.crt.**
+
 # Cognito
 -keep class com.amazonaws.mobileconnectors.cognitoidentityprovider.** { *; }
 
@@ -51,6 +58,22 @@
 
 # Pinpoint
 -keep class com.amazonaws.mobileconnectors.pinpoint.** { *; }
+
+# ========================
+# Reactor / Netty BlockHound
+# ========================
+
+# BlockHound integration is optional and not included
+-dontwarn reactor.blockhound.**
+-dontwarn io.netty.util.internal.Hidden$NettyBlockHoundIntegration
+
+# ========================
+# Apache HTTP Client
+# ========================
+
+# JNDI/LDAP classes used by Apache HTTP hostname verifier (not available on Android)
+-dontwarn javax.naming.**
+-dontwarn org.apache.http.conn.ssl.DefaultHostnameVerifier
 
 # ========================
 # Retrofit

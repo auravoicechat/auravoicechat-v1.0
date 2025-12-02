@@ -693,6 +693,82 @@ Update `android/gradle.properties`:
 org.gradle.jvmargs=-Xmx4g -XX:+UseParallelGC
 ```
 
+#### BlockHound Integration Warning
+
+**Issue:** `Unexpected reference to missing service class: META-INF/services/reactor.blockhound.integration.BlockHoundIntegration`
+
+**Cause:** This warning occurs due to the reactor-blockhound integration library reference being present in dependencies (like AWS SDK v2) but the actual BlockHound library not being included.
+
+**Resolution:** This is handled in two ways:
+1. In `build.gradle.kts` by excluding the service file in the packaging section:
+```kotlin
+packaging {
+    resources {
+        excludes += "/META-INF/services/reactor.blockhound.integration.BlockHoundIntegration"
+    }
+}
+```
+2. In `proguard-rules.pro` by adding dontwarn rules for R8:
+```proguard
+-dontwarn reactor.blockhound.**
+-dontwarn io.netty.util.internal.Hidden$NettyBlockHoundIntegration
+```
+
+#### R8/ProGuard Missing Classes Errors
+
+**Issue:** During release builds, R8 may report missing classes:
+- `javax.naming.*` classes (JNDI/LDAP)
+- `software.amazon.awssdk.crt.*` classes (AWS CRT)
+- `reactor.blockhound.integration.BlockHoundIntegration`
+
+**Cause:** These classes are referenced by dependencies (AWS SDK v2, Apache HTTP Client) but are either not available on Android or are optional native components.
+
+**Resolution:** Add dontwarn rules in `proguard-rules.pro`:
+```proguard
+# AWS SDK v2 and CRT
+-dontwarn software.amazon.awssdk.**
+-dontwarn software.amazon.awssdk.crt.**
+
+# JNDI classes (not available on Android)
+-dontwarn javax.naming.**
+
+# Apache HTTP hostname verifier
+-dontwarn org.apache.http.conn.ssl.DefaultHostnameVerifier
+```
+
+#### Kotlin Stdlib Version Mismatch
+
+**Issue:** `Module was compiled with an incompatible version of Kotlin. The binary version of its metadata is 2.1.0, expected version is 1.9.0.`
+
+**Cause:** A transitive dependency pulls in a newer version of kotlin-stdlib that is incompatible with the project's Kotlin compiler version.
+
+**Resolution:** Force kotlin-stdlib versions in `build.gradle.kts`:
+```kotlin
+configurations.all {
+    resolutionStrategy {
+        // Force kotlin-stdlib to match the Kotlin compiler version
+        force("org.jetbrains.kotlin:kotlin-stdlib:2.0.21")
+        force("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.21")
+        force("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.21")
+        force("org.jetbrains.kotlin:kotlin-stdlib-common:2.0.21")
+    }
+}
+```
+
+#### Deprecation Warnings During Compilation
+
+During compilation, you may see deprecation warnings for:
+
+1. **Material Icons:** Icons like `Icons.Filled.ArrowBack`, `Icons.Filled.Send`, etc. are deprecated in favor of AutoMirrored versions (e.g., `Icons.AutoMirrored.Filled.ArrowBack`). These warnings do not affect functionality.
+
+2. **Google Sign-In API:** `GoogleSignIn` and `GoogleSignInOptions` classes are deprecated. Consider migrating to the new Credential Manager API in future versions.
+
+3. **Compose Components:** Some components like `Divider` are renamed (now `HorizontalDivider`).
+
+4. **Window APIs:** `statusBarColor` on Window is deprecated in newer Android versions.
+
+These are warnings, not errors, and do not prevent successful builds. They indicate APIs that may be removed in future library versions.
+
 ### Getting Help
 
 1. Check the documentation in `docs/`
