@@ -13,7 +13,7 @@ import { logger } from '../utils/logger';
  */
 export const getConversations = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 20;
     const offset = (page - 1) * limit;
@@ -76,7 +76,7 @@ export const getConversations = async (req: Request, res: Response, next: NextFu
  */
 export const getMessages = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
     const { conversationId } = req.params;
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 50;
@@ -164,7 +164,7 @@ export const getMessages = async (req: Request, res: Response, next: NextFunctio
  */
 export const sendMessage = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const userId = req.user?.userId;
+    const userId = req.user?.id;
     const { recipientId, content, type = 'text' } = req.body;
 
     if (!recipientId || !content) {
