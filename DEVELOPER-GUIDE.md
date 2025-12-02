@@ -699,13 +699,41 @@ org.gradle.jvmargs=-Xmx4g -XX:+UseParallelGC
 
 **Cause:** This warning occurs due to the reactor-blockhound integration library reference being present in dependencies (like AWS SDK v2) but the actual BlockHound library not being included.
 
-**Resolution:** This is handled in `build.gradle.kts` by excluding the service file in the packaging section:
+**Resolution:** This is handled in two ways:
+1. In `build.gradle.kts` by excluding the service file in the packaging section:
 ```kotlin
 packaging {
     resources {
         excludes += "/META-INF/services/reactor.blockhound.integration.BlockHoundIntegration"
     }
 }
+```
+2. In `proguard-rules.pro` by adding dontwarn rules for R8:
+```proguard
+-dontwarn reactor.blockhound.**
+-dontwarn io.netty.util.internal.Hidden$NettyBlockHoundIntegration
+```
+
+#### R8/ProGuard Missing Classes Errors
+
+**Issue:** During release builds, R8 may report missing classes:
+- `javax.naming.*` classes (JNDI/LDAP)
+- `software.amazon.awssdk.crt.*` classes (AWS CRT)
+- `reactor.blockhound.integration.BlockHoundIntegration`
+
+**Cause:** These classes are referenced by dependencies (AWS SDK v2, Apache HTTP Client) but are either not available on Android or are optional native components.
+
+**Resolution:** Add dontwarn rules in `proguard-rules.pro`:
+```proguard
+# AWS SDK v2 and CRT
+-dontwarn software.amazon.awssdk.**
+-dontwarn software.amazon.awssdk.crt.**
+
+# JNDI classes (not available on Android)
+-dontwarn javax.naming.**
+
+# Apache HTTP hostname verifier
+-dontwarn org.apache.http.conn.ssl.DefaultHostnameVerifier
 ```
 
 #### Deprecation Warnings During Compilation
