@@ -390,12 +390,8 @@ private fun DayRewardItem(
                 .background(
                     when {
                         isClaimed -> SuccessGreen.copy(alpha = 0.3f)
-                        isClaimable -> Brush.linearGradient(
-                            colors = listOf(AccentMagenta, Purple80)
-                        )
-                        else -> Brush.linearGradient(
-                            colors = listOf(DarkCard, DarkCard)
-                        )
+                        isClaimable -> AccentMagenta
+                        else -> DarkCard
                     }
                 )
                 .then(
