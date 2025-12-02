@@ -25,6 +25,9 @@ class MedalsViewModel @Inject constructor(
     
     companion object {
         private const val TAG = "MedalsViewModel"
+        // Default values for medal progress when API doesn't provide them
+        // Progress is set to target (100) if medal is earned, 0 otherwise
+        private const val DEFAULT_MEDAL_TARGET = 100L
     }
     
     private val _uiState = MutableStateFlow(MedalsUiState())
@@ -47,8 +50,8 @@ class MedalsViewModel @Inject constructor(
                             name = dto.name,
                             description = dto.description,
                             category = dto.category,
-                            progress = if (dto.earnedAt != null) 100L else 0L,
-                            target = 100L,
+                            progress = if (dto.earnedAt != null) DEFAULT_MEDAL_TARGET else 0L,
+                            target = DEFAULT_MEDAL_TARGET,
                             isDisplayed = dto.isDisplayed ?: false
                         )
                     } ?: emptyList()

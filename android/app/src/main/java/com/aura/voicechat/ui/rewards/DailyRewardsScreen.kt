@@ -388,16 +388,10 @@ private fun DayRewardItem(
                 .size(if (isLarge) 72.dp else 56.dp)
                 .clip(RoundedCornerShape(if (isLarge) 20.dp else 16.dp))
                 .background(
-                    brush = when {
-                        isClaimed -> Brush.linearGradient(
-                            colors = listOf(SuccessGreen.copy(alpha = 0.3f), SuccessGreen.copy(alpha = 0.3f))
-                        )
-                        isClaimable -> Brush.linearGradient(
-                            colors = listOf(AccentMagenta, Purple80)
-                        )
-                        else -> Brush.linearGradient(
-                            colors = listOf(DarkCard, DarkCard)
-                        )
+                    when {
+                        isClaimed -> SuccessGreen.copy(alpha = 0.3f)
+                        isClaimable -> AccentMagenta
+                        else -> DarkCard
                     }
                 )
                 .then(
