@@ -8,6 +8,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.aura.voicechat.ui.auth.LoginScreen
 import com.aura.voicechat.ui.auth.OtpVerificationScreen
+import com.aura.voicechat.ui.auth.PhoneLoginScreen
+import com.aura.voicechat.ui.auth.RegisterScreen
+import com.aura.voicechat.ui.auth.SplashScreen
 import com.aura.voicechat.ui.cp.CpScreen
 import com.aura.voicechat.ui.dailyreward.DailyRewardScreen
 import com.aura.voicechat.ui.events.EventsScreen
@@ -44,6 +47,8 @@ sealed class Screen(val route: String) {
     // Auth
     object Splash : Screen("splash")
     object Login : Screen("login")
+    object Register : Screen("register")
+    object PhoneLogin : Screen("phone_login")
     object OtpVerification : Screen("otp_verification/{phoneNumber}") {
         fun createRoute(phoneNumber: String) = "otp_verification/$phoneNumber"
     }
@@ -127,6 +132,21 @@ fun AuraNavHost(
         startDestination = startDestination
     ) {
         // ===== AUTH =====
+        composable(Screen.Splash.route) {
+            SplashScreen(
+                onNavigateToLogin = {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(Screen.Splash.route) { inclusive = true }
+                    }
+                },
+                onNavigateToHome = {
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(Screen.Splash.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+        
         composable(Screen.Login.route) {
             LoginScreen(
                 onNavigateToHome = {
@@ -136,6 +156,32 @@ fun AuraNavHost(
                 },
                 onNavigateToOtp = { phone ->
                     navController.navigate(Screen.OtpVerification.createRoute(phone))
+                }
+            )
+        }
+        
+        composable(Screen.Register.route) {
+            RegisterScreen(
+                onBack = { navController.popBackStack() },
+                onRegisterComplete = { username, displayName, dob, gender ->
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(Screen.Login.route) { inclusive = true }
+                    }
+                },
+                onNavigateToLogin = {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(Screen.Register.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+        
+        composable(Screen.PhoneLogin.route) {
+            PhoneLoginScreen(
+                onBack = { navController.popBackStack() },
+                onSendOtp = { countryCode, phoneNumber ->
+                    val fullNumber = "$countryCode$phoneNumber"
+                    navController.navigate(Screen.OtpVerification.createRoute(fullNumber))
                 }
             )
         }
