@@ -2,6 +2,8 @@ package com.aura.voicechat.ui.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aura.voicechat.data.model.UserPreferences
+import com.aura.voicechat.data.repository.PreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,45 +16,58 @@ import javax.inject.Inject
  * Developer: Hawkaye Visions LTD — Pakistan
  */
 @HiltViewModel
-class SettingsViewModel @Inject constructor() : ViewModel() {
+class SettingsViewModel @Inject constructor(
+    private val preferencesRepository: PreferencesRepository
+) : ViewModel() {
     
     private val _uiState = MutableStateFlow(SettingsUiState())
     val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
+    
+    private val _preferences = MutableStateFlow<UserPreferences?>(null)
+    val preferences: StateFlow<UserPreferences?> = _preferences.asStateFlow()
     
     init {
         loadSettings()
     }
     
     private fun loadSettings() {
-        _uiState.value = SettingsUiState(
-            pushNotifications = true,
-            giftNotifications = true,
-            messageNotifications = true,
-            noiseCancellation = true,
-            autoPlayAnimations = true,
-            language = "English",
-            cacheSize = 125,
-            appVersion = "2.0.0",
-            blockedCount = 3
-        )
+        viewModelScope.launch {
+            preferencesRepository.getPreferences().collect { prefs ->
+                _preferences.value = prefs
+                _uiState.value = SettingsUiState(
+                    pushNotifications = prefs.pushNotificationsEnabled,
+                    giftNotifications = prefs.giftNotifications,
+                    messageNotifications = prefs.messageNotifications,
+                    noiseCancellation = true, // From local settings
+                    autoPlayAnimations = true, // From local settings
+                    language = "English", // From locale
+                    cacheSize = 125, // From local cache
+                    appVersion = "2.0.0",
+                    blockedCount = 0 // From backend
+                )
+            }
+        }
     }
     
     fun togglePushNotifications() {
-        _uiState.value = _uiState.value.copy(
-            pushNotifications = !_uiState.value.pushNotifications
-        )
+        _preferences.value?.let { prefs ->
+            val updated = prefs.copy(pushNotificationsEnabled = !prefs.pushNotificationsEnabled)
+            updatePreferences(updated)
+        }
     }
     
     fun toggleGiftNotifications() {
-        _uiState.value = _uiState.value.copy(
-            giftNotifications = !_uiState.value.giftNotifications
-        )
+        _preferences.value?.let { prefs ->
+            val updated = prefs.copy(giftNotifications = !prefs.giftNotifications)
+            updatePreferences(updated)
+        }
     }
     
     fun toggleMessageNotifications() {
-        _uiState.value = _uiState.value.copy(
-            messageNotifications = !_uiState.value.messageNotifications
-        )
+        _preferences.value?.let { prefs ->
+            val updated = prefs.copy(messageNotifications = !prefs.messageNotifications)
+            updatePreferences(updated)
+        }
     }
     
     fun toggleNoiseCancellation() {
@@ -88,6 +103,16 @@ class SettingsViewModel @Inject constructor() : ViewModel() {
     fun deleteAccount() {
         viewModelScope.launch {
             // Delete account logic
+        }
+    }
+    
+    private fun updatePreferences(preferences: UserPreferences) {
+        viewModelScope.launch {
+            preferencesRepository.updatePreferences(preferences).collect { result ->
+                result.onSuccess {
+                    loadSettings()
+                }
+            }
         }
     }
 }

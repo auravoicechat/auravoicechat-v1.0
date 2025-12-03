@@ -1,0 +1,62 @@
+
+gameover.png
+size: 1825,742
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dk_paihang
+  rotate: true
+  xy: 1457, 201
+  size: 539, 366
+  orig: 563, 370
+  offset: 12, 2
+  index: -1
+guang
+  rotate: false
+  xy: 710, 226
+  size: 745, 514
+  orig: 824, 620
+  offset: 38, 53
+  index: -1
+guang1
+  rotate: false
+  xy: 2, 34
+  size: 706, 706
+  orig: 720, 720
+  offset: 7, 7
+  index: -1
+laba_1
+  rotate: false
+  xy: 1325, 2
+  size: 197, 104
+  orig: 309, 113
+  offset: 36, 9
+  index: -1
+laba_2
+  rotate: false
+  xy: 1524, 5
+  size: 125, 101
+  orig: 132, 119
+  offset: 1, 6
+  index: -1
+mask
+  rotate: false
+  xy: 1325, 204
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+num_dk
+  rotate: false
+  xy: 710, 82
+  size: 613, 142
+  orig: 638, 154
+  offset: 13, 6
+  index: -1
+youwin
+  rotate: false
+  xy: 1325, 108
+  size: 483, 91
+  orig: 483, 91
+  offset: 0, 0
+  index: -1

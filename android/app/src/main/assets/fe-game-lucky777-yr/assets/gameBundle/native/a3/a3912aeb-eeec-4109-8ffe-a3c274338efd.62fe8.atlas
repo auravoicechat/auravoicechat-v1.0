@@ -1,0 +1,55 @@
+
+baojinbi.png
+size: 932,292
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bling
+  rotate: false
+  xy: 876, 131
+  size: 45, 45
+  orig: 53, 53
+  offset: 4, 4
+  index: -1
+coin_slide
+  rotate: true
+  xy: 572, 18
+  size: 21, 112
+  orig: 21, 112
+  offset: 0, 0
+  index: -1
+coin_slide_ban
+  rotate: false
+  xy: 818, 64
+  size: 56, 112
+  orig: 56, 112
+  offset: 0, 0
+  index: -1
+coin_up
+  rotate: false
+  xy: 818, 178
+  size: 112, 112
+  orig: 112, 112
+  offset: 0, 0
+  index: -1
+hight_light
+  rotate: false
+  xy: 298, 17
+  size: 272, 273
+  orig: 300, 299
+  offset: 14, 13
+  index: -1
+light_begin
+  rotate: true
+  xy: 2, 2
+  size: 288, 294
+  orig: 302, 304
+  offset: 8, 8
+  index: -1
+light_end
+  rotate: false
+  xy: 572, 41
+  size: 244, 249
+  orig: 268, 257
+  offset: 0, 7
+  index: -1

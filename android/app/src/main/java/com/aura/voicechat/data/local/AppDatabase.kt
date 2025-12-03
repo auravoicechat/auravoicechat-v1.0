@@ -11,7 +11,7 @@ import com.aura.voicechat.data.local.entity.*
  * Developer: Hawkaye Visions LTD — Pakistan
  * 
  * Local database for caching and offline support
- * Version 1 - Initial schema for Week 2 features
+ * Version 2 - Added Week 4 features: Notifications, Music, Playlists
  */
 @Database(
     entities = [
@@ -24,9 +24,14 @@ import com.aura.voicechat.data.local.entity.*
         FamilyEntity::class,
         FamilyMemberEntity::class,
         CpPartnershipEntity::class,
-        ProfileVisitorEntity::class
+        ProfileVisitorEntity::class,
+        // Week 4 entities
+        NotificationEntity::class,
+        SongEntity::class,
+        PlaylistEntity::class,
+        PlaylistSongEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 @TypeConverters(Converters::class)
@@ -41,6 +46,12 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun familyDao(): FamilyDao
     abstract fun cpDao(): CpDao
     abstract fun visitorDao(): VisitorDao
+    
+    // Week 4 DAOs
+    abstract fun notificationDao(): NotificationDao
+    abstract fun songDao(): SongDao
+    abstract fun playlistDao(): PlaylistDao
+    abstract fun playlistSongDao(): PlaylistSongDao
     
     companion object {
         const val DATABASE_NAME = "aura_voice_chat.db"

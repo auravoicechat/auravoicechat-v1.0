@@ -58,6 +58,11 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         
+        <!-- AWS Pinpoint Configuration -->
+        <meta-data
+            android:name="aws_pinpoint_app_id"
+            android:value="@string/aws_pinpoint_app_id" />
+        
         <!-- Facebook Meta Data -->
 	<meta-data
     		android:name="com.facebook.sdk.ApplicationId"
@@ -153,6 +158,23 @@
         <service
             android:name=".services.AuraPushNotificationService"
             android:exported="false" />
+        
+        <!-- Music Service -->
+        <service
+            android:name=".services.MusicService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
+        
+        <!-- GCM Receiver for AWS Pinpoint -->
+        <receiver
+            android:name="com.amazonaws.mobileconnectors.pinpoint.targeting.notification.PinpointNotificationReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </receiver>
         
         <!-- Work Manager Provider -->
 

@@ -1,0 +1,1665 @@
+{
+  "code": 200,
+  "message": "",
+  "data": [
+    {
+      "continentName": "Popular",
+      "countryList": [
+        {
+          "countryName": "India",
+          "countryUrl": "https://rec.yriry.com/u/flag_in.png",
+          "phonePrefix": "+91",
+          "phoneType": 91,
+          "countryCode": "IN",
+          "mcc": "404, 405"
+        },
+        {
+          "countryName": "Pakistan",
+          "countryUrl": "https://rec.yriry.com/u/flag_pk.png",
+          "phonePrefix": "+92",
+          "phoneType": 92,
+          "countryCode": "PK",
+          "mcc": "410"
+        },
+        {
+          "countryName": "Philippines",
+          "countryUrl": "https://rec.yriry.com/u/flag_ph.png",
+          "phonePrefix": "+63",
+          "phoneType": 63,
+          "countryCode": "PH",
+          "mcc": "515"
+        },
+        {
+          "countryName": "Bangladesh",
+          "countryUrl": "https://rec.yriry.com/u/flag_bd.png",
+          "phonePrefix": "+880",
+          "phoneType": 880,
+          "countryCode": "BD",
+          "mcc": "470"
+        },
+        {
+          "countryName": "Saudi Arabia",
+          "countryUrl": "https://rec.yriry.com/u/flag_sa.png",
+          "phonePrefix": "+966",
+          "phoneType": 966,
+          "countryCode": "SA",
+          "mcc": "420"
+        },
+        {
+          "countryName": "Turkey",
+          "countryUrl": "https://rec.yriry.com/u/flag_tr.png",
+          "phonePrefix": "+90",
+          "phoneType": 90,
+          "countryCode": "TR",
+          "mcc": "286"
+        },
+        {
+          "countryName": "Vietnam",
+          "countryUrl": "https://rec.yriry.com/u/flag_vn.png",
+          "phonePrefix": "+84",
+          "phoneType": 84,
+          "countryCode": "VN",
+          "mcc": "452"
+        },
+        {
+          "countryName": "United Arab Emirates",
+          "countryUrl": "https://rec.yriry.com/u/flag_ae.png",
+          "phonePrefix": "+971",
+          "phoneType": 971,
+          "countryCode": "AE",
+          "mcc": "424,430,431"
+        }
+      ]
+    },
+    {
+      "continentName": "Asia",
+      "countryList": [
+        {
+          "countryName": "Afghanistan",
+          "countryUrl": "https://rec.yriry.com/u/flag_af.png",
+          "phonePrefix": "+93",
+          "phoneType": 93,
+          "countryCode": "AF",
+          "mcc": "412"
+        },
+        {
+          "countryName": "Armenia",
+          "countryUrl": "https://rec.yriry.com/u/flag_am.png",
+          "phonePrefix": "+374",
+          "phoneType": 374,
+          "countryCode": "AM",
+          "mcc": "283"
+        },
+        {
+          "countryName": "Azerbaijan",
+          "countryUrl": "https://rec.yriry.com/u/flag_az.png",
+          "phonePrefix": "+994",
+          "phoneType": 994,
+          "countryCode": "AZ",
+          "mcc": "400"
+        },
+        {
+          "countryName": "Bahrain",
+          "countryUrl": "https://rec.yriry.com/u/flag_bh.png",
+          "phonePrefix": "+973",
+          "phoneType": 973,
+          "countryCode": "BH",
+          "mcc": "426"
+        },
+        {
+          "countryName": "Bangladesh",
+          "countryUrl": "https://rec.yriry.com/u/flag_bd.png",
+          "phonePrefix": "+880",
+          "phoneType": 880,
+          "countryCode": "BD",
+          "mcc": "470"
+        },
+        {
+          "countryName": "Bhutan",
+          "countryUrl": "https://rec.yriry.com/u/flag_bt.png",
+          "phonePrefix": "+975",
+          "phoneType": 975,
+          "countryCode": "BT",
+          "mcc": "402"
+        },
+        {
+          "countryName": "Brunei",
+          "countryUrl": "https://rec.yriry.com/u/flag_bn.png",
+          "phonePrefix": "+673",
+          "phoneType": 673,
+          "countryCode": "BN",
+          "mcc": "528"
+        },
+        {
+          "countryName": "Cambodia",
+          "countryUrl": "https://rec.yriry.com/u/flag_kh.png",
+          "phonePrefix": "+855",
+          "phoneType": 855,
+          "countryCode": "KH",
+          "mcc": "456"
+        },
+        {
+          "countryName": "Georgia",
+          "countryUrl": "https://rec.yriry.com/u/flag_ge.png",
+          "phonePrefix": "+995",
+          "phoneType": 995,
+          "countryCode": "GE",
+          "mcc": "282"
+        },
+        {
+          "countryName": "Hong Kong",
+          "countryUrl": "https://rec.yriry.com/u/flag_hk.png",
+          "phonePrefix": "+852",
+          "phoneType": 852,
+          "countryCode": "HK",
+          "mcc": "454"
+        },
+        {
+          "countryName": "India",
+          "countryUrl": "https://rec.yriry.com/u/flag_in.png",
+          "phonePrefix": "+91",
+          "phoneType": 91,
+          "countryCode": "IN",
+          "mcc": "404, 405"
+        },
+        {
+          "countryName": "Indonesia",
+          "countryUrl": "https://rec.yriry.com/u/flag_id.png",
+          "phonePrefix": "+62",
+          "phoneType": 62,
+          "countryCode": "ID",
+          "mcc": "510"
+        },
+        {
+          "countryName": "Iraq",
+          "countryUrl": "https://rec.yriry.com/u/flag_iq.png",
+          "phonePrefix": "+964",
+          "phoneType": 964,
+          "countryCode": "IQ",
+          "mcc": "418"
+        },
+        {
+          "countryName": "Israel",
+          "countryUrl": "https://rec.yriry.com/u/flag_il.png",
+          "phonePrefix": "+972",
+          "phoneType": 972,
+          "countryCode": "IL",
+          "mcc": "425"
+        },
+        {
+          "countryName": "Japan",
+          "countryUrl": "https://rec.yriry.com/u/flag_jp.png",
+          "phonePrefix": "+81",
+          "phoneType": 81,
+          "countryCode": "JP",
+          "mcc": "440,441"
+        },
+        {
+          "countryName": "Jordan",
+          "countryUrl": "https://rec.yriry.com/u/flag_jo.png",
+          "phonePrefix": "+962",
+          "phoneType": 962,
+          "countryCode": "JO",
+          "mcc": "416"
+        },
+        {
+          "countryName": "Kazakhstan",
+          "countryUrl": "https://rec.yriry.com/u/flag_kz.png",
+          "phonePrefix": "+7",
+          "phoneType": 7,
+          "countryCode": "KZ",
+          "mcc": "401"
+        },
+        {
+          "countryName": "Kuwait",
+          "countryUrl": "https://rec.yriry.com/u/flag_kw.png",
+          "phonePrefix": "+965",
+          "phoneType": 965,
+          "countryCode": "KW",
+          "mcc": "419"
+        },
+        {
+          "countryName": "Kyrgyzstan",
+          "countryUrl": "https://rec.yriry.com/u/flag_kg.png",
+          "phonePrefix": "+996",
+          "phoneType": 996,
+          "countryCode": "KG",
+          "mcc": "437"
+        },
+        {
+          "countryName": "Laos",
+          "countryUrl": "https://rec.yriry.com/u/flag_la.png",
+          "phonePrefix": "+856",
+          "phoneType": 856,
+          "countryCode": "LA",
+          "mcc": "457"
+        },
+        {
+          "countryName": "Lebanon",
+          "countryUrl": "https://rec.yriry.com/u/flag_lb.png",
+          "phonePrefix": "+961",
+          "phoneType": 961,
+          "countryCode": "LB",
+          "mcc": "415"
+        },
+        {
+          "countryName": "Macao",
+          "countryUrl": "https://rec.yriry.com/u/flag_default.png",
+          "phonePrefix": "+853",
+          "phoneType": 853,
+          "countryCode": "MO",
+          "mcc": "455"
+        },
+        {
+          "countryName": "Malaysia",
+          "countryUrl": "https://rec.yriry.com/u/flag_my.png",
+          "phonePrefix": "+60",
+          "phoneType": 60,
+          "countryCode": "MY",
+          "mcc": "502"
+        },
+        {
+          "countryName": "Maldives",
+          "countryUrl": "https://rec.yriry.com/u/flag_mv.png",
+          "phonePrefix": "+960",
+          "phoneType": 960,
+          "countryCode": "MV",
+          "mcc": "472"
+        },
+        {
+          "countryName": "Mongolia",
+          "countryUrl": "https://rec.yriry.com/u/flag_mn.png",
+          "phonePrefix": "+976",
+          "phoneType": 976,
+          "countryCode": "MN",
+          "mcc": "428"
+        },
+        {
+          "countryName": "Myanmar",
+          "countryUrl": "https://rec.yriry.com/u/flag_mm.png",
+          "phonePrefix": "+95",
+          "phoneType": 95,
+          "countryCode": "MM",
+          "mcc": "414"
+        },
+        {
+          "countryName": "Nepal",
+          "countryUrl": "https://rec.yriry.com/u/flag_np.png",
+          "phonePrefix": "+977",
+          "phoneType": 977,
+          "countryCode": "NP",
+          "mcc": "429"
+        },
+        {
+          "countryName": "Oman",
+          "countryUrl": "https://rec.yriry.com/u/flag_om.png",
+          "phonePrefix": "+968",
+          "phoneType": 968,
+          "countryCode": "OM",
+          "mcc": "422"
+        },
+        {
+          "countryName": "Pakistan",
+          "countryUrl": "https://rec.yriry.com/u/flag_pk.png",
+          "phonePrefix": "+92",
+          "phoneType": 92,
+          "countryCode": "PK",
+          "mcc": "410"
+        },
+        {
+          "countryName": "Palestine",
+          "countryUrl": "https://rec.yriry.com/u/flag_ps.png",
+          "phonePrefix": "+970",
+          "phoneType": 970,
+          "countryCode": "PS",
+          "mcc": "425"
+        },
+        {
+          "countryName": "Philippines",
+          "countryUrl": "https://rec.yriry.com/u/flag_ph.png",
+          "phonePrefix": "+63",
+          "phoneType": 63,
+          "countryCode": "PH",
+          "mcc": "515"
+        },
+        {
+          "countryName": "Quatar",
+          "countryUrl": "https://rec.yriry.com/u/flag_qa.png",
+          "phonePrefix": "+974",
+          "phoneType": 974,
+          "countryCode": "QA",
+          "mcc": "427"
+        },
+        {
+          "countryName": "Saudi Arabia",
+          "countryUrl": "https://rec.yriry.com/u/flag_sa.png",
+          "phonePrefix": "+966",
+          "phoneType": 966,
+          "countryCode": "SA",
+          "mcc": "420"
+        },
+        {
+          "countryName": "Singapore",
+          "countryUrl": "https://rec.yriry.com/u/flag_sg.png",
+          "phonePrefix": "+65",
+          "phoneType": 65,
+          "countryCode": "SG",
+          "mcc": "525"
+        },
+        {
+          "countryName": "South Korea",
+          "countryUrl": "https://rec.yriry.com/u/flag_kr.png",
+          "phonePrefix": "+82",
+          "phoneType": 82,
+          "countryCode": "KR",
+          "mcc": "450"
+        },
+        {
+          "countryName": "SriLanka",
+          "countryUrl": "https://rec.yriry.com/u/flag_lk.png",
+          "phonePrefix": "+94",
+          "phoneType": 94,
+          "countryCode": "LK",
+          "mcc": "413"
+        },
+        {
+          "countryName": "Taiwan",
+          "countryUrl": "https://rec.yriry.com/u/flag_tw.png",
+          "phonePrefix": "+886",
+          "phoneType": 886,
+          "countryCode": "TW",
+          "mcc": "466"
+        },
+        {
+          "countryName": "Tajikistan",
+          "countryUrl": "https://rec.yriry.com/u/flag_tj.png",
+          "phonePrefix": "+992",
+          "phoneType": 992,
+          "countryCode": "TJ",
+          "mcc": "436"
+        },
+        {
+          "countryName": "Thailand",
+          "countryUrl": "https://rec.yriry.com/u/flag_th.png",
+          "phonePrefix": "+66",
+          "phoneType": 66,
+          "countryCode": "TH",
+          "mcc": "520"
+        },
+        {
+          "countryName": "Timor-Leste (East Timor)",
+          "countryUrl": "https://rec.yriry.com/u/flag_tl.png",
+          "phonePrefix": "+670",
+          "phoneType": 670,
+          "countryCode": "TL",
+          "mcc": "514"
+        },
+        {
+          "countryName": "Turkey",
+          "countryUrl": "https://rec.yriry.com/u/flag_tr.png",
+          "phonePrefix": "+90",
+          "phoneType": 90,
+          "countryCode": "TR",
+          "mcc": "286"
+        },
+        {
+          "countryName": "Turkmenistan",
+          "countryUrl": "https://rec.yriry.com/u/flag_tm.png",
+          "phonePrefix": "+993",
+          "phoneType": 993,
+          "countryCode": "TM",
+          "mcc": "438"
+        },
+        {
+          "countryName": "United Arab Emirates",
+          "countryUrl": "https://rec.yriry.com/u/flag_ae.png",
+          "phonePrefix": "+971",
+          "phoneType": 971,
+          "countryCode": "AE",
+          "mcc": "424,430,431"
+        },
+        {
+          "countryName": "Uzbekistan",
+          "countryUrl": "https://rec.yriry.com/u/flag_uz.png",
+          "phonePrefix": "+998",
+          "phoneType": 998,
+          "countryCode": "UZ",
+          "mcc": "434"
+        },
+        {
+          "countryName": "Vietnam",
+          "countryUrl": "https://rec.yriry.com/u/flag_vn.png",
+          "phonePrefix": "+84",
+          "phoneType": 84,
+          "countryCode": "VN",
+          "mcc": "452"
+        },
+        {
+          "countryName": "Yemen",
+          "countryUrl": "https://rec.yriry.com/u/flag_ye.png",
+          "phonePrefix": "+967",
+          "phoneType": 967,
+          "countryCode": "YE",
+          "mcc": "421"
+        }
+      ]
+    },
+    {
+      "continentName": "Europe",
+      "countryList": [
+        {
+          "countryName": "Albania",
+          "countryUrl": "https://rec.yriry.com/u/flag_al.png",
+          "phonePrefix": "+355",
+          "phoneType": 355,
+          "countryCode": "AL",
+          "mcc": "276"
+        },
+        {
+          "countryName": "Andorra",
+          "countryUrl": "https://rec.yriry.com/u/flag_ad.png",
+          "phonePrefix": "+376",
+          "phoneType": 376,
+          "countryCode": "AD",
+          "mcc": "213"
+        },
+        {
+          "countryName": "Austria",
+          "countryUrl": "https://rec.yriry.com/u/flag_at.png",
+          "phonePrefix": "+43",
+          "phoneType": 43,
+          "countryCode": "AT",
+          "mcc": "232"
+        },
+        {
+          "countryName": "Belarus",
+          "countryUrl": "https://rec.yriry.com/u/flag_by.png",
+          "phonePrefix": "+375",
+          "phoneType": 375,
+          "countryCode": "BY",
+          "mcc": "257"
+        },
+        {
+          "countryName": "Belgium",
+          "countryUrl": "https://rec.yriry.com/u/flag_be.png",
+          "phonePrefix": "+32",
+          "phoneType": 32,
+          "countryCode": "BE",
+          "mcc": "206"
+        },
+        {
+          "countryName": "Bosnia and Herzegovina",
+          "countryUrl": "https://rec.yriry.com/u/flag_ba.png",
+          "phonePrefix": "+387",
+          "phoneType": 387,
+          "countryCode": "BA",
+          "mcc": "218"
+        },
+        {
+          "countryName": "Bulgaria",
+          "countryUrl": "https://rec.yriry.com/u/flag_bg.png",
+          "phonePrefix": "+359",
+          "phoneType": 359,
+          "countryCode": "BG",
+          "mcc": "284"
+        },
+        {
+          "countryName": "Croatia",
+          "countryUrl": "https://rec.yriry.com/u/flag_hr.png",
+          "phonePrefix": "+385",
+          "phoneType": 385,
+          "countryCode": "HR",
+          "mcc": "219"
+        },
+        {
+          "countryName": "Cyprus",
+          "countryUrl": "https://rec.yriry.com/u/flag_cy.png",
+          "phonePrefix": "+357",
+          "phoneType": 357,
+          "countryCode": "CY",
+          "mcc": "280"
+        },
+        {
+          "countryName": "Czech Republic",
+          "countryUrl": "https://rec.yriry.com/u/flag_cz.png",
+          "phonePrefix": "+420",
+          "phoneType": 420,
+          "countryCode": "CZ",
+          "mcc": "230"
+        },
+        {
+          "countryName": "Denmark",
+          "countryUrl": "https://rec.yriry.com/u/flag_dk.png",
+          "phonePrefix": "+45",
+          "phoneType": 45,
+          "countryCode": "DK",
+          "mcc": "238"
+        },
+        {
+          "countryName": "Estonia",
+          "countryUrl": "https://rec.yriry.com/u/flag_ee.png",
+          "phonePrefix": "+372",
+          "phoneType": 372,
+          "countryCode": "EE",
+          "mcc": "248"
+        },
+        {
+          "countryName": "Finland",
+          "countryUrl": "https://rec.yriry.com/u/flag_fi.png",
+          "phonePrefix": "+358",
+          "phoneType": 358,
+          "countryCode": "FI",
+          "mcc": "244"
+        },
+        {
+          "countryName": "France",
+          "countryUrl": "https://rec.yriry.com/u/flag_fr.png",
+          "phonePrefix": "+33",
+          "phoneType": 33,
+          "countryCode": "FR",
+          "mcc": "208"
+        },
+        {
+          "countryName": "Germany",
+          "countryUrl": "https://rec.yriry.com/u/flag_de.png",
+          "phonePrefix": "+49",
+          "phoneType": 49,
+          "countryCode": "DE",
+          "mcc": "262"
+        },
+        {
+          "countryName": "Greece",
+          "countryUrl": "https://rec.yriry.com/u/flag_gr.png",
+          "phonePrefix": "+30",
+          "phoneType": 30,
+          "countryCode": "GR",
+          "mcc": "202"
+        },
+        {
+          "countryName": "Hungary",
+          "countryUrl": "https://rec.yriry.com/u/flag_hu.png",
+          "phonePrefix": "+36",
+          "phoneType": 36,
+          "countryCode": "HU",
+          "mcc": "216"
+        },
+        {
+          "countryName": "Iceland",
+          "countryUrl": "https://rec.yriry.com/u/flag_is.png",
+          "phonePrefix": "+354",
+          "phoneType": 354,
+          "countryCode": "IS",
+          "mcc": "274"
+        },
+        {
+          "countryName": "Ireland",
+          "countryUrl": "https://rec.yriry.com/u/flag_ie.png",
+          "phonePrefix": "+353",
+          "phoneType": 353,
+          "countryCode": "IE",
+          "mcc": "272"
+        },
+        {
+          "countryName": "Italy",
+          "countryUrl": "https://rec.yriry.com/u/flag_it.png",
+          "phonePrefix": "+39",
+          "phoneType": 39,
+          "countryCode": "IT",
+          "mcc": "222"
+        },
+        {
+          "countryName": "Latvia",
+          "countryUrl": "https://rec.yriry.com/u/flag_lv.png",
+          "phonePrefix": "+371",
+          "phoneType": 371,
+          "countryCode": "LV",
+          "mcc": "247"
+        },
+        {
+          "countryName": "Liechtenstein",
+          "countryUrl": "https://rec.yriry.com/u/flag_li.png",
+          "phonePrefix": "+423",
+          "phoneType": 423,
+          "countryCode": "LI",
+          "mcc": "295"
+        },
+        {
+          "countryName": "Lithuania",
+          "countryUrl": "https://rec.yriry.com/u/flag_lt.png",
+          "phonePrefix": "+370",
+          "phoneType": 370,
+          "countryCode": "LT",
+          "mcc": "246"
+        },
+        {
+          "countryName": "Luxembourg",
+          "countryUrl": "https://rec.yriry.com/u/flag_lu.png",
+          "phonePrefix": "+352",
+          "phoneType": 352,
+          "countryCode": "LU",
+          "mcc": "270"
+        },
+        {
+          "countryName": "Malta",
+          "countryUrl": "https://rec.yriry.com/u/flag_mt.png",
+          "phonePrefix": "+356",
+          "phoneType": 356,
+          "countryCode": "MT",
+          "mcc": "278"
+        },
+        {
+          "countryName": "Moldova",
+          "countryUrl": "https://rec.yriry.com/u/flag_md.png",
+          "phonePrefix": "+373",
+          "phoneType": 373,
+          "countryCode": "MD",
+          "mcc": "259"
+        },
+        {
+          "countryName": "Monaco",
+          "countryUrl": "https://rec.yriry.com/u/flag_mc.png",
+          "phonePrefix": "+377",
+          "phoneType": 377,
+          "countryCode": "MC",
+          "mcc": "212"
+        },
+        {
+          "countryName": "Montenegro",
+          "countryUrl": "https://rec.yriry.com/u/flag_me.png",
+          "phonePrefix": "+382",
+          "phoneType": 382,
+          "countryCode": "ME",
+          "mcc": "297"
+        },
+        {
+          "countryName": "Netherlands",
+          "countryUrl": "https://rec.yriry.com/u/flag_nl.png",
+          "phonePrefix": "+31",
+          "phoneType": 31,
+          "countryCode": "NL",
+          "mcc": "204"
+        },
+        {
+          "countryName": "North Macedonia",
+          "countryUrl": "https://rec.yriry.com/u/flag_mk.png",
+          "phonePrefix": "+389",
+          "phoneType": 389,
+          "countryCode": "MK",
+          "mcc": "294"
+        },
+        {
+          "countryName": "Norway",
+          "countryUrl": "https://rec.yriry.com/u/flag_no.png",
+          "phonePrefix": "+47",
+          "phoneType": 47,
+          "countryCode": "NO",
+          "mcc": "242"
+        },
+        {
+          "countryName": "Poland",
+          "countryUrl": "https://rec.yriry.com/u/flag_pl.png",
+          "phonePrefix": "+48",
+          "phoneType": 48,
+          "countryCode": "PL",
+          "mcc": "260"
+        },
+        {
+          "countryName": "Portugal",
+          "countryUrl": "https://rec.yriry.com/u/flag_pt.png",
+          "phonePrefix": "+351",
+          "phoneType": 351,
+          "countryCode": "PT",
+          "mcc": "268"
+        },
+        {
+          "countryName": "Romania",
+          "countryUrl": "https://rec.yriry.com/u/flag_ro.png",
+          "phonePrefix": "+40",
+          "phoneType": 40,
+          "countryCode": "RO",
+          "mcc": "226"
+        },
+        {
+          "countryName": "Russia",
+          "countryUrl": "https://rec.yriry.com/u/flag_ru.png",
+          "phonePrefix": "+7",
+          "phoneType": 7,
+          "countryCode": "KZ",
+          "mcc": "401"
+        },
+        {
+          "countryName": "San Marino",
+          "countryUrl": "https://rec.yriry.com/u/flag_sm.png",
+          "phonePrefix": "+378",
+          "phoneType": 378,
+          "countryCode": "SM",
+          "mcc": "292"
+        },
+        {
+          "countryName": "Serbia",
+          "countryUrl": "https://rec.yriry.com/u/flag_rs.png",
+          "phonePrefix": "+381",
+          "phoneType": 381,
+          "countryCode": "RS",
+          "mcc": "220"
+        },
+        {
+          "countryName": "Slovakia",
+          "countryUrl": "https://rec.yriry.com/u/flag_sk.png",
+          "phonePrefix": "+421",
+          "phoneType": 421,
+          "countryCode": "SK",
+          "mcc": "231"
+        },
+        {
+          "countryName": "Slovenia",
+          "countryUrl": "https://rec.yriry.com/u/flag_si.png",
+          "phonePrefix": "+386",
+          "phoneType": 386,
+          "countryCode": "SI",
+          "mcc": "293"
+        },
+        {
+          "countryName": "Spain",
+          "countryUrl": "https://rec.yriry.com/u/flag_es.png",
+          "phonePrefix": "+34",
+          "phoneType": 34,
+          "countryCode": "ES",
+          "mcc": "214"
+        },
+        {
+          "countryName": "Sweden",
+          "countryUrl": "https://rec.yriry.com/u/flag_se.png",
+          "phonePrefix": "+46",
+          "phoneType": 46,
+          "countryCode": "SE",
+          "mcc": "240"
+        },
+        {
+          "countryName": "Switzerland",
+          "countryUrl": "https://rec.yriry.com/u/flag_ch.png",
+          "phonePrefix": "+41",
+          "phoneType": 41,
+          "countryCode": "CH",
+          "mcc": "228"
+        },
+        {
+          "countryName": "Ukraine",
+          "countryUrl": "https://rec.yriry.com/u/flag_ua.png",
+          "phonePrefix": "+380",
+          "phoneType": 380,
+          "countryCode": "UA",
+          "mcc": "255"
+        },
+        {
+          "countryName": "United Kingdom",
+          "countryUrl": "https://rec.yriry.com/u/flag_gb.png",
+          "phonePrefix": "+44",
+          "phoneType": 44,
+          "countryCode": "GB",
+          "mcc": "234,235"
+        },
+        {
+          "countryName": "Vatican City State",
+          "countryUrl": "https://rec.yriry.com/u/flag_va.png",
+          "phonePrefix": "+379",
+          "phoneType": 379,
+          "countryCode": "VA",
+          "mcc": "225"
+        }
+      ]
+    },
+    {
+      "continentName": "Africa",
+      "countryList": [
+        {
+          "countryName": "Algeria",
+          "countryUrl": "https://rec.yriry.com/u/flag_dz.png",
+          "phonePrefix": "+213",
+          "phoneType": 213,
+          "countryCode": "DZ",
+          "mcc": "603"
+        },
+        {
+          "countryName": "Angola",
+          "countryUrl": "https://rec.yriry.com/u/flag_ao.png",
+          "phonePrefix": "+244",
+          "phoneType": 244,
+          "countryCode": "AO",
+          "mcc": "631"
+        },
+        {
+          "countryName": "Benin",
+          "countryUrl": "https://rec.yriry.com/u/flag_bj.png",
+          "phonePrefix": "+229",
+          "phoneType": 229,
+          "countryCode": "BJ",
+          "mcc": "616"
+        },
+        {
+          "countryName": "Botswana",
+          "countryUrl": "https://rec.yriry.com/u/flag_bw.png",
+          "phonePrefix": "+267",
+          "phoneType": 267,
+          "countryCode": "BW",
+          "mcc": "652"
+        },
+        {
+          "countryName": "Burkina Faso",
+          "countryUrl": "https://rec.yriry.com/u/flag_bf.png",
+          "phonePrefix": "+226",
+          "phoneType": 226,
+          "countryCode": "BF",
+          "mcc": "613"
+        },
+        {
+          "countryName": "Burundi",
+          "countryUrl": "https://rec.yriry.com/u/flag_bi.png",
+          "phonePrefix": "+257",
+          "phoneType": 257,
+          "countryCode": "BI",
+          "mcc": "642"
+        },
+        {
+          "countryName": "Cameroon",
+          "countryUrl": "https://rec.yriry.com/u/flag_cm.png",
+          "phonePrefix": "+237",
+          "phoneType": 237,
+          "countryCode": "CM",
+          "mcc": "624"
+        },
+        {
+          "countryName": "Cape Verde",
+          "countryUrl": "https://rec.yriry.com/u/flag_cv.png",
+          "phonePrefix": "+238",
+          "phoneType": 238,
+          "countryCode": "CV",
+          "mcc": "625"
+        },
+        {
+          "countryName": "Central African Republic",
+          "countryUrl": "https://rec.yriry.com/u/flag_cf.png",
+          "phonePrefix": "+236",
+          "phoneType": 236,
+          "countryCode": "CF",
+          "mcc": "623"
+        },
+        {
+          "countryName": "Chad",
+          "countryUrl": "https://rec.yriry.com/u/flag_td.png",
+          "phonePrefix": "+235",
+          "phoneType": 235,
+          "countryCode": "TD",
+          "mcc": "622"
+        },
+        {
+          "countryName": "Comoros",
+          "countryUrl": "https://rec.yriry.com/u/flag_km.png",
+          "phonePrefix": "+269",
+          "phoneType": 269,
+          "countryCode": "KM",
+          "mcc": "654"
+        },
+        {
+          "countryName": "Congo(Brazzaville)",
+          "countryUrl": "https://rec.yriry.com/u/flag_cg.png",
+          "phonePrefix": "+242",
+          "phoneType": 242,
+          "countryCode": "CG",
+          "mcc": "629"
+        },
+        {
+          "countryName": "Democratic Republic of the Congo",
+          "countryUrl": "https://rec.yriry.com/u/flag_cd.png",
+          "phonePrefix": "+243",
+          "phoneType": 243,
+          "countryCode": "CD",
+          "mcc": "630"
+        },
+        {
+          "countryName": "Djibouti",
+          "countryUrl": "https://rec.yriry.com/u/flag_dj.png",
+          "phonePrefix": "+253",
+          "phoneType": 253,
+          "countryCode": "DJ",
+          "mcc": "638"
+        },
+        {
+          "countryName": "Egypt",
+          "countryUrl": "https://rec.yriry.com/u/flag_eg.png",
+          "phonePrefix": "+20",
+          "phoneType": 20,
+          "countryCode": "EG",
+          "mcc": "602"
+        },
+        {
+          "countryName": "Equatorial Guinea",
+          "countryUrl": "https://rec.yriry.com/u/flag_gq.png",
+          "phonePrefix": "+240",
+          "phoneType": 240,
+          "countryCode": "GQ",
+          "mcc": "627"
+        },
+        {
+          "countryName": "Eritrea",
+          "countryUrl": "https://rec.yriry.com/u/flag_er.png",
+          "phonePrefix": "+291",
+          "phoneType": 291,
+          "countryCode": "ER",
+          "mcc": "657"
+        },
+        {
+          "countryName": "Ethiopia",
+          "countryUrl": "https://rec.yriry.com/u/flag_et.png",
+          "phonePrefix": "+251",
+          "phoneType": 251,
+          "countryCode": "ET",
+          "mcc": "636"
+        },
+        {
+          "countryName": "Gabon",
+          "countryUrl": "https://rec.yriry.com/u/flag_ga.png",
+          "phonePrefix": "+241",
+          "phoneType": 241,
+          "countryCode": "GA",
+          "mcc": "628"
+        },
+        {
+          "countryName": "Gambia",
+          "countryUrl": "https://rec.yriry.com/u/flag_gm.png",
+          "phonePrefix": "+220",
+          "phoneType": 220,
+          "countryCode": "GM",
+          "mcc": "607"
+        },
+        {
+          "countryName": "Ghana",
+          "countryUrl": "https://rec.yriry.com/u/flag_gh.png",
+          "phonePrefix": "+233",
+          "phoneType": 233,
+          "countryCode": "GH",
+          "mcc": "620"
+        },
+        {
+          "countryName": "Guinea",
+          "countryUrl": "https://rec.yriry.com/u/flag_gn.png",
+          "phonePrefix": "+224",
+          "phoneType": 224,
+          "countryCode": "GN",
+          "mcc": "611"
+        },
+        {
+          "countryName": "Guinea-Bissau",
+          "countryUrl": "https://rec.yriry.com/u/flag_gw.png",
+          "phonePrefix": "+245",
+          "phoneType": 245,
+          "countryCode": "GW",
+          "mcc": "632"
+        },
+        {
+          "countryName": "Ivory Coast",
+          "countryUrl": "https://rec.yriry.com/u/flag_ci.png",
+          "phonePrefix": "+225",
+          "phoneType": 225,
+          "countryCode": "CI",
+          "mcc": "612"
+        },
+        {
+          "countryName": "Kenya",
+          "countryUrl": "https://rec.yriry.com/u/flag_ke.png",
+          "phonePrefix": "+254",
+          "phoneType": 254,
+          "countryCode": "KE",
+          "mcc": "639"
+        },
+        {
+          "countryName": "Lesotho",
+          "countryUrl": "https://rec.yriry.com/u/flag_ls.png",
+          "phonePrefix": "+266",
+          "phoneType": 266,
+          "countryCode": "LS",
+          "mcc": "651"
+        },
+        {
+          "countryName": "Liberia",
+          "countryUrl": "https://rec.yriry.com/u/flag_lr.png",
+          "phonePrefix": "+231",
+          "phoneType": 231,
+          "countryCode": "LR",
+          "mcc": "618"
+        },
+        {
+          "countryName": "Libya",
+          "countryUrl": "https://rec.yriry.com/u/flag_ly.png",
+          "phonePrefix": "+218",
+          "phoneType": 218,
+          "countryCode": "LY",
+          "mcc": "606"
+        },
+        {
+          "countryName": "Madagascar",
+          "countryUrl": "https://rec.yriry.com/u/flag_mg.png",
+          "phonePrefix": "+261",
+          "phoneType": 261,
+          "countryCode": "MG",
+          "mcc": "646"
+        },
+        {
+          "countryName": "Malawi",
+          "countryUrl": "https://rec.yriry.com/u/flag_mw.png",
+          "phonePrefix": "+265",
+          "phoneType": 265,
+          "countryCode": "MW",
+          "mcc": "650"
+        },
+        {
+          "countryName": "Mali",
+          "countryUrl": "https://rec.yriry.com/u/flag_ml.png",
+          "phonePrefix": "+223",
+          "phoneType": 223,
+          "countryCode": "ML",
+          "mcc": "610"
+        },
+        {
+          "countryName": "Mauritania",
+          "countryUrl": "https://rec.yriry.com/u/flag_mr.png",
+          "phonePrefix": "+222",
+          "phoneType": 222,
+          "countryCode": "MR",
+          "mcc": "609"
+        },
+        {
+          "countryName": "Mauritius",
+          "countryUrl": "https://rec.yriry.com/u/flag_mu.png",
+          "phonePrefix": "+230",
+          "phoneType": 230,
+          "countryCode": "MU",
+          "mcc": "617"
+        },
+        {
+          "countryName": "Morocco",
+          "countryUrl": "https://rec.yriry.com/u/flag_ma.png",
+          "phonePrefix": "+212",
+          "phoneType": 212,
+          "countryCode": "MA",
+          "mcc": "604"
+        },
+        {
+          "countryName": "Mozambique",
+          "countryUrl": "https://rec.yriry.com/u/flag_mz.png",
+          "phonePrefix": "+258",
+          "phoneType": 258,
+          "countryCode": "MZ",
+          "mcc": "643"
+        },
+        {
+          "countryName": "Namibia",
+          "countryUrl": "https://rec.yriry.com/u/flag_na.png",
+          "phonePrefix": "+264",
+          "phoneType": 264,
+          "countryCode": "NA",
+          "mcc": "649"
+        },
+        {
+          "countryName": "Niger",
+          "countryUrl": "https://rec.yriry.com/u/flag_ne.png",
+          "phonePrefix": "+227",
+          "phoneType": 227,
+          "countryCode": "NE",
+          "mcc": "614"
+        },
+        {
+          "countryName": "Nigeria",
+          "countryUrl": "https://rec.yriry.com/u/flag_ng.png",
+          "phonePrefix": "+234",
+          "phoneType": 234,
+          "countryCode": "NG",
+          "mcc": "621"
+        },
+        {
+          "countryName": "Rwanda",
+          "countryUrl": "https://rec.yriry.com/u/flag_rw.png",
+          "phonePrefix": "+250",
+          "phoneType": 250,
+          "countryCode": "RW",
+          "mcc": "635"
+        },
+        {
+          "countryName": "Sao Tome and Principe",
+          "countryUrl": "https://rec.yriry.com/u/flag_st.png",
+          "phonePrefix": "+239",
+          "phoneType": 239,
+          "countryCode": "ST",
+          "mcc": "626"
+        },
+        {
+          "countryName": "Senegal",
+          "countryUrl": "https://rec.yriry.com/u/flag_sn.png",
+          "phonePrefix": "+221",
+          "phoneType": 221,
+          "countryCode": "SN",
+          "mcc": "608"
+        },
+        {
+          "countryName": "Seychelles",
+          "countryUrl": "https://rec.yriry.com/u/flag_sc.png",
+          "phonePrefix": "+248",
+          "phoneType": 248,
+          "countryCode": "SC",
+          "mcc": "633"
+        },
+        {
+          "countryName": "Sierra Leone",
+          "countryUrl": "https://rec.yriry.com/u/flag_sl.png",
+          "phonePrefix": "+232",
+          "phoneType": 232,
+          "countryCode": "SL",
+          "mcc": "619"
+        },
+        {
+          "countryName": "Somalia",
+          "countryUrl": "https://rec.yriry.com/u/flag_so.png",
+          "phonePrefix": "+252",
+          "phoneType": 252,
+          "countryCode": "SO",
+          "mcc": "637"
+        },
+        {
+          "countryName": "South Africa",
+          "countryUrl": "https://rec.yriry.com/u/flag_za.png",
+          "phonePrefix": "+27",
+          "phoneType": 27,
+          "countryCode": "ZA",
+          "mcc": "655"
+        },
+        {
+          "countryName": "South Sudan",
+          "countryUrl": "https://rec.yriry.com/u/flag_ss.png",
+          "phonePrefix": "+211",
+          "phoneType": 211,
+          "countryCode": "SS",
+          "mcc": "659"
+        },
+        {
+          "countryName": "Sudan",
+          "countryUrl": "https://rec.yriry.com/u/flag_sd.png",
+          "phonePrefix": "+249",
+          "phoneType": 249,
+          "countryCode": "SD",
+          "mcc": "634"
+        },
+        {
+          "countryName": "Swaziland",
+          "countryUrl": "https://rec.yriry.com/u/flag_sz.png",
+          "phonePrefix": "+268",
+          "phoneType": 268,
+          "countryCode": "SZ",
+          "mcc": "653"
+        },
+        {
+          "countryName": "Tanzania",
+          "countryUrl": "https://rec.yriry.com/u/flag_tz.png",
+          "phonePrefix": "+255",
+          "phoneType": 255,
+          "countryCode": "TZ",
+          "mcc": "640"
+        },
+        {
+          "countryName": "Togo",
+          "countryUrl": "https://rec.yriry.com/u/flag_tg.png",
+          "phonePrefix": "+228",
+          "phoneType": 228,
+          "countryCode": "TG",
+          "mcc": "615"
+        },
+        {
+          "countryName": "Tunisia",
+          "countryUrl": "https://rec.yriry.com/u/flag_tn.png",
+          "phonePrefix": "+216",
+          "phoneType": 216,
+          "countryCode": "TN",
+          "mcc": "605"
+        },
+        {
+          "countryName": "Uganda",
+          "countryUrl": "https://rec.yriry.com/u/flag_ug.png",
+          "phonePrefix": "+256",
+          "phoneType": 256,
+          "countryCode": "UG",
+          "mcc": "641"
+        },
+        {
+          "countryName": "Zambia",
+          "countryUrl": "https://rec.yriry.com/u/flag_zm.png",
+          "phonePrefix": "+260",
+          "phoneType": 260,
+          "countryCode": "ZM",
+          "mcc": "645"
+        },
+        {
+          "countryName": "Zimbabwe",
+          "countryUrl": "https://rec.yriry.com/u/flag_zw.png",
+          "phonePrefix": "+263",
+          "phoneType": 263,
+          "countryCode": "ZW",
+          "mcc": "648"
+        }
+      ]
+    },
+    {
+      "continentName": "Oceania",
+      "countryList": [
+        {
+          "countryName": "Australia",
+          "countryUrl": "https://rec.yriry.com/u/flag_au.png",
+          "phonePrefix": "+61",
+          "phoneType": 61,
+          "countryCode": "AU",
+          "mcc": "505"
+        },
+        {
+          "countryName": "Cook Islands",
+          "countryUrl": "https://rec.yriry.com/u/flag_ck.png",
+          "phonePrefix": "+682",
+          "phoneType": 682,
+          "countryCode": "CK",
+          "mcc": "548"
+        },
+        {
+          "countryName": "Federated States of Micronesia",
+          "countryUrl": "https://rec.yriry.com/u/flag_fm.png",
+          "phonePrefix": "+691",
+          "phoneType": 691,
+          "countryCode": "FM",
+          "mcc": "550"
+        },
+        {
+          "countryName": "Fiji",
+          "countryUrl": "https://rec.yriry.com/u/flag_fj.png",
+          "phonePrefix": "+679",
+          "phoneType": 679,
+          "countryCode": "FJ",
+          "mcc": "542"
+        },
+        {
+          "countryName": "Kiribati",
+          "countryUrl": "https://rec.yriry.com/u/flag_ki.png",
+          "phonePrefix": "+686",
+          "phoneType": 686,
+          "countryCode": "KI",
+          "mcc": "545"
+        },
+        {
+          "countryName": "Marshall Islands",
+          "countryUrl": "https://rec.yriry.com/u/flag_mh.png",
+          "phonePrefix": "+692",
+          "phoneType": 692,
+          "countryCode": "MH",
+          "mcc": "551"
+        },
+        {
+          "countryName": "Nauru",
+          "countryUrl": "https://rec.yriry.com/u/flag_nr.png",
+          "phonePrefix": "+674",
+          "phoneType": 674,
+          "countryCode": "NR",
+          "mcc": "536"
+        },
+        {
+          "countryName": "New Zealand",
+          "countryUrl": "https://rec.yriry.com/u/flag_nz.png",
+          "phonePrefix": "+64",
+          "phoneType": 64,
+          "countryCode": "NZ",
+          "mcc": "530"
+        },
+        {
+          "countryName": "Niue",
+          "countryUrl": "https://rec.yriry.com/u/flag_nu.png",
+          "phonePrefix": "+683",
+          "phoneType": 683,
+          "countryCode": "NU",
+          "mcc": "555"
+        },
+        {
+          "countryName": "Palau",
+          "countryUrl": "https://rec.yriry.com/u/flag_pw.png",
+          "phonePrefix": "+680",
+          "phoneType": 680,
+          "countryCode": "PW",
+          "mcc": "552"
+        },
+        {
+          "countryName": "Papua New Guinea",
+          "countryUrl": "https://rec.yriry.com/u/flag_pg.png",
+          "phonePrefix": "+675",
+          "phoneType": 675,
+          "countryCode": "PG",
+          "mcc": "537"
+        },
+        {
+          "countryName": "Samoa",
+          "countryUrl": "https://rec.yriry.com/u/flag_ws.png",
+          "phonePrefix": "+685",
+          "phoneType": 685,
+          "countryCode": "WS",
+          "mcc": "549"
+        },
+        {
+          "countryName": "Solomon Islands",
+          "countryUrl": "https://rec.yriry.com/u/flag_sb.png",
+          "phonePrefix": "+677",
+          "phoneType": 677,
+          "countryCode": "SB",
+          "mcc": "540"
+        },
+        {
+          "countryName": "Tonga",
+          "countryUrl": "https://rec.yriry.com/u/flag_to.png",
+          "phonePrefix": "+676",
+          "phoneType": 676,
+          "countryCode": "TO",
+          "mcc": "539"
+        },
+        {
+          "countryName": "Tuvalu",
+          "countryUrl": "https://rec.yriry.com/u/flag_tv.png",
+          "phonePrefix": "+688",
+          "phoneType": 688,
+          "countryCode": "TUV",
+          "mcc": "438"
+        },
+        {
+          "countryName": "Vanuatu",
+          "countryUrl": "https://rec.yriry.com/u/flag_vu.png",
+          "phonePrefix": "+678",
+          "phoneType": 678,
+          "countryCode": "VU",
+          "mcc": "541"
+        }
+      ]
+    },
+    {
+      "continentName": "North America",
+      "countryList": [
+        {
+          "countryName": "Antigua and Barbuda",
+          "countryUrl": "https://rec.yriry.com/u/flag_ag.png",
+          "phonePrefix": "+1268",
+          "phoneType": 1268,
+          "countryCode": "AG",
+          "mcc": "344"
+        },
+        {
+          "countryName": "Bahamas",
+          "countryUrl": "https://rec.yriry.com/u/flag_bs.png",
+          "phonePrefix": "+1242",
+          "phoneType": 1242,
+          "countryCode": "BS",
+          "mcc": "364"
+        },
+        {
+          "countryName": "Barbados",
+          "countryUrl": "https://rec.yriry.com/u/flag_bb.png",
+          "phonePrefix": "+1246",
+          "phoneType": 1246,
+          "countryCode": "BB",
+          "mcc": "342"
+        },
+        {
+          "countryName": "Belize",
+          "countryUrl": "https://rec.yriry.com/u/flag_bz.png",
+          "phonePrefix": "+501",
+          "phoneType": 501,
+          "countryCode": "BZ",
+          "mcc": "702"
+        },
+        {
+          "countryName": "Canada",
+          "countryUrl": "https://rec.yriry.com/u/flag_ca.png",
+          "phonePrefix": "+1",
+          "phoneType": 1,
+          "countryCode": "CA",
+          "mcc": "302"
+        },
+        {
+          "countryName": "Costa Rica",
+          "countryUrl": "https://rec.yriry.com/u/flag_cr.png",
+          "phonePrefix": "+506",
+          "phoneType": 506,
+          "countryCode": "CR",
+          "mcc": "712"
+        },
+        {
+          "countryName": "Dominica",
+          "countryUrl": "https://rec.yriry.com/u/flag_dm.png",
+          "phonePrefix": "+1767",
+          "phoneType": 1767,
+          "countryCode": "DM",
+          "mcc": "366"
+        },
+        {
+          "countryName": "Dominican Republic",
+          "countryUrl": "https://rec.yriry.com/u/flag_do.png",
+          "phonePrefix": "+1809",
+          "phoneType": 1809,
+          "countryCode": "DO",
+          "mcc": "370"
+        },
+        {
+          "countryName": "El Salvador",
+          "countryUrl": "https://rec.yriry.com/u/flag_sv.png",
+          "phonePrefix": "+503",
+          "phoneType": 503,
+          "countryCode": "SV",
+          "mcc": "706"
+        },
+        {
+          "countryName": "Grenada",
+          "countryUrl": "https://rec.yriry.com/u/flag_gd.png",
+          "phonePrefix": "+1473",
+          "phoneType": 1473,
+          "countryCode": "GD",
+          "mcc": "352"
+        },
+        {
+          "countryName": "Guatemala",
+          "countryUrl": "https://rec.yriry.com/u/flag_gt.png",
+          "phonePrefix": "+502",
+          "phoneType": 502,
+          "countryCode": "GT",
+          "mcc": "704"
+        },
+        {
+          "countryName": "Haiti",
+          "countryUrl": "https://rec.yriry.com/u/flag_ht.png",
+          "phonePrefix": "+509",
+          "phoneType": 509,
+          "countryCode": "HT",
+          "mcc": "372"
+        },
+        {
+          "countryName": "Honduras",
+          "countryUrl": "https://rec.yriry.com/u/flag_hn.png",
+          "phonePrefix": "+504",
+          "phoneType": 504,
+          "countryCode": "HN",
+          "mcc": "708"
+        },
+        {
+          "countryName": "Jamaica",
+          "countryUrl": "https://rec.yriry.com/u/flag_jm.png",
+          "phonePrefix": "+1876",
+          "phoneType": 1876,
+          "countryCode": "JM",
+          "mcc": "338"
+        },
+        {
+          "countryName": "Mexico",
+          "countryUrl": "https://rec.yriry.com/u/flag_mx.png",
+          "phonePrefix": "+52",
+          "phoneType": 52,
+          "countryCode": "MX",
+          "mcc": "334"
+        },
+        {
+          "countryName": "Nicaragua",
+          "countryUrl": "https://rec.yriry.com/u/flag_ni.png",
+          "phonePrefix": "+505",
+          "phoneType": 505,
+          "countryCode": "NI",
+          "mcc": "710"
+        },
+        {
+          "countryName": "Panama",
+          "countryUrl": "https://rec.yriry.com/u/flag_pa.png",
+          "phonePrefix": "+507",
+          "phoneType": 507,
+          "countryCode": "PA",
+          "mcc": "714"
+        },
+        {
+          "countryName": "Saint Kitts and Nevis",
+          "countryUrl": "https://rec.yriry.com/u/flag_kn.png",
+          "phonePrefix": "+1869",
+          "phoneType": 1869,
+          "countryCode": "KN",
+          "mcc": "356"
+        },
+        {
+          "countryName": "Saint Lucia",
+          "countryUrl": "https://rec.yriry.com/u/flag_lc.png",
+          "phonePrefix": "+1758",
+          "phoneType": 1758,
+          "countryCode": "LC",
+          "mcc": "358"
+        },
+        {
+          "countryName": "Saint Vincent and the Grenadines",
+          "countryUrl": "https://rec.yriry.com/u/flag_vc.png",
+          "phonePrefix": "+1784",
+          "phoneType": 1784,
+          "countryCode": "VC",
+          "mcc": "360"
+        },
+        {
+          "countryName": "Trinidad and Tobago",
+          "countryUrl": "https://rec.yriry.com/u/flag_tt.png",
+          "phonePrefix": "+1868",
+          "phoneType": 1868,
+          "countryCode": "TT",
+          "mcc": "374"
+        },
+        {
+          "countryName": "United States of America",
+          "countryUrl": "https://rec.yriry.com/u/flag_us.png",
+          "phonePrefix": "+1",
+          "phoneType": 1,
+          "countryCode": "CA",
+          "mcc": "302"
+        }
+      ]
+    },
+    {
+      "continentName": "South America",
+      "countryList": [
+        {
+          "countryName": "Argentina",
+          "countryUrl": "https://rec.yriry.com/u/flag_ar.png",
+          "phonePrefix": "+54",
+          "phoneType": 54,
+          "countryCode": "AR",
+          "mcc": "722"
+        },
+        {
+          "countryName": "Bolivia",
+          "countryUrl": "https://rec.yriry.com/u/flag_bo.png",
+          "phonePrefix": "+591",
+          "phoneType": 591,
+          "countryCode": "BO",
+          "mcc": "736"
+        },
+        {
+          "countryName": "Brazil",
+          "countryUrl": "https://rec.yriry.com/u/flag_br.png",
+          "phonePrefix": "+55",
+          "phoneType": 55,
+          "countryCode": "BR",
+          "mcc": "724"
+        },
+        {
+          "countryName": "Chile",
+          "countryUrl": "https://rec.yriry.com/u/flag_cl.png",
+          "phonePrefix": "+56",
+          "phoneType": 56,
+          "countryCode": "CL",
+          "mcc": "730"
+        },
+        {
+          "countryName": "Colombia",
+          "countryUrl": "https://rec.yriry.com/u/flag_co.png",
+          "phonePrefix": "+57",
+          "phoneType": 57,
+          "countryCode": "CO",
+          "mcc": "732"
+        },
+        {
+          "countryName": "Ecuador",
+          "countryUrl": "https://rec.yriry.com/u/flag_ec.png",
+          "phonePrefix": "+593",
+          "phoneType": 593,
+          "countryCode": "EC",
+          "mcc": "740"
+        },
+        {
+          "countryName": "Guyana",
+          "countryUrl": "https://rec.yriry.com/u/flag_gy.png",
+          "phonePrefix": "+592",
+          "phoneType": 592,
+          "countryCode": "GY",
+          "mcc": "738"
+        },
+        {
+          "countryName": "Paraguay",
+          "countryUrl": "https://rec.yriry.com/u/flag_py.png",
+          "phonePrefix": "+595",
+          "phoneType": 595,
+          "countryCode": "PY",
+          "mcc": "744"
+        },
+        {
+          "countryName": "Peru",
+          "countryUrl": "https://rec.yriry.com/u/flag_pe.png",
+          "phonePrefix": "+51",
+          "phoneType": 51,
+          "countryCode": "PE",
+          "mcc": "716"
+        },
+        {
+          "countryName": "Suriname",
+          "countryUrl": "https://rec.yriry.com/u/flag_sr.png",
+          "phonePrefix": "+597",
+          "phoneType": 597,
+          "countryCode": "SR",
+          "mcc": "746"
+        },
+        {
+          "countryName": "Uruguay",
+          "countryUrl": "https://rec.yriry.com/u/flag_uy.png",
+          "phonePrefix": "+598",
+          "phoneType": 598,
+          "countryCode": "UY",
+          "mcc": "748"
+        },
+        {
+          "countryName": "Venezuela",
+          "countryUrl": "https://rec.yriry.com/u/flag_ve.png",
+          "phonePrefix": "+58",
+          "phoneType": 58,
+          "countryCode": "VE",
+          "mcc": "734"
+        }
+      ]
+    }
+  ]
+}
