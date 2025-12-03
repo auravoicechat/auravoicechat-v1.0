@@ -1,0 +1,20 @@
+
+zuanshi.png
+size: 197,101
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+7
+  rotate: false
+  xy: 0, 6
+  size: 113, 95
+  orig: 130, 130
+  offset: 8, 16
+  index: -1
+72
+  rotate: true
+  xy: 115, 0
+  size: 101, 82
+  orig: 130, 130
+  offset: 14, 21
+  index: -1

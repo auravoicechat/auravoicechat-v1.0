@@ -1,0 +1,20 @@
+
+betting_started.png
+size: 754,221
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bar_bg
+  rotate: false
+  xy: 2, 81
+  size: 750, 138
+  orig: 752, 140
+  offset: 1, 1
+  index: -1
+en
+  rotate: false
+  xy: 2, 2
+  size: 608, 77
+  orig: 610, 79
+  offset: 1, 1
+  index: -1

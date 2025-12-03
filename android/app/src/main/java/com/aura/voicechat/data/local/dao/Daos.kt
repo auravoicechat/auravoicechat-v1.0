@@ -218,3 +218,115 @@ interface VisitorDao {
     @Query("DELETE FROM profile_visitors WHERE visitedAt < :timestamp")
     suspend fun deleteOldVisitors(timestamp: Long)
 }
+
+// ============================================
+// Week 4: Advanced Features DAOs
+// ============================================
+
+@Dao
+interface NotificationDao {
+    @Query("SELECT * FROM notifications ORDER BY createdAt DESC")
+    fun getAllNotifications(): Flow<List<NotificationEntity>>
+    
+    @Query("SELECT * FROM notifications WHERE type = :type ORDER BY createdAt DESC")
+    fun getNotificationsByType(type: String): Flow<List<NotificationEntity>>
+    
+    @Query("SELECT * FROM notifications WHERE isRead = 0 ORDER BY createdAt DESC")
+    fun getUnreadNotifications(): Flow<List<NotificationEntity>>
+    
+    @Query("SELECT COUNT(*) FROM notifications WHERE isRead = 0")
+    fun getUnreadCount(): Flow<Int>
+    
+    @Query("SELECT * FROM notifications WHERE id = :id")
+    suspend fun getNotificationById(id: String): NotificationEntity?
+    
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertNotification(notification: NotificationEntity)
+    
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertNotifications(notifications: List<NotificationEntity>)
+    
+    @Query("UPDATE notifications SET isRead = 1 WHERE id = :id")
+    suspend fun markAsRead(id: String)
+    
+    @Query("UPDATE notifications SET isRead = 1")
+    suspend fun markAllAsRead()
+    
+    @Delete
+    suspend fun deleteNotification(notification: NotificationEntity)
+    
+    @Query("DELETE FROM notifications WHERE id = :id")
+    suspend fun deleteNotificationById(id: String)
+    
+    @Query("DELETE FROM notifications WHERE createdAt < :timestamp")
+    suspend fun deleteOldNotifications(timestamp: Long)
+}
+
+@Dao
+interface SongDao {
+    @Query("SELECT * FROM songs ORDER BY title ASC")
+    fun getAllSongs(): Flow<List<SongEntity>>
+    
+    @Query("SELECT * FROM songs WHERE title LIKE '%' || :query || '%' OR artist LIKE '%' || :query || '%'")
+    fun searchSongs(query: String): Flow<List<SongEntity>>
+    
+    @Query("SELECT * FROM songs WHERE id = :id")
+    suspend fun getSongById(id: String): SongEntity?
+    
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSong(song: SongEntity)
+    
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSongs(songs: List<SongEntity>)
+    
+    @Delete
+    suspend fun deleteSong(song: SongEntity)
+    
+    @Query("DELETE FROM songs WHERE cachedAt < :timestamp")
+    suspend fun deleteOldCache(timestamp: Long)
+}
+
+@Dao
+interface PlaylistDao {
+    @Query("SELECT * FROM playlists WHERE createdBy = :userId ORDER BY createdAt DESC")
+    fun getUserPlaylists(userId: String): Flow<List<PlaylistEntity>>
+    
+    @Query("SELECT * FROM playlists WHERE id = :id")
+    suspend fun getPlaylistById(id: String): PlaylistEntity?
+    
+    @Query("SELECT * FROM playlists ORDER BY createdAt DESC")
+    fun getAllPlaylists(): Flow<List<PlaylistEntity>>
+    
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPlaylist(playlist: PlaylistEntity)
+    
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPlaylists(playlists: List<PlaylistEntity>)
+    
+    @Update
+    suspend fun updatePlaylist(playlist: PlaylistEntity)
+    
+    @Delete
+    suspend fun deletePlaylist(playlist: PlaylistEntity)
+}
+
+@Dao
+interface PlaylistSongDao {
+    @Query("SELECT s.* FROM songs s INNER JOIN playlist_songs ps ON s.id = ps.songId WHERE ps.playlistId = :playlistId ORDER BY ps.position ASC")
+    fun getPlaylistSongs(playlistId: String): Flow<List<SongEntity>>
+    
+    @Query("SELECT * FROM playlist_songs WHERE playlistId = :playlistId ORDER BY position ASC")
+    fun getPlaylistSongEntries(playlistId: String): Flow<List<PlaylistSongEntity>>
+    
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPlaylistSong(playlistSong: PlaylistSongEntity)
+    
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPlaylistSongs(playlistSongs: List<PlaylistSongEntity>)
+    
+    @Query("DELETE FROM playlist_songs WHERE playlistId = :playlistId AND songId = :songId")
+    suspend fun removePlaylistSong(playlistId: String, songId: String)
+    
+    @Query("DELETE FROM playlist_songs WHERE playlistId = :playlistId")
+    suspend fun clearPlaylist(playlistId: String)
+}

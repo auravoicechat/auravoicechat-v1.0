@@ -1,0 +1,62 @@
+
+bling.png
+size: 543,110
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+mask
+  rotate: false
+  xy: 0, 15
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+shanshuo_1
+  rotate: true
+  xy: 83, 55
+  size: 55, 214
+  orig: 55, 214
+  offset: 0, 0
+  index: -1
+shanshuo_2
+  rotate: true
+  xy: 299, 55
+  size: 55, 214
+  orig: 55, 214
+  offset: 0, 0
+  index: -1
+star1
+  rotate: false
+  xy: 452, 8
+  size: 45, 45
+  orig: 49, 49
+  offset: 2, 2
+  index: -1
+star2
+  rotate: true
+  xy: 402, 4
+  size: 49, 48
+  orig: 51, 50
+  offset: 1, 1
+  index: -1
+star3
+  rotate: true
+  xy: 499, 8
+  size: 45, 44
+  orig: 51, 50
+  offset: 3, 3
+  index: -1
+star_lan
+  rotate: true
+  xy: 0, 27
+  size: 83, 81
+  orig: 91, 89
+  offset: 4, 3
+  index: -1
+tx
+  rotate: true
+  xy: 83, 0
+  size: 53, 317
+  orig: 53, 317
+  offset: 0, 0
+  index: -1
