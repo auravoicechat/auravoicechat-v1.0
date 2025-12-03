@@ -35,6 +35,16 @@ enum class RoomMode {
     INVITE_ONLY
 }
 
+enum class RoomCategory(val displayName: String) {
+    ALL("All"),
+    CHAT("Chat"),
+    MUSIC("Music"),
+    GAMING("Gaming"),
+    DATING("Dating"),
+    PARTY("Party"),
+    CHILL("Chill")
+}
+
 data class Seat(
     val position: Int,
     val userId: String?,

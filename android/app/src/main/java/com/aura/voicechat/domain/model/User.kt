@@ -37,3 +37,9 @@ enum class KycStatus {
     VERIFIED,
     REJECTED
 }
+
+enum class VipTier(val displayName: String) {
+    NONE(""),
+    VIP("VIP"),
+    SVIP("SVIP")
+}
