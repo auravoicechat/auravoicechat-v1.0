@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Search
@@ -533,7 +534,7 @@ fun LoginScreen(
                         enabled = !uiState.isLoading
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Phone,
+                            imageVector = Icons.Default.AccountCircle,
                             contentDescription = "Google",
                             tint = com.aura.voicechat.ui.theme.AccentCyan
                         )
@@ -574,7 +575,7 @@ fun LoginScreen(
                         enabled = !uiState.isLoading
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Phone,
+                            imageVector = Icons.Default.AccountCircle,
                             contentDescription = "Facebook",
                             tint = com.aura.voicechat.ui.theme.AccentMagenta
                         )

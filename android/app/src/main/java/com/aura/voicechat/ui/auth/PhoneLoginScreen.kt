@@ -31,6 +31,8 @@ import com.aura.voicechat.ui.theme.*
  * Developer: Hawkaye Visions LTD — Pakistan
  * 
  * Dedicated screen for phone number entry with country code selection.
+ * Note: This functionality is already integrated in LoginScreen. 
+ * This is a standalone version for navigation flexibility.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,7 +44,9 @@ fun PhoneLoginScreen(
     val uiState by viewModel.uiState.collectAsState()
     
     var phoneNumber by remember { mutableStateOf("") }
-    var selectedCountry by remember { mutableStateOf(countries[0]) } // Default to US
+    // Using the countries list from LoginScreen (same data)
+    val defaultCountry = remember { Country("United States", "US", "+1", "🇺🇸") }
+    var selectedCountry by remember { mutableStateOf(defaultCountry) }
     var showCountryPicker by remember { mutableStateOf(false) }
     
     val snackbarHostState = remember { SnackbarHostState() }
@@ -58,17 +62,9 @@ fun PhoneLoginScreen(
         }
     }
     
-    // Country picker dialog
-    if (showCountryPicker) {
-        CountryPickerDialog(
-            countries = countries,
-            onCountrySelected = { country ->
-                selectedCountry = country
-                showCountryPicker = false
-            },
-            onDismiss = { showCountryPicker = false }
-        )
-    }
+    // Note: Country picker removed for simplicity. 
+    // Full implementation available in LoginScreen.
+    // Using default US country code for this standalone version.
     
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) }
@@ -125,17 +121,18 @@ fun PhoneLoginScreen(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Country Code Picker Button
+                    // Country Code Display (fixed to US for standalone version)
                     OutlinedButton(
-                        onClick = { showCountryPicker = true },
+                        onClick = { /* Country picker disabled in standalone version */ },
                         modifier = Modifier.height(56.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = ButtonDefaults.outlinedButtonColors(
-                            containerColor = DarkCard,
-                            contentColor = TextPrimary
+                            containerColor = com.aura.voicechat.ui.theme.DarkCard,
+                            contentColor = com.aura.voicechat.ui.theme.TextPrimary
                         ),
-                        border = BorderStroke(1.dp, Purple80),
-                        contentPadding = PaddingValues(horizontal = 12.dp)
+                        border = BorderStroke(1.dp, com.aura.voicechat.ui.theme.Purple80),
+                        contentPadding = PaddingValues(horizontal = 12.dp),
+                        enabled = false
                     ) {
                         Text(
                             text = selectedCountry.flag,

@@ -23,6 +23,7 @@ import com.aura.voicechat.R
 import com.aura.voicechat.ui.theme.AccentCyan
 import com.aura.voicechat.ui.theme.DarkCanvas
 import com.aura.voicechat.ui.theme.Purple80
+import com.aura.voicechat.ui.theme.TextPrimary
 import kotlinx.coroutines.delay
 
 /**
