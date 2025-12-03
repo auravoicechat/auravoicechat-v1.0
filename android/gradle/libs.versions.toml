@@ -19,7 +19,7 @@ desugarJdkLibs = "2.0.4"
 
 # Android SDK
 compileSdk = "35"
-minSdk = "28"
+minSdk = "24"
 targetSdk = "35"
 
 # Compose
@@ -79,6 +79,15 @@ media3 = "1.5.1"
 
 # Lottie
 lottie = "6.6.2"
+
+# SVGA Animation
+svgaplayer = "2.6.1"
+
+# WebView
+webkit = "1.9.0"
+
+# Agora Voice SDK
+agoraRtc = "4.2.6"
 
 # CameraX
 camerax = "1.4.1"
@@ -157,6 +166,7 @@ amplify-push-notifications-pinpoint = { group = "com.amplifyframework", name = "
 
 # AWS SDK Kotlin
 aws-sdk-kotlin-s3 = { group = "aws.sdk.kotlin", name = "s3", version.ref = "awsSdkKotlin" }
+aws-sdk-kotlin-cognitoidentityprovider = { group = "aws.sdk.kotlin", name = "cognitoidentityprovider", version.ref = "awsSdkKotlin" }
 
 # Google Sign-In
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
@@ -200,6 +210,15 @@ media3-exoplayer-hls = { group = "androidx.media3", name = "media3-exoplayer-hls
 
 # Lottie
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
+
+# SVGA Animation
+svgaplayer-android = { group = "com.github.AnylifeDev", name = "svgaplayer-android", version.ref = "svgaplayer" }
+
+# WebView
+androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "webkit" }
+
+# Agora Voice SDK
+agora-rtc-full-sdk = { group = "io.agora.rtc", name = "full-sdk", version.ref = "agoraRtc" }
 
 # CameraX
 camerax-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "camerax" }

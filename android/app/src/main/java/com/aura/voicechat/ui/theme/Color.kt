@@ -1,5 +1,6 @@
 package com.aura.voicechat.ui.theme
 
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 /**
@@ -56,3 +57,14 @@ val TextOnLight = Color(0xFF1A1C24)
 // Coin Colors
 val CoinGold = Color(0xFFFFD700)
 val DiamondBlue = Color(0xFF00BFFF)
+
+// Gradient Brushes
+// Aura Purple Gradient
+val AuraGradient = Brush.linearGradient(
+    colors = listOf(Color(0xFFC9A8F1), Color(0xFFD958FF))
+)
+
+// Aura Glow Gradient (for buttons, highlights)
+val AuraGlowGradient = Brush.linearGradient(
+    colors = listOf(Color(0xFFD958FF), Color(0xFF35E8FF))
+)

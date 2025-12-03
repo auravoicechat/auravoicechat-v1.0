@@ -229,6 +229,7 @@ dependencies {
 
     // AWS SDK (for direct S3 operations if needed)
     implementation(libs.aws.sdk.kotlin.s3)
+    implementation(libs.aws.sdk.kotlin.cognitoidentityprovider)
 
     // AWS SDK v2 (for Cognito, S3, SNS operations)
     implementation("software.amazon.awssdk:cognitoidentityprovider:2.25.0")
@@ -271,6 +272,15 @@ dependencies {
 
     // Lottie animations
     implementation(libs.lottie.compose)
+
+    // SVGA animations
+    implementation(libs.svgaplayer.android)
+
+    // WebView for games
+    implementation(libs.androidx.webkit)
+
+    // Voice SDK (Agora)
+    implementation(libs.agora.rtc.full.sdk)
 
     // CameraX for KYC selfie
     implementation(libs.bundles.camerax)
