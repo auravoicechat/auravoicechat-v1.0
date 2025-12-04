@@ -506,5 +506,11 @@ fun AuraNavHost(
                 onNavigateBack = { navController.popBackStack() }
             )
         }
+        
+        composable(Screen.UpdateCheck.route) {
+            com.aura.voicechat.ui.settings.UpdateCheckScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
     }
 }
