@@ -471,5 +471,12 @@ data class ProfileUiState(
     val following: List<com.aura.voicechat.ui.profile.UserItemState> = emptyList(),
     val visitors: List<com.aura.voicechat.ui.profile.VisitorState> = emptyList(),
     val visitorsCount: Int = 0,
-    val todayVisitorsCount: Int = 0
+    val todayVisitorsCount: Int = 0,
+    // Admin/Owner status
+    val isOwner: Boolean = false,
+    val isCountryAdmin: Boolean = false,
+    val isAdmin: Boolean = false,
+    val adminLevel: String? = null,
+    val adminCountry: String? = null,
+    val adminBadge: String? = null
 )

@@ -140,6 +140,16 @@ sealed class Screen(val route: String) {
     object OwnerPanel : Screen("owner/panel")
     object EconomySetup : Screen("owner/economy")
     
+    // Guide Panel
+    object GuidePanel : Screen("guide/panel")
+    
+    // Support System
+    object SupportTickets : Screen("support/tickets")
+    object LiveChat : Screen("support/chat")
+    object LiveChatWithTicket : Screen("support/chat/{ticketId}") {
+        fun createRoute(ticketId: String) = "support/chat/$ticketId"
+    }
+    
     // Utility
     object Search : Screen("search")
     object Referral : Screen("referral")
@@ -560,6 +570,46 @@ fun AuraNavHost(
         
         composable(Screen.EconomySetup.route) {
             com.aura.voicechat.ui.owner.EconomySetupScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        
+        // ===== GUIDE PANEL =====
+        composable(Screen.GuidePanel.route) {
+            com.aura.voicechat.ui.guide.GuidePanelScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToEarnings = { navController.navigate(Screen.EarningTargetsGuide.route) },
+                onNavigateToSessions = { /* TODO: Session history */ },
+                onNavigateToTargets = { navController.navigate(Screen.EarningTargetsGuide.route) }
+            )
+        }
+        
+        // ===== SUPPORT SYSTEM =====
+        composable(Screen.SupportTickets.route) {
+            com.aura.voicechat.ui.support.SupportTicketsScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToTicket = { ticketId -> 
+                    navController.navigate(Screen.LiveChatWithTicket.createRoute(ticketId))
+                },
+                onNavigateToNewTicket = { /* TODO: New ticket form */ },
+                onNavigateToLiveChat = { navController.navigate(Screen.LiveChat.route) }
+            )
+        }
+        
+        composable(Screen.LiveChat.route) {
+            com.aura.voicechat.ui.support.LiveChatScreen(
+                ticketId = null,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        
+        composable(
+            route = Screen.LiveChatWithTicket.route,
+            arguments = listOf(navArgument("ticketId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val ticketId = backStackEntry.arguments?.getString("ticketId")
+            com.aura.voicechat.ui.support.LiveChatScreen(
+                ticketId = ticketId,
                 onNavigateBack = { navController.popBackStack() }
             )
         }

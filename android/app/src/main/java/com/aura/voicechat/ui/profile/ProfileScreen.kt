@@ -242,6 +242,63 @@ fun ProfileScreen(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
+                    // Owner Panel (only for owner)
+                    if (uiState.isOwner) {
+                        Card(
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.errorContainer
+                            )
+                        ) {
+                            ProfileMenuItem(
+                                icon = Icons.Default.AdminPanelSettings,
+                                title = "👑 Owner Panel",
+                                subtitle = "Full app control & economy setup",
+                                onClick = { /* Navigate to OwnerPanel */ },
+                                tint = MaterialTheme.colorScheme.error
+                            )
+                        }
+                        
+                        Spacer(modifier = Modifier.height(4.dp))
+                    }
+                    
+                    // Country Admin Panel
+                    if (uiState.isCountryAdmin) {
+                        Card(
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer
+                            )
+                        ) {
+                            ProfileMenuItem(
+                                icon = Icons.Default.AdminPanelSettings,
+                                title = "🌍 Country Admin Panel",
+                                subtitle = "Manage ${uiState.adminCountry} region",
+                                onClick = { /* Navigate to CountryAdminPanel */ },
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                        
+                        Spacer(modifier = Modifier.height(4.dp))
+                    }
+                    
+                    // Small Admin Panel
+                    if (uiState.isAdmin) {
+                        Card(
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                            )
+                        ) {
+                            ProfileMenuItem(
+                                icon = Icons.Default.Shield,
+                                title = "${uiState.adminBadge} Admin Panel",
+                                subtitle = "Moderation & management tools",
+                                onClick = { /* Navigate to AdminPanel */ },
+                                tint = MaterialTheme.colorScheme.tertiary
+                            )
+                        }
+                        
+                        Spacer(modifier = Modifier.height(4.dp))
+                    }
+                    
                     // Earnings Section (prominent at top)
                     EarningsCard(
                         earnings = uiState.earnings,
@@ -251,20 +308,29 @@ fun ProfileScreen(
                     
                     Spacer(modifier = Modifier.height(8.dp))
                     
-                    // Guide System (for female users)
-                    if (uiState.user?.gender == Gender.FEMALE && !uiState.isGuideApplied) {
-                        GuideApplicationCard(
-                            onApply = { /* Apply for guide */ }
-                        )
+                    // Guide Panel (for guides)
+                    if (uiState.isGuide) {
+                        Card(
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.secondaryContainer
+                            )
+                        ) {
+                            ProfileMenuItem(
+                                icon = Icons.Default.Stars,
+                                title = "👑 Guide Panel",
+                                subtitle = "View guide stats & earnings",
+                                onClick = { /* Navigate to GuidePanel */ },
+                                tint = MaterialTheme.colorScheme.secondary
+                            )
+                        }
+                        
+                        Spacer(modifier = Modifier.height(4.dp))
                     }
                     
-                    // If user is a guide, show guide stats
-                    if (uiState.isGuide) {
-                        ProfileMenuItem(
-                            icon = Icons.Default.Stars,
-                            title = "Guide Dashboard",
-                            subtitle = "View your guide stats and earnings",
-                            onClick = { }
+                    // Guide System (for female users)
+                    if (uiState.user?.gender == Gender.FEMALE && !uiState.isGuideApplied && !uiState.isGuide) {
+                        GuideApplicationCard(
+                            onApply = { /* Apply for guide */ }
                         )
                     }
                     
@@ -291,6 +357,12 @@ fun ProfileScreen(
                         title = "Invite Friends",
                         subtitle = "Earn rewards for referrals",
                         onClick = { }
+                    )
+                    ProfileMenuItem(
+                        icon = Icons.Default.Support,
+                        title = "Support Center",
+                        subtitle = "Live chat & tickets",
+                        onClick = { /* Navigate to SupportTickets */ }
                     )
                     ProfileMenuItem(
                         icon = Icons.Default.VerifiedUser,
@@ -770,7 +842,8 @@ private fun ProfileMenuItem(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
     title: String,
     subtitle: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    tint: androidx.compose.ui.graphics.Color = AccentMagenta
 ) {
     Card(
         onClick = onClick,
@@ -786,7 +859,7 @@ private fun ProfileMenuItem(
             Icon(
                 icon,
                 contentDescription = null,
-                tint = AccentMagenta,
+                tint = tint,
                 modifier = Modifier.size(24.dp)
             )
             Spacer(modifier = Modifier.width(16.dp))
