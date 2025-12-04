@@ -1,0 +1,209 @@
+
+kaijiang_baojinbi.png
+size: 870,541
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+coins1
+  rotate: false
+  xy: 353, 74
+  size: 101, 101
+  orig: 130, 130
+  offset: 15, 14
+  index: -1
+coins10
+  rotate: false
+  xy: 250, 73
+  size: 101, 102
+  orig: 131, 131
+  offset: 15, 14
+  index: -1
+coins11
+  rotate: false
+  xy: 776, 332
+  size: 81, 102
+  orig: 111, 129
+  offset: 15, 13
+  index: -1
+coins12
+  rotate: true
+  xy: 250, 2
+  size: 69, 102
+  orig: 102, 129
+  offset: 17, 14
+  index: -1
+coins13
+  rotate: false
+  xy: 640, 101
+  size: 56, 102
+  orig: 81, 132
+  offset: 13, 16
+  index: -1
+coins14
+  rotate: false
+  xy: 645, 6
+  size: 64, 93
+  orig: 96, 121
+  offset: 16, 14
+  index: -1
+coins15
+  rotate: false
+  xy: 559, 6
+  size: 84, 84
+  orig: 109, 105
+  offset: 13, 10
+  index: -1
+coins16
+  rotate: false
+  xy: 778, 158
+  size: 89, 79
+  orig: 120, 100
+  offset: 16, 11
+  index: -1
+coins17
+  rotate: true
+  xy: 778, 239
+  size: 91, 84
+  orig: 121, 100
+  offset: 13, 8
+  index: -1
+coins18
+  rotate: true
+  xy: 556, 92
+  size: 96, 82
+  orig: 125, 93
+  offset: 15, 5
+  index: -1
+coins19
+  rotate: true
+  xy: 776, 436
+  size: 103, 89
+  orig: 125, 102
+  offset: 13, 6
+  index: -1
+coins2
+  rotate: false
+  xy: 627, 205
+  size: 82, 100
+  orig: 110, 129
+  offset: 14, 14
+  index: -1
+coins20
+  rotate: true
+  xy: 528, 190
+  size: 103, 97
+  orig: 125, 115
+  offset: 12, 9
+  index: -1
+coins3
+  rotate: false
+  xy: 711, 206
+  size: 65, 99
+  orig: 100, 128
+  offset: 17, 14
+  index: -1
+coins4
+  rotate: false
+  xy: 711, 4
+  size: 57, 98
+  orig: 86, 126
+  offset: 15, 14
+  index: -1
+coins5
+  rotate: true
+  xy: 770, 101
+  size: 55, 98
+  orig: 79, 123
+  offset: 12, 12
+  index: -1
+coins6
+  rotate: false
+  xy: 698, 104
+  size: 57, 99
+  orig: 85, 126
+  offset: 14, 13
+  index: -1
+coins7
+  rotate: true
+  xy: 354, 5
+  size: 67, 100
+  orig: 93, 128
+  offset: 13, 14
+  index: -1
+coins8
+  rotate: true
+  xy: 456, 5
+  size: 78, 101
+  orig: 105, 130
+  offset: 14, 14
+  index: -1
+coins9
+  rotate: false
+  xy: 456, 85
+  size: 98, 103
+  orig: 124, 131
+  offset: 14, 14
+  index: -1
+d_mask
+  rotate: false
+  xy: 770, 16
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+fsg2
+  rotate: true
+  xy: 296, 177
+  size: 116, 118
+  orig: 119, 122
+  offset: 1, 2
+  index: -1
+gq
+  rotate: false
+  xy: 296, 295
+  size: 244, 244
+  orig: 246, 246
+  offset: 1, 1
+  index: -1
+guangdian1
+  rotate: false
+  xy: 770, 58
+  size: 41, 41
+  orig: 45, 45
+  offset: 2, 2
+  index: -1
+guanghuan1
+  rotate: false
+  xy: 542, 307
+  size: 232, 232
+  orig: 232, 232
+  offset: 0, 0
+  index: -1
+guangqiu
+  rotate: false
+  xy: 2, 247
+  size: 292, 292
+  orig: 310, 310
+  offset: 9, 9
+  index: -1
+julongguang
+  rotate: false
+  xy: 2, 3
+  size: 246, 242
+  orig: 252, 253
+  offset: 1, 4
+  index: -1
+xx1
+  rotate: false
+  xy: 416, 190
+  size: 110, 103
+  orig: 112, 104
+  offset: 1, 1
+  index: -1
+xx2
+  rotate: true
+  xy: 250, 192
+  size: 53, 41
+  orig: 54, 48
+  offset: 1, 2
+  index: -1

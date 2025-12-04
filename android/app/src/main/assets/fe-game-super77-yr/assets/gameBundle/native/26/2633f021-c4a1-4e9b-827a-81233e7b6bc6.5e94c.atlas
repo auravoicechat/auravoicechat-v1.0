@@ -1,0 +1,27 @@
+
+light_selected.png
+size: 638,287
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+light_add
+  rotate: false
+  xy: 460, 28
+  size: 176, 257
+  orig: 176, 257
+  offset: 0, 0
+  index: -1
+light_xuanzhong
+  rotate: false
+  xy: 256, 2
+  size: 202, 283
+  orig: 207, 289
+  offset: 2, 3
+  index: -1
+mask
+  rotate: false
+  xy: 2, 5
+  size: 252, 280
+  orig: 252, 280
+  offset: 0, 0
+  index: -1

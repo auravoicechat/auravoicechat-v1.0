@@ -1,0 +1,123 @@
+{
+  "code": 200,
+  "data": {
+    "type": 1,
+    "items": [
+      {
+        "id": "frame-1-3",
+        "type": 1,
+        "name": "Lv.20",
+        "icon": "https://rec.yriry.com/u/562c60de-8542-4006-b6e1-700a2daf48fa.webp",
+        "resUrl": "https://rec.yriry.com/u/71b8465f-745c-4d43-99f2-edae432c835a.svga",
+        "expireDays": 0,
+        "tips": "This frame shows your unique identity when on mic.",
+        "state": 0,
+        "title": "Lv.20 Frame",
+        "desc": "This frame is valid for 0 days.",
+        "update": 1754208329726,
+        "rarity": 2,
+        "properties": [
+          {
+            "imageWidth": 240,
+            "imageHeight": 45,
+            "urlKey": "image",
+            "url": "https://rec.yriry.com/u/client_frame_leve_22.png",
+            "textSize": 0
+          }
+        ],
+        "privilege": 3,
+        "reviewStatus": 0,
+        "friendItems": [
+          {
+            "itemId": "frame-1-1377",
+            "level": "LV3",
+            "avatar": "https://pic.ihapilive.com/202509090800/bf73ddf8241eed02b695c8749c519bd9/avatar/9-xXgzF3XYn2xg.jpg?x-oss-process=style/user_icon_216",
+            "friendAvatar": "https://hapi-pic.oss.ihapilive.com/svip/95K9NWGSDK6OYD569-0.gif?x-oss-process=image/quality,q_50/format,webp",
+            "friendUid": "10000079",
+            "resUrl": "https://rec.ihapilive.com/u/a3702353-e8d3-4a04-8de2-c475b3ff19d8.svga",
+            "icon": "https://rec.ihapilive.com/u/6fb74640-73a0-4dee-8908-1b5ac41a0bd3.webp",
+            "title": "Lv.3 Friend",
+            "state": 1,
+            "rarity": 1,
+            "desc": "Exclusive to Friend, Only Friend can wear it",
+            "properties": [
+              {
+                "imageWidth": 80,
+                "imageHeight": 80,
+                "urlKey": "user",
+                "url": "https://hapi-pic.oss.ihapilive.com/svip/95K9NWGSDK6OYD569-0.gif?x-oss-process=image/quality,q_50/format,webp",
+                "textKey": "user",
+                "textSize": 0
+              }
+            ]
+          },
+          {
+            "itemId": "frame-1-1375",
+            "level": "LV1",
+            "avatar": "https://pic.ihapilive.com/202509090800/bf73ddf8241eed02b695c8749c519bd9/avatar/9-xXgzF3XYn2xg.jpg?x-oss-process=style/user_icon_216",
+            "friendAvatar": "https://pic.ihapilive.com/202509090800/d9a14cfa35b447ce02fc9f9013808114/avatar/rxOdqNtmKER8Jk.jpg?x-oss-process=style/user_icon_216",
+            "friendUid": "10000285",
+            "resUrl": "https://rec.ihapilive.com/u/f3450d9a-65f6-40ed-a86d-965b1a2a6f05.svga",
+            "icon": "https://rec.ihapilive.com/u/40c27f95-6753-4bbe-8845-66d34726c17e.webp",
+            "title": "Lv.1 Friend",
+            "state": 1,
+            "rarity": 0,
+            "desc": "Exclusive to Friend, Only Friend can wear it",
+            "properties": [
+              {
+                "imageWidth": 80,
+                "imageHeight": 80,
+                "urlKey": "user",
+                "url": "https://pic.ihapilive.com/202509090800/d9a14cfa35b447ce02fc9f9013808114/avatar/rxOdqNtmKER8Jk.jpg?x-oss-process=style/user_icon_216",
+                "textKey": "user",
+                "textSize": 0
+              }
+            ]
+          },
+          {
+            "itemId": "frame-1-1375",
+            "level": "LV1",
+            "avatar": "https://pic.ihapilive.com/202509090800/bf73ddf8241eed02b695c8749c519bd9/avatar/9-xXgzF3XYn2xg.jpg?x-oss-process=style/user_icon_216",
+            "friendAvatar": "https://pic.ihapilive.com/202509090800/8f94485b4fb329dcf9b38c570afc3122/avatar/BxPkEYi62GlQYR.png?x-oss-process=style/user_icon_216",
+            "friendUid": "21021411",
+            "resUrl": "https://rec.ihapilive.com/u/f3450d9a-65f6-40ed-a86d-965b1a2a6f05.svga",
+            "icon": "https://rec.ihapilive.com/u/40c27f95-6753-4bbe-8845-66d34726c17e.webp",
+            "title": "Lv.1 Friend",
+            "state": 1,
+            "rarity": 0,
+            "desc": "Exclusive to Friend, Only Friend can wear it",
+            "properties": [
+              {
+                "imageWidth": 80,
+                "imageHeight": 80,
+                "urlKey": "user",
+                "url": "https://pic.ihapilive.com/202509090800/8f94485b4fb329dcf9b38c570afc3122/avatar/BxPkEYi62GlQYR.png?x-oss-process=style/user_icon_216",
+                "textKey": "user",
+                "textSize": 0
+              }
+            ]
+          }
+        ],
+        "bizType": 0
+      },
+      {
+        "id": "frame-1-7",
+        "type": 1,
+        "name": "Sign in1",
+        "icon": "https://rec.yriry.com/u/70a4b6fa-fc59-4e1c-a31f-ef42a39d93fc.webp",
+        "resUrl": "https://rec.yriry.com/u/f519556f-6a81-4416-be6a-390bd8c82342.svga",
+        "expire": "1Days",
+        "expireDays": 1,
+        "tips": "This frame shows your unique identity when on mic.",
+        "state": 1,
+        "title": "Sign in1 Frame",
+        "desc": "This frame is valid for 1 days.",
+        "update": 1755657756398,
+        "rarity": 0,
+        "privilege": 0,
+        "reviewStatus": 0,
+        "bizType": 0
+      }
+    ]
+  }
+}

@@ -12,6 +12,7 @@ import com.aura.voicechat.data.local.entity.*
  * 
  * Local database for caching and offline support
  * Version 3 - Added admin hierarchy, guide system, and earning system
+ * Version 2 - Added Week 4 features: Notifications, Music, Playlists
  */
 @Database(
     entities = [
@@ -34,6 +35,13 @@ import com.aura.voicechat.data.local.entity.*
         CashoutRequestEntity::class
     ],
     version = 3,
+        // Week 4 entities
+        NotificationEntity::class,
+        SongEntity::class,
+        PlaylistEntity::class,
+        PlaylistSongEntity::class
+    ],
+    version = 2,
     exportSchema = true
 )
 @TypeConverters(Converters::class)
@@ -55,6 +63,12 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun guideApplicationDao(): GuideApplicationDao
     abstract fun earningTargetDao(): EarningTargetDao
     abstract fun cashoutRequestDao(): CashoutRequestDao
+    
+    // Week 4 DAOs
+    abstract fun notificationDao(): NotificationDao
+    abstract fun songDao(): SongDao
+    abstract fun playlistDao(): PlaylistDao
+    abstract fun playlistSongDao(): PlaylistSongDao
     
     companion object {
         const val DATABASE_NAME = "aura_voice_chat.db"

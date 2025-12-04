@@ -275,6 +275,40 @@ data class GuideApplicationEntity(
     val appliedAt: Long,
     val reviewedAt: Long?,
     val rejectionReason: String?,
+// ============================================
+// Week 4: Advanced Features Entities
+// ============================================
+
+@Entity(
+    tableName = "notifications",
+    indices = [
+        Index(value = ["isRead"]),
+        Index(value = ["type"]),
+        Index(value = ["createdAt"])
+    ]
+)
+data class NotificationEntity(
+    @PrimaryKey val id: String,
+    val type: String, // MENTION, GIFT, FOLLOW, SYSTEM, etc.
+    val title: String,
+    val message: String,
+    val imageUrl: String?,
+    val deepLink: String?,
+    val isRead: Boolean,
+    val createdAt: Long
+)
+
+@Entity(
+    tableName = "songs",
+    indices = [Index(value = ["title"])]
+)
+data class SongEntity(
+    @PrimaryKey val id: String,
+    val title: String,
+    val artist: String,
+    val albumArt: String,
+    val duration: Long,
+    val streamUrl: String,
     val cachedAt: Long = System.currentTimeMillis()
 )
 
@@ -310,4 +344,28 @@ data class CashoutRequestEntity(
     val rejectionReason: String?,
     val paymentMethod: String,
     val cachedAt: Long = System.currentTimeMillis()
+    tableName = "playlists",
+    indices = [Index(value = ["createdBy"])]
+)
+data class PlaylistEntity(
+    @PrimaryKey val id: String,
+    val name: String,
+    val coverUrl: String,
+    val createdBy: String,
+    val songCount: Int = 0,
+    val createdAt: Long = System.currentTimeMillis()
+)
+
+@Entity(
+    tableName = "playlist_songs",
+    indices = [
+        Index(value = ["playlistId"]),
+        Index(value = ["songId"])
+    ]
+)
+data class PlaylistSongEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val playlistId: String,
+    val songId: String,
+    val position: Int
 )

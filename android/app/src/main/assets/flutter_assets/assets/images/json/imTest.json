@@ -1,0 +1,76 @@
+[
+  {
+    "conversationId": "conv_123456",
+    "messageType": 1,
+    "messageText": "你好，需要帮助吗？",
+    "messageData": {
+      "ext": "additional_info",
+      "customData": {
+        "id": "custom_123",
+        "version": 1,
+        "type": 200,
+        "data": "{\"key\":\"value\"}",
+        "hiddenToUids": [
+          "user_111",
+          "user_222"
+        ],
+        "block": false,
+        "from": "system",
+        "to": "client",
+        "fromUid": "sys_001",
+        "toUid": "user_789",
+        "languageType": "zh-CN",
+        "countryCode": "CN",
+        "feedbackType": 5
+      },
+      "messageType": 300,
+      "toNickName": "客户昵称",
+      "fromNickName": "系统昵称"
+    },
+    "uid": "user_789",
+    "fromUid": "user_456",
+    "toUid": "user_123",
+    "userName": "客服小张",
+    "userIcon": "https://pic.yriry.com/avatar/zwuv4NOvZ2.png",
+    "unReadCount": 3,
+    "lastModifyTime": 1676543210987,
+    "msgStatus": 2
+  },
+  {
+    "conversationId": "conv_123456",
+    "messageType": 1,
+    "messageText": "你好，需要帮助吗？",
+    "messageData": {
+      "ext": "additional_info",
+      "customData": {
+        "id": "custom_123",
+        "version": 1,
+        "type": 200,
+        "data": "{\"key\":\"value\"}",
+        "hiddenToUids": [
+          "user_111",
+          "user_222"
+        ],
+        "block": false,
+        "from": "system",
+        "to": "client",
+        "fromUid": "sys_001",
+        "toUid": "user_789",
+        "languageType": "zh-CN",
+        "countryCode": "CN",
+        "feedbackType": 5
+      },
+      "messageType": 300,
+      "toNickName": "客户昵称",
+      "fromNickName": "系统昵称"
+    },
+    "uid": "user_789",
+    "fromUid": "user_456",
+    "toUid": "user_123",
+    "userName": "客服小张_12312",
+    "userIcon": "https://pic.yriry.com/avatar/zwuv4NOvZ2.png",
+    "unReadCount": 3,
+    "lastModifyTime": 1676543210987,
+    "msgStatus": 2
+  }
+]

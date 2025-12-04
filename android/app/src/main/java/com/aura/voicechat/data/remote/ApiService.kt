@@ -1218,6 +1218,87 @@ interface ApiService {
     // Get owner panel stats
     @GET("api/v1/owner/stats")
     suspend fun getOwnerStats(): Response<OwnerStats>
+    // Week 4: Advanced Features
+    // ============================================
+    
+    // ============================================
+    // Live Streaming
+    // ============================================
+    
+    @GET("api/v1/live/streams")
+    suspend fun getLiveStreams(@Query("category") category: String?): Response<LiveStreamsResponse>
+    
+    @POST("api/v1/live/start")
+    suspend fun startLiveStream(@Body request: StartStreamRequest): Response<LiveStream>
+    
+    @POST("api/v1/live/stop/{streamId}")
+    suspend fun stopLiveStream(@Path("streamId") streamId: String): Response<Unit>
+    
+    @GET("api/v1/live/{streamId}")
+    suspend fun getLiveStreamDetails(@Path("streamId") streamId: String): Response<LiveStream>
+    
+    // ============================================
+    // Music
+    // ============================================
+    
+    @GET("api/v1/music/songs")
+    suspend fun getSongs(@Query("query") query: String?): Response<SongsResponse>
+    
+    @GET("api/v1/music/playlists")
+    suspend fun getPlaylists(): Response<PlaylistsResponse>
+    
+    @POST("api/v1/music/playlists")
+    suspend fun createPlaylist(@Body request: CreatePlaylistRequest): Response<Playlist>
+    
+    @GET("api/v1/music/trending")
+    suspend fun getTrendingSongs(): Response<SongsResponse>
+    
+    // ============================================
+    // Leaderboards
+    // ============================================
+    
+    @GET("api/v1/leaderboard/{type}")
+    suspend fun getLeaderboard(
+        @Path("type") type: String,
+        @Query("period") period: String
+    ): Response<LeaderboardResponse>
+    
+    @GET("api/v1/leaderboard/my-rank/{type}")
+    suspend fun getMyRank(@Path("type") type: String): Response<RankingUser>
+    
+    // ============================================
+    // Notifications (Week 4)
+    // ============================================
+    
+    @GET("api/v1/notifications/list")
+    suspend fun getNotificationsList(
+        @Query("type") type: String?
+    ): Response<NotificationsListResponse>
+    
+    @POST("api/v1/notifications/{id}/read")
+    suspend fun markNotificationAsRead(@Path("id") notificationId: String): Response<Unit>
+    
+    @POST("api/v1/notifications/read-all")
+    suspend fun markAllNotificationsAsRead(): Response<Unit>
+    
+    @DELETE("api/v1/notifications/{id}")
+    suspend fun deleteNotification(@Path("id") notificationId: String): Response<Unit>
+    
+    // ============================================
+    // Settings
+    // ============================================
+    
+    @GET("api/v1/settings/preferences")
+    suspend fun getUserPreferences(): Response<SettingsResponse>
+    
+    @PUT("api/v1/settings/preferences")
+    suspend fun updateUserPreferences(@Body preferences: UserPreferences): Response<SettingsResponse>
+    
+    @POST("api/v1/account/change-phone")
+    suspend fun changePhoneNumber(@Body request: ChangePhoneRequest): Response<Unit>
+    
+    @DELETE("api/v1/account/delete")
+    suspend fun deleteAccount(): Response<Unit>
 }
 
 // Request Models for new endpoints

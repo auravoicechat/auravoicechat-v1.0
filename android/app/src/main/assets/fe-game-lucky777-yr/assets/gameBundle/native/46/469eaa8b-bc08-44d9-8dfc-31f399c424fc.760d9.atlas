@@ -1,0 +1,27 @@
+
+yingtao.png
+size: 331,130
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+7
+  rotate: false
+  xy: 132, 19
+  size: 110, 111
+  orig: 130, 131
+  offset: 11, 11
+  index: -1
+72
+  rotate: false
+  xy: 244, 42
+  size: 87, 88
+  orig: 130, 131
+  offset: 22, 23
+  index: -1
+mask
+  rotate: false
+  xy: 0, 0
+  size: 130, 130
+  orig: 130, 130
+  offset: 0, 0
+  index: -1

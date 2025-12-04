@@ -1,0 +1,41 @@
+
+jiangkuang.png
+size: 237,424
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bling
+  rotate: false
+  xy: 2, 2
+  size: 57, 57
+  orig: 67, 67
+  offset: 4, 5
+  index: -1
+center_light
+  rotate: false
+  xy: 114, 384
+  size: 107, 38
+  orig: 113, 60
+  offset: 6, 12
+  index: -1
+hightLight_1
+  rotate: true
+  xy: 190, 20
+  size: 362, 45
+  orig: 429, 49
+  offset: 58, 2
+  index: -1
+hightLight_2
+  rotate: true
+  xy: 2, 61
+  size: 361, 110
+  orig: 463, 118
+  offset: 89, 4
+  index: -1
+kk
+  rotate: true
+  xy: 114, 4
+  size: 378, 74
+  orig: 380, 76
+  offset: 1, 1
+  index: -1
