@@ -129,6 +129,17 @@ sealed class Screen(val route: String) {
     object Feedback : Screen("settings/feedback")
     object UpdateCheck : Screen("settings/update")
     
+    // Guide System
+    object GuideApplication : Screen("guide/apply")
+    
+    // Earning System
+    object EarningTargets : Screen("earning/targets")
+    object EarningTargetsGuide : Screen("earning/targets/guide")
+    
+    // Owner Panel
+    object OwnerPanel : Screen("owner/panel")
+    object EconomySetup : Screen("owner/economy")
+    
     // Utility
     object Search : Screen("search")
     object Referral : Screen("referral")
@@ -509,6 +520,46 @@ fun AuraNavHost(
         
         composable(Screen.UpdateCheck.route) {
             com.aura.voicechat.ui.settings.UpdateCheckScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        
+        // ===== GUIDE SYSTEM =====
+        composable(Screen.GuideApplication.route) {
+            com.aura.voicechat.ui.guide.GuideApplicationScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        
+        // ===== EARNING SYSTEM =====
+        composable(Screen.EarningTargets.route) {
+            com.aura.voicechat.ui.earning.EarningTargetSheetScreen(
+                isGuide = false,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        
+        composable(Screen.EarningTargetsGuide.route) {
+            com.aura.voicechat.ui.earning.EarningTargetSheetScreen(
+                isGuide = true,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        
+        // ===== OWNER PANEL =====
+        composable(Screen.OwnerPanel.route) {
+            com.aura.voicechat.ui.owner.OwnerPanelScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToEconomy = { navController.navigate(Screen.EconomySetup.route) },
+                onNavigateToAdmins = { /* TODO: Admin management */ },
+                onNavigateToCashouts = { /* TODO: Cashout approvals */ },
+                onNavigateToGuides = { /* TODO: Guide management */ },
+                onNavigateToAnalytics = { /* TODO: Analytics */ }
+            )
+        }
+        
+        composable(Screen.EconomySetup.route) {
+            com.aura.voicechat.ui.owner.EconomySetupScreen(
                 onNavigateBack = { navController.popBackStack() }
             )
         }

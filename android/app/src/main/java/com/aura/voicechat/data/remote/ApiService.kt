@@ -1076,4 +1076,189 @@ interface ApiService {
     // Clear app cache (server-side tracking)
     @POST("api/v1/app/clear-cache")
     suspend fun clearCache(): Response<Unit>
+    
+    // ============================================
+    // Admin System
+    // ============================================
+    
+    // Get all admins
+    @GET("api/v1/admin/all")
+    suspend fun getAllAdmins(): Response<List<AdminUser>>
+    
+    // Get admins by level
+    @GET("api/v1/admin/level/{level}")
+    suspend fun getAdminsByLevel(
+        @Path("level") level: String
+    ): Response<List<AdminUser>>
+    
+    // Get admins by country
+    @GET("api/v1/admin/country/{country}")
+    suspend fun getAdminsByCountry(
+        @Path("country") country: String
+    ): Response<List<AdminUser>>
+    
+    // Assign admin
+    @POST("api/v1/admin/assign")
+    suspend fun assignAdmin(
+        @Body request: AssignAdminRequest
+    ): Response<AdminUser>
+    
+    // Remove admin
+    @POST("api/v1/admin/{userId}/remove")
+    suspend fun removeAdmin(
+        @Path("userId") userId: String
+    ): Response<Unit>
+    
+    // ============================================
+    // Guide System
+    // ============================================
+    
+    // Apply to be a guide
+    @POST("api/v1/guide/apply")
+    suspend fun applyForGuide(
+        @Body request: ApplyGuideRequest
+    ): Response<GuideApplication>
+    
+    // Get my guide application
+    @GET("api/v1/guide/application/my")
+    suspend fun getMyGuideApplication(): Response<GuideApplication>
+    
+    // Get pending guide applications (admin only)
+    @GET("api/v1/guide/applications")
+    suspend fun getGuideApplications(
+        @Query("status") status: String? = null
+    ): Response<List<GuideApplication>>
+    
+    // Review guide application (admin only)
+    @POST("api/v1/guide/applications/{applicationId}/review")
+    suspend fun reviewGuideApplication(
+        @Path("applicationId") applicationId: String,
+        @Body request: ReviewGuideApplicationRequest
+    ): Response<GuideApplication>
+    
+    // Get guide profile
+    @GET("api/v1/guide/profile/{userId}")
+    suspend fun getGuideProfile(
+        @Path("userId") userId: String
+    ): Response<GuideProfile>
+    
+    // Get my guide profile
+    @GET("api/v1/guide/profile/my")
+    suspend fun getMyGuideProfile(): Response<GuideProfile>
+    
+    // ============================================
+    // Earning System
+    // ============================================
+    
+    // Get earning targets
+    @GET("api/v1/earning/targets")
+    suspend fun getEarningTargets(
+        @Query("isGuide") isGuide: Boolean = false
+    ): Response<EarningTargetSheet>
+    
+    // Get my earning status
+    @GET("api/v1/earning/status")
+    suspend fun getMyEarningStatus(): Response<UserEarningStatus>
+    
+    // Request cashout
+    @POST("api/v1/earning/cashout/request")
+    suspend fun requestCashout(
+        @Body request: RequestCashoutRequest
+    ): Response<CashoutRequest>
+    
+    // Get my cashout requests
+    @GET("api/v1/earning/cashout/my")
+    suspend fun getMyCashoutRequests(): Response<List<CashoutRequest>>
+    
+    // Get pending cashouts (owner/admin only)
+    @GET("api/v1/earning/cashout/pending")
+    suspend fun getPendingCashouts(): Response<List<CashoutRequest>>
+    
+    // Approve/reject cashout (owner only)
+    @POST("api/v1/earning/cashout/{requestId}/review")
+    suspend fun reviewCashout(
+        @Path("requestId") requestId: String,
+        @Body request: ApproveCashoutRequest
+    ): Response<CashoutRequest>
+    
+    // ============================================
+    // Customer Support Room
+    // ============================================
+    
+    // Get customer support room
+    @GET("api/v1/support/room")
+    suspend fun getCustomerSupportRoom(): Response<CustomerSupportRoom>
+    
+    // ============================================
+    // Owner Panel - Economy Configuration
+    // ============================================
+    
+    // Get current economy config
+    @GET("api/v1/owner/economy/config")
+    suspend fun getEconomyConfig(): Response<EconomyConfig>
+    
+    // Update earning targets
+    @POST("api/v1/owner/economy/targets")
+    suspend fun updateEarningTargets(
+        @Body targets: List<TargetConfig>
+    ): Response<Unit>
+    
+    // Update conversion rates
+    @POST("api/v1/owner/economy/conversions")
+    suspend fun updateConversionRates(
+        @Body request: ConversionRatesRequest
+    ): Response<Unit>
+    
+    // Update system limits
+    @POST("api/v1/owner/economy/limits")
+    suspend fun updateSystemLimits(
+        @Body request: SystemLimitsRequest
+    ): Response<Unit>
+    
+    // Get owner panel stats
+    @GET("api/v1/owner/stats")
+    suspend fun getOwnerStats(): Response<OwnerStats>
 }
+
+// Request Models for new endpoints
+data class AssignAdminRequest(
+    val userId: String,
+    val adminLevel: String,
+    val country: String?
+)
+
+data class EconomyConfig(
+    val userTargets: List<TargetConfig>,
+    val guideTargets: List<TargetConfig>,
+    val conversionRates: ConversionRates,
+    val systemLimits: SystemLimits
+)
+
+data class ConversionRates(
+    val diamondToCashRate: Double,
+    val diamondToCoinRate: Int,
+    val coinValue: Double
+)
+
+data class SystemLimits(
+    val minCashout: Double,
+    val maxCashout: Double,
+    val clearanceDays: Int,
+    val maxGiftQuantity: Int,
+    val dailyDiamondLimit: Long
+)
+
+data class ConversionRatesRequest(
+    val diamondToCashRate: Double,
+    val diamondToCoinRate: Int,
+    val coinValue: Double
+)
+
+data class SystemLimitsRequest(
+    val minCashout: Double,
+    val maxCashout: Double,
+    val clearanceDays: Int,
+    val maxGiftQuantity: Int,
+    val dailyDiamondLimit: Long
+)
+
