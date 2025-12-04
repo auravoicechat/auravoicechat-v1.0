@@ -4,6 +4,7 @@ import com.aura.voicechat.data.model.CinemaSession
 import com.aura.voicechat.data.model.StartCinemaRequest
 import com.aura.voicechat.data.model.SyncCinemaRequest
 import com.aura.voicechat.data.remote.ApiService
+import com.aura.voicechat.domain.repository.CinemaRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -11,25 +12,6 @@ import javax.inject.Singleton
  * Repository for Cinema operations
  * Developer: Hawkaye Visions LTD — Pakistan
  */
-interface CinemaRepository {
-    suspend fun startCinema(
-        roomId: String,
-        videoUrl: String,
-        videoTitle: String,
-        videoDuration: Long
-    ): Result<CinemaSession>
-    
-    suspend fun getCinemaSession(roomId: String): Result<CinemaSession>
-    
-    suspend fun syncPlayback(
-        roomId: String,
-        currentPosition: Long,
-        isPlaying: Boolean
-    ): Result<Unit>
-    
-    suspend fun stopCinema(roomId: String): Result<Unit>
-}
-
 @Singleton
 class CinemaRepositoryImpl @Inject constructor(
     private val apiService: ApiService
