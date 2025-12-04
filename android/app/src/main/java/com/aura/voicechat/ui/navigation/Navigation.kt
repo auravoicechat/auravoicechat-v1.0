@@ -114,6 +114,20 @@ sealed class Screen(val route: String) {
     object RoomSupport : Screen("events/room_support/{roomId}") {
         fun createRoute(roomId: String) = "events/room_support/$roomId"
     }
+    object EventDetail : Screen("events/{eventId}") {
+        fun createRoute(eventId: String) = "events/$eventId"
+    }
+    object LuckyDraw : Screen("events/lucky_draw")
+    
+    // Cinema
+    object Cinema : Screen("room/{roomId}/cinema") {
+        fun createRoute(roomId: String) = "room/$roomId/cinema"
+    }
+    
+    // Settings - Extended
+    object HelpCenter : Screen("settings/help")
+    object Feedback : Screen("settings/feedback")
+    object UpdateCheck : Screen("settings/update")
     
     // Utility
     object Search : Screen("search")
@@ -431,6 +445,8 @@ fun AuraNavHost(
                 onNavigateToPrivacy = { /* Navigate to privacy */ },
                 onNavigateToBlocked = { /* Navigate to blocked users */ },
                 onNavigateToAbout = { /* Navigate to about */ },
+                onNavigateToHelp = { navController.navigate(Screen.HelpCenter.route) },
+                onNavigateToFeedback = { navController.navigate(Screen.Feedback.route) },
                 onLogout = {
                     navController.navigate(Screen.Login.route) {
                         popUpTo(0) { inclusive = true }
@@ -443,6 +459,51 @@ fun AuraNavHost(
             KycScreen(
                 onNavigateBack = { navController.popBackStack() },
                 onKycComplete = { navController.popBackStack() }
+            )
+        }
+        
+        // ===== CINEMA =====
+        composable(
+            route = Screen.Cinema.route,
+            arguments = listOf(navArgument("roomId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val roomId = backStackEntry.arguments?.getString("roomId") ?: ""
+            com.aura.voicechat.ui.room.cinema.CinemaScreen(
+                roomId = roomId,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        
+        // ===== EVENT DETAILS =====
+        composable(
+            route = Screen.EventDetail.route,
+            arguments = listOf(navArgument("eventId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val eventId = backStackEntry.arguments?.getString("eventId") ?: ""
+            com.aura.voicechat.ui.events.EventDetailScreen(
+                eventId = eventId,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        
+        // ===== LUCKY DRAW =====
+        composable(Screen.LuckyDraw.route) {
+            com.aura.voicechat.ui.events.LuckyDrawScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        
+        // ===== SETTINGS - EXTENDED =====
+        composable(Screen.HelpCenter.route) {
+            com.aura.voicechat.ui.settings.HelpCenterScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onContactSupport = { navController.navigate(Screen.Feedback.route) }
+            )
+        }
+        
+        composable(Screen.Feedback.route) {
+            com.aura.voicechat.ui.settings.FeedbackScreen(
+                onNavigateBack = { navController.popBackStack() }
             )
         }
     }
